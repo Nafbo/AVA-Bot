@@ -2,10 +2,14 @@ import ccxt
 import pandas as pd
 import os
 import pickle
+from time import gmtime, strftime
+from datetime import datetime
+import time
+
 
 
 class DataBase():
-    def __init__(self, session=ccxt.binance(), path_to_data="BackTest/DataBase/"):
+    def __init__(self, session=ccxt.binance(), path_to_data="DataBase/Crypto_Database/"):
         self._session = session
         self.exchange_name = str(self._session)
         self.path_to_data = path_to_data
@@ -19,6 +23,19 @@ class DataBase():
         result = result.set_index(result['timestamp'])
         result.index = pd.to_datetime(result.index, unit='ms')
         del result['timestamp']
+        while datetime.strftime(result.index[-1], '%Y-%m-%d') != strftime('%Y-%m-%d', gmtime()):
+            start_date = str(result.index[-1])
+            start_date = self._session.parse8601(start_date)
+            time.sleep(2)
+            temp_data = self._session.fetch_ohlcv(symbol, timeframe, start_date, limit=limit)
+            dtNew = pd.DataFrame(temp_data)
+            dtNew = dtNew.rename(columns={0: 'timestamp', 1: 'open', 2: 'high', 3: 'low', 4: 'close', 5: 'volume'})
+            dtNew = dtNew.set_index(dtNew['timestamp'])
+            dtNew.index = pd.to_datetime(dtNew.index, unit='ms')
+            del dtNew['timestamp']
+            dfFinal = pd.concat([result,dtNew])
+            result = dfFinal
+            dtNew = pd.DataFrame()
         return (result)
     
     
@@ -58,5 +75,6 @@ class DataBase():
              
 if __name__ == '__main__':
     database = DataBase(session=ccxt.binance())
+    # print(database.get_historical_from_api('BTC/USDT', '1h', '2017-01-01T00:00:00'))
     print(database.download_data(['BTC/USDT'], ['1h']))
-    print(database.update_data(['BTC/USDT'], ['1h']))
+    # print(database.update_data(['BTC/USDT'], ['1h']))

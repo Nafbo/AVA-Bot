@@ -76,5 +76,5 @@ class DataBase():
 if __name__ == '__main__':
     database = DataBase(session=ccxt.binance())
     # print(database.get_historical_from_api('BTC/USDT', '1h', '2017-01-01T00:00:00'))
-    print(database.download_data(['BNB/USDT'], ['1h']))
+    print(database.download_data(['ADA/USDT'], ['1h']))
     # print(database.update_data(['BTC/USDT'], ['1h']))

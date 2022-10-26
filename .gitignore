@@ -3,3 +3,5 @@ env
 __pycache__
 setup.py
 Crypto_Database
+test.csv
+test.ipynb

@@ -9,7 +9,7 @@ import time
 
 
 class DataBase():
-    def __init__(self, session=ccxt.binance(), path_to_data="DataBase/Crypto_Database/"):
+    def __init__(self, session=ccxt.binance(), path_to_data="src/app/DataBase/Crypto_Database/"):
         self._session = session
         self.exchange_name = str(self._session)
         self.path_to_data = path_to_data
@@ -76,5 +76,5 @@ class DataBase():
 if __name__ == '__main__':
     database = DataBase(session=ccxt.binance())
     # print(database.get_historical_from_api('BTC/USDT', '1h', '2017-01-01T00:00:00'))
-    print(database.download_data(['BTC/USDT'], ['1h']))
+    print(database.download_data(['BNB/USDT'], ['1h']))
     # print(database.update_data(['BTC/USDT'], ['1h']))

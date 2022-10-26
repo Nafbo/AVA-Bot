@@ -28,25 +28,54 @@ class All_Indicator():
                 candle.append('red')
                 
         df['candle'] = candle
-        df['EMA200'] =ta.trend.ema_indicator(close=df['close'], window=200)
-        df['EMA100'] =ta.trend.ema_indicator(close=df['close'], window=100)
+        
+        df['EMA1']= ta.trend.ema_indicator(close=df['close'], window=7)
+        df['EMA2']= ta.trend.ema_indicator(close=df['close'], window=30)
+        df['EMA3']= ta.trend.ema_indicator(close=df['close'], window=50)
+        df['EMA4']= ta.trend.ema_indicator(close=df['close'], window=100)
+        df['EMA5']= ta.trend.ema_indicator(close=df['close'], window=121)
+        df['EMA6']= ta.trend.ema_indicator(close=df['close'], window=200)
+        
+        df['STOCH_RSI'] = ta.momentum.stochrsi(close=df['close'], window=14, smooth1=3, smooth2=3)
+        
         df = df.dropna()
         return(df)
     
     
-    def buyCondition_Strategy1(self, row):
-        if row['EMA100'] > row['EMA200']:
-            return(True)
+    def openLongCondition_Strategy1(self, row):
+        if (row['EMA1'] > row['EMA2'] 
+        and row['EMA2'] > row['EMA3'] 
+        and row['EMA3'] > row['EMA4'] 
+        and row['EMA4'] > row['EMA5'] 
+        and row['EMA5'] > row['EMA6'] 
+        and row['STOCH_RSI'] < 0.82):
+            return True
         else:
-            return(False)
-
-
-    def sellCondition_Strategy1(self, row):
-        if row['EMA200'] > row['EMA100']:
-            return(True)
-        else:
-            return(False)
+            return False
         
+    def closeLongCondition_Strategy1(self, row):
+        if row['EMA6'] > row['EMA1']:
+            return True
+        else:
+            return False
+
+
+    def openShortCondition_Strategy1(self, row):
+        if ( row['EMA6'] > row['EMA5'] 
+        and row['EMA5'] > row['EMA4'] 
+        and row['EMA4'] > row['EMA3'] 
+        and row['EMA3'] > row['EMA2'] 
+        and row['EMA2'] > row['EMA1'] 
+        and row['STOCH_RSI'] > 0.2 ):
+            return True
+        else:
+            return False
+     
+    def closeShortCondition_Strategy1(self, row):
+        if row['EMA1'] > row['EMA6']:
+            return True
+        else:
+            return False    
         
 if __name__ == '__main__':
     allIndicator = All_Indicator()

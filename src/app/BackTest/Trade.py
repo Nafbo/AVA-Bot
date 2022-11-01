@@ -17,20 +17,23 @@ class Trade():
         else:
             return(False)
         
-    def buyCondition(row):
-        if (row['EMA1'] > row['EMA2'] 
-        and row['EMA2'] > row['EMA3'] 
-        and row['EMA3'] > row['EMA4'] 
-        and row['EMA4'] > row['EMA5'] 
-        and row['EMA5'] > row['EMA6'] 
-        and row['STOCH_RSI']<0.82):
-            return True
+    def buyCondition(self, row, previousRow):
+        if (
+            row['AO'] >= 0
+            and previousRow['AO'] > row['AO']
+            and row['WillR'] < -85
+            and row['EMA100'] > row['EMA200']
+        ):
+            return(True)
         else:
-            return False
+            return(False)
 
-    def sellCondition(row):
-        if (row['EMA6'] > row['EMA1'] 
-            and row['STOCH_RSI']>0.2):
-            return True
+    def sellCondition(self, row, previousRow=None):
+        if (
+            (row['AO'] < 0
+            and row['STOCH_RSI'] > 0.2)
+            or row['WillR'] > -10
+        ):
+            return(True)
         else:
-            return False
+            return(False)

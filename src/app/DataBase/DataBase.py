@@ -36,6 +36,7 @@ class DataBase():
             dfFinal = pd.concat([result,dtNew])
             result = dfFinal
             dtNew = pd.DataFrame()
+        result = result.drop_duplicates()
         return (result)
     
     
@@ -67,6 +68,7 @@ class DataBase():
                 dfNew = self.get_historical_from_api(symbol, tf, start_date)
                 dfNew = dfNew.loc[start_date:].iloc[1:]
                 dfFinal = pd.concat([dfOrigin,dfNew]) 
+                dfFinal = dfFinal.drop_duplicates()
                 with open(fileName, 'wb') as file:
                     pickle.dump(dfFinal, file)
         return("All it's update")   
@@ -75,6 +77,7 @@ class DataBase():
              
 if __name__ == '__main__':
     database = DataBase(session=ccxt.binance())
-    # print(database.get_historical_from_api('BTC/USDT', '1h', '2017-01-01T00:00:00'))
-    print(database.download_data(['ADA/USDT'], ['1h']))
-    # print(database.update_data(['BTC/USDT'], ['1h']))
+    pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
+    # print(database.get_historical_from_api('ADA/USDT', '1h', '2017-01-01T00:00:00'))
+    print(database.download_data(pairList, ['1h']))
+    # print(database.update_data(pairList, ['1h']))

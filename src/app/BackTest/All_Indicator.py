@@ -20,25 +20,32 @@ class All_indicator():
     def indicators(self, symbol, timeframe):
         df = self.load_data_from_db(symbol, timeframe)
         
-        candle = []
-        for i in range(len(df)):
-            if df.iloc[i]['close'] > df.iloc[i]['open']:
-                candle.append('green')
-            else:
-                candle.append('red')
+        # candle = []
+        # for i in range(len(df)):
+        #     if df.iloc[i]['close'] > df.iloc[i]['open']:
+        #         candle.append('green')
+        #     else:
+        #         candle.append('red')
                 
-        df['candle'] = candle
+        # df['candle'] = candle
         
-        df['EMA1']= ta.trend.ema_indicator(close=df['close'], window=7)
-        df['EMA2']= ta.trend.ema_indicator(close=df['close'], window=30)
-        df['EMA3']= ta.trend.ema_indicator(close=df['close'], window=50)
-        df['EMA4']= ta.trend.ema_indicator(close=df['close'], window=100)
-        df['EMA5']= ta.trend.ema_indicator(close=df['close'], window=121)
-        df['EMA6']= ta.trend.ema_indicator(close=df['close'], window=200)
+        # df['EMA50']=ta.trend.ema_indicator(df['close'], 50)
+        # df['STOCH_RSI']=ta.momentum.stochrsi(df['close'])
+        # df['KIJUN'] = ta.trend.ichimoku_base_line(df['high'],df['low'])
+        # df['TENKAN'] = ta.trend.ichimoku_conversion_line(df['high'],df['low'])
+        # df['SSA'] = ta.trend.ichimoku_a(df['high'],df['low'],3,38).shift(periods=48)
+        # df['SSB'] = ta.trend.ichimoku_b(df['high'],df['low'],38,46).shift(periods=48)
+
+        df['AO'] = ta.momentum.awesome_oscillator(df['high'],df['low'],window1=6,window2=22)
+    
+        df['EMA100'] =ta.trend.ema_indicator(close=df['close'], window=100)
+        df['EMA200'] =ta.trend.ema_indicator(close=df['close'], window=200)
+
+        df['STOCH_RSI'] = ta.momentum.stochrsi(close=df['close'], window=14)
+
+        df['WillR'] = ta.momentum.williams_r(high=df['high'], low=df['low'], close=df['close'], lbp=14)
         
-        df['STOCH_RSI'] = ta.momentum.stochrsi(close=df['close'], window=14, smooth1=3, smooth2=3)
-        
-        df = df.dropna()
+        # df = df.dropna()
         return(df)   
         
 if __name__ == '__main__':

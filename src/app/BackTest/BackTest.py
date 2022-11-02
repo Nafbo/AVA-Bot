@@ -18,7 +18,6 @@ class BackTest():
             df_symbol = allIndicator.indicators(pair, timeframe)
             df_symbol = df_symbol.loc[start_date:]
             df_symbol = df_symbol.sort_index()
-            # print(df_symbol.loc['2022-01-23 10:00:00'])
             df.append(df_symbol)
 
         # -- Parameters --
@@ -26,6 +25,7 @@ class BackTest():
         maxActivePositions = 3
         
         myrow_list=[]
+        walletUsdArray = [0] * len(symbols)
         positionInProgress = [''] * len(df)
         lastIndex = df[0].index.values[1]
         
@@ -37,6 +37,15 @@ class BackTest():
                     if positionInProgress[i] != '':
                         if trade.takeProfit(actualRow, positionInProgress[i]['takeProfit']):
                             usd = usd + positionInProgress[i]['takeProfit'] * positionInProgress[i]['coins']
+                            sell = round(positionInProgress[i]['takeProfit'] * positionInProgress[i]['coins'], 2)
+                            buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'],2)
+                            walletUsdArray[i] = 0
+                            if sell - buy > 0:
+                                resultat = 'good'
+                                performance = ((sell - buy)/buy)*100
+                            else:
+                                resultat = 'bad'
+                                performance = ((sell - buy)/buy)*100
                             myrow = {
                                 'symbol': symbols[i],
                                 'date': index,
@@ -44,9 +53,12 @@ class BackTest():
                                 'price': positionInProgress[i]['takeProfit'],
                                 'usd': usd,
                                 'coins': 0,
+                                'wallet': sum(walletUsdArray) + usd,
                                 'takeProfit' : positionInProgress[i]['takeProfit'],
                                 'stopLoss' : positionInProgress[i]['stopLoss'], 
-                                'whenBuy': positionInProgress[i]['date']
+                                'whenBuy': positionInProgress[i]['date'],
+                                'resultat' : resultat,
+                                'performance' : performance
                                 }
                             myrow_list.append(myrow)
                             df_buy = pd.DataFrame(myrow_list)
@@ -55,8 +67,19 @@ class BackTest():
                             myrow={} 
                             activePositions -= 1
                             positionInProgress[i] = ''
+                            
+                            
                         elif trade.stopLoss(actualRow, positionInProgress[i]['stopLoss']):
                             usd = usd + positionInProgress[i]['stopLoss'] * positionInProgress[i]['coins']
+                            sell = round(positionInProgress[i]['stopLoss'] * positionInProgress[i]['coins'],2)
+                            buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'],2)
+                            walletUsdArray[i] = 0
+                            if sell - buy > 0:
+                                resultat = 'good'
+                                performance = ((sell - buy)/buy)*100
+                            else:
+                                resultat = 'bad'
+                                performance = ((sell - buy)/buy)*100
                             myrow = {
                                 'symbol': symbols[i],
                                 'date': index,
@@ -64,9 +87,12 @@ class BackTest():
                                 'price': positionInProgress[i]['stopLoss'],
                                 'usd': usd,
                                 'coins': 0,
+                                'wallet': sum(walletUsdArray) + usd,
                                 'takeProfit' : positionInProgress[i]['takeProfit'],
                                 'stopLoss' : positionInProgress[i]['stopLoss'], 
-                                'whenBuy': positionInProgress[i]['date']
+                                'whenBuy': positionInProgress[i]['date'],
+                                'resultat' : resultat,
+                                'performance' : performance
                                 }
                             myrow_list.append(myrow)
                             df_buy = pd.DataFrame(myrow_list)
@@ -75,8 +101,19 @@ class BackTest():
                             myrow={} 
                             activePositions -= 1
                             positionInProgress[i] = ''
+                            
+                            
                         elif trade.sellCondition(actualRow):
                             usd = usd + actualRow['close'] * positionInProgress[i]['coins']
+                            sell = round(actualRow['close'] * positionInProgress[i]['coins'],2)
+                            buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'], 2)
+                            walletUsdArray[i] = 0
+                            if sell - buy > 0:
+                                resultat = 'good'
+                                performance = ((sell - buy)/buy)*100
+                            else:
+                                resultat = 'bad'
+                                performance = ((sell - buy)/buy)*100
                             myrow = {
                                 'symbol': symbols[i],
                                 'date': index,
@@ -84,9 +121,12 @@ class BackTest():
                                 'price': actualRow['close'],
                                 'usd': usd,
                                 'coins': 0,
+                                'wallet': sum(walletUsdArray) + usd,
                                 'takeProfit' : positionInProgress[i]['takeProfit'],
                                 'stopLoss' : positionInProgress[i]['stopLoss'], 
-                                'whenBuy': positionInProgress[i]['date']
+                                'whenBuy': positionInProgress[i]['date'],
+                                'resultat' : resultat,
+                                'performance' : performance
                                 }
                             myrow_list.append(myrow)
                             df_buy = pd.DataFrame(myrow_list)
@@ -94,7 +134,8 @@ class BackTest():
                             myrow_list=[]  
                             myrow={} 
                             activePositions -= 1
-                            positionInProgress[i] = ''  
+                            positionInProgress[i] = ''
+                              
                             
             if activePositions < maxActivePositions:  
                 for i in range(len(df)):
@@ -104,6 +145,7 @@ class BackTest():
                         usdMultiplier = 1/(maxActivePositions-activePositions)        
                         coin = (usd * usdMultiplier) / actualRow['close']
                         usd = usd - (usd * usdMultiplier)
+                        walletUsdArray[i] = coin * actualRow['close']
                         takeProfitValue = actualRow['close'] + 0.15 * actualRow['close']
                         stopLossValue = actualRow['close'] - 0.04 *actualRow['close']
                         myrow = {
@@ -113,6 +155,7 @@ class BackTest():
                             'price': actualRow['close'],
                             'usd': usd,
                             'coins': coin,
+                            'wallet': sum(walletUsdArray) + usd,
                             'takeProfit' : takeProfitValue,
                             'stopLoss' : stopLossValue
                         }
@@ -124,7 +167,9 @@ class BackTest():
                         myrow_list=[]  
                         myrow={} 
                         activePositions += 1
-            lastIndex = index     
+            lastIndex = index 
+        # dfTrades = dfTrades.set_index(dfTrades['date'])
+        # del dfTrades['date']
         return(dfTrades,positionInProgress)                  
     
     
@@ -133,23 +178,22 @@ class BackTest():
         df = pd.DataFrame()
         dfBuyAnsHold = pd.DataFrame()
         myrow_list=[] 
+    
+        df = []
         for pair in symbols:   
             df_symbol = allIndicator.indicators(pair, timeframe)
-            df_symbol['symbol'] = pair 
             df_symbol = df_symbol.loc[start_date:]
-            df = pd.concat([df,df_symbol])
-        df['timestamp2'] = df.index
-        df = df.sort_values(by=['timestamp2', 'symbol'], ascending=True)
-        del df['timestamp2']
+            df_symbol = df_symbol.sort_index()
+            df.append(df_symbol)
         
         usd = usd / len(symbols)      
         for i in range(len(symbols)):
-            firstRow = df.iloc[i]
-            lastRow = df.iloc[-len(symbols) + i]       
+            firstRow = df[i].iloc[0]
+            lastRow = df[i].iloc[-1]      
             coin = usd / firstRow['close']
             usdFinal = lastRow['close'] * coin
             myrow = {
-                 'symbol': firstRow['symbol'],
+                 'symbol': symbols[i],
                  'position' : 'buyAndHold',
                  'startingBalance' : usd,
                  'finalBalance' : usdFinal
@@ -168,9 +212,4 @@ if __name__ == '__main__':
     backtest = BackTest()
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
     print(backtest.trade(pairList, '1h', start_date='2022-01-01'))
-    # print(backtest.buyAndHold(pairList, '1h', start_date='2022-01-01'))
-    
-    
-'''
-Condition sur actualROw et previousROw pas faite. Ect prend pas forcement un BTC pour un BTC
-'''
+    # print(backtest.buyAndHold(pairList, '1h', start_date='2017-01-01'))

@@ -146,7 +146,7 @@ class BackTest():
                         coin = (usd * usdMultiplier) / actualRow['close']
                         usd = usd - (usd * usdMultiplier)
                         walletUsdArray[i] = coin * actualRow['close']
-                        takeProfitValue = actualRow['close'] + 0.15 * actualRow['close']
+                        takeProfitValue = actualRow['close'] + 1 * actualRow['close']
                         stopLossValue = actualRow['close'] - 0.04 *actualRow['close']
                         myrow = {
                             'symbol': symbols[i],
@@ -168,7 +168,7 @@ class BackTest():
                         myrow={} 
                         activePositions += 1
             lastIndex = index 
-        # dfTrades = dfTrades.set_index(dfTrades['date'])
+        dfTrades = dfTrades.set_index(dfTrades['date'])
         # del dfTrades['date']
         return(dfTrades,positionInProgress)                  
     

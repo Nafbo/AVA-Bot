@@ -19,10 +19,9 @@ class Trade():
         
     def buyCondition(self, row, previousRow):
         if (
-            row['AO'] >= 0
-            and previousRow['AO'] > row['AO']
-            and row['WillR'] < -85
-            and row['EMA100'] > row['EMA200']
+            row['ema1'] > row['ema2'] 
+            and row['stoch_rsi'] < 0.8 
+            and row['close'] > row['sma_long']
         ):
             return(True)
         else:
@@ -30,9 +29,8 @@ class Trade():
 
     def sellCondition(self, row, previousRow=None):
         if (
-            (row['AO'] < 0
-            and row['STOCH_RSI'] > 0.2)
-            or row['WillR'] > -10
+            row['ema2'] > row['ema1'] 
+            and row['stoch_rsi'] > 0.2
         ):
             return(True)
         else:

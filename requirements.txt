@@ -180,3 +180,5 @@ wrapt==1.14.1
 wsproto==1.1.0
 yarl==1.7.2
 youtube-search-python==1.6.6
+tweepy
+

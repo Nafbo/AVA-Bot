@@ -5,33 +5,55 @@ from src.app.BackTest.All_indicator import All_indicator
 
 class Trade():
     
-    def takeProfit(self, row, takeProfitValue):
-        if row['high'] > takeProfitValue:
-            return(True)
-        else:
-            return(False)
+    def takeProfit(self, row, takeProfitValue, position):
+        if position == 'openLong':
+            if row['high'] > takeProfitValue:
+                return(True)
+            else:
+                return(False)
+        elif position == 'openShort':
+            if row['low'] < takeProfitValue:
+                return(True)
+            else:
+                return(False)
     
-    def stopLoss(self, row, stopLossValue):
-        if row['low'] < stopLossValue:
+    def stopLoss(self, row, stopLossValue, position):
+        if position == 'openLong':
+            if row['low'] < stopLossValue:
+                return(True)
+            else:
+                return(False)
+        elif position == 'openShort':
+            if row['high'] > stopLossValue:
+                return(True)
+            else:
+                return(False)
+        
+    def openLongPosition(self, row, previousRow=None):
+        if (row['ema100']>row['ema200'] and
+            row['vip']>=row['vin']):
             return(True)
         else:
             return(False)
         
-    def buyCondition(self, row, previousRow):
-        if (
-            row['ema1'] > row['ema2'] 
-            and row['stoch_rsi'] < 0.8 
-            and row['close'] > row['sma_long']
-        ):
+    def closeLongPosition(self, row, previousRow=None):  
+        if(row['vip']<=row['vin']):
+            return(True)  
+        else:
+            return(False)
+        
+    def openShortPosition(self, row, previousRow=None):
+        if (row['ema100']<row['ema200'] and
+            row['vip']<=row['vin']):
             return(True)
         else:
             return(False)
-
-    def sellCondition(self, row, previousRow=None):
-        if (
-            row['ema2'] > row['ema1'] 
-            and row['stoch_rsi'] > 0.2
-        ):
-            return(True)
+        
+    def closeShortPosition(self, row, previousRow=None):  
+        if(row['vip']>=row['vin']):
+            return(True)  
         else:
             return(False)
+        
+    
+    

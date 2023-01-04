@@ -78,6 +78,6 @@ class DataBase():
 if __name__ == '__main__':
     database = DataBase(session=ccxt.binance())
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
-    # print(database.get_historical_from_api('ADA/USDT', '1h', '2017-01-01T00:00:00'))
-    print(database.download_data(pairList, ['1h']))
-    # print(database.update_data(pairList, ['1h']))
+    # print(database.get_historical_from_api('BTC/USDT', '1h', '2017-01-01T00:00:00'))
+    # print(database.download_data(['BTC/USDT'], ['1d']))
+    print(database.update_data(pairList, ['1h']))

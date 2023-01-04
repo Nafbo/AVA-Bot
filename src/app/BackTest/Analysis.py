@@ -8,9 +8,9 @@ import seaborn as sns
 
 class Analysis ():
     
-    def analyzeBacktest(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00'):
+    def analyzeBacktest(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00', leverage=1):
         backtest = BackTest()
-        dfTrades,positionInProgress = backtest.trade(symbols, timeframe, usd, start_date)
+        dfTrades,positionInProgress = backtest.trade(symbols, timeframe, usd, start_date, leverage)
         dfBuyAndHold = backtest.buyAndHold(symbols, timeframe, usd, start_date)
         walletFinal = dfTrades.wallet.iloc[-1]
         algoPercentage = ((walletFinal - usd)/usd) * 100
@@ -22,7 +22,7 @@ class Analysis ():
         idworst = dfTrades['performance'].idxmin()
         totalGoodTrades = len(dfTrades.loc[dfTrades['resultat'] == 'good'])
         totalBadTrades = len(dfTrades.loc[dfTrades['resultat'] == 'bad'])
-        winRateRatio = (totalGoodTrades/(dfTrades.loc[dfTrades['position'] == 'Buy'].symbol.count())) * 100
+        winRateRatio = (totalGoodTrades/(totalGoodTrades+totalBadTrades))
         tradesPerformance = round(dfTrades.performance.mean(), 3)
         AveragePercentagePositivTrades = round(dfTrades[dfTrades['performance'] > 0].performance.mean(), 3)
         AveragePercentageNegativTrades = round(dfTrades[dfTrades['performance'] <= 0 ].performance.mean(), 3)
@@ -31,6 +31,7 @@ class Analysis ():
         print("Trading Bot on :", len(symbols), 'coins | Timeframe :', timeframe)
         print("Starting date : [" + str(start_date) + "]")
         print("Starting balance :", usd, "$")
+        print("Leverage use :", leverage )
         print("\n----- General Informations -----")
         print("Final balance :", round(walletFinal, 2), "$")
         print("Performance :", round(algoPercentage, 2), "%")
@@ -39,10 +40,11 @@ class Analysis ():
         print("Best trade : +"+bestTrade, "%, the", idbest)
         print("Worst trade :", worstTrade, "%, the", idworst)
         print("\n----- Trades Informations -----")
-        print("Number of trade :", (dfTrades.loc[dfTrades['position'] == 'Buy'].count()).symbol, "trades")
+        print("Number of Long trade :", (dfTrades.loc[dfTrades['position'] == 'openLong'].count()).symbol, "trades")
+        print("Number of Short trade :", (dfTrades.loc[dfTrades['position'] == 'openShort'].count()).symbol, "trades")
         print("Number of positive trades :", totalGoodTrades)
         print("Number of negative trades : ", totalBadTrades)
-        print("Trades win rate ratio :", round(winRateRatio, 2), '%')
+        print("Trades win rate ratio :", round((winRateRatio) * 100, 2), '%')
         print("Average trades performance :", tradesPerformance, "%")
         print("Average positive trades :", AveragePercentagePositivTrades, "%")
         print("Average negative trades :", AveragePercentageNegativTrades, "%")
@@ -120,7 +122,7 @@ class Analysis ():
                         dfTrades.loc[myString].iloc[0]['wallet'])/dfTrades.loc[myString].iloc[0]['wallet']
         except:
             myResult = 0
-        g = sns.barplot(data=dfTemp,x='date',y='result', palette=custom_palette)
+        # g = sns.barplot(data=dfTemp,x='date',y='result', palette=custom_palette)
         for index, row in dfTemp.iterrows():
             if row.result >= 0:
                 g.text(row.name,row.result, '+'+str(round(row.result))+'%', color='black', ha="center", va="bottom")
@@ -136,4 +138,5 @@ class Analysis ():
 if __name__ == '__main__':
     analysis = Analysis()
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
-    analysis.analyzeBacktest(pairList, '1h', start_date='2021-01-01')
+    # pairList = ['ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
+    analysis.analyzeBacktest(pairList, '1h', start_date='2022-01-01', leverage = 1.2)

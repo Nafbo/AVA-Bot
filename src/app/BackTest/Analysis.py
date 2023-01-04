@@ -33,12 +33,14 @@ class Analysis ():
         print("Starting balance :", usd, "$")
         print("Leverage use :", leverage )
         print("\n----- General Informations -----")
-        print("Final balance :", round(walletFinal, 2), "$")
+        print("Total balance :", round(walletFinal, 2), "$")
+        print("Total fees : ", round(dfTrades['fees'].sum(), 2), "$")
+        print("Final Balance :", round(walletFinal-dfTrades['fees'].sum(), 2), "$")
         print("Performance :", round(algoPercentage, 2), "%")
         print("Buy and Hold :", round(buyAndHold, 2), "$")
         print("Performance vs Buy and Hold :", round(vsHoldPercentage, 2), "%")
         print("Best trade : +"+bestTrade, "%, the", idbest)
-        print("Worst trade :", worstTrade, "%, the", idworst)
+        print("Worst trade :", worstTrade, "%, the", idworst) 
         print("\n----- Trades Informations -----")
         print("Number of Long trade :", (dfTrades.loc[dfTrades['position'] == 'openLong'].count()).symbol, "trades")
         print("Number of Short trade :", (dfTrades.loc[dfTrades['position'] == 'openShort'].count()).symbol, "trades")
@@ -138,5 +140,4 @@ class Analysis ():
 if __name__ == '__main__':
     analysis = Analysis()
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
-    # pairList = ['ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
     analysis.analyzeBacktest(pairList, '1h', start_date='2022-01-01', leverage = 1.2)

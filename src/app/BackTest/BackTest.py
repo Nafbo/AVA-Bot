@@ -23,6 +23,7 @@ class BackTest():
         # -- Parameters --
         activePositions = 0
         maxActivePositions = 3
+        takerFee = 0.00051
         
         myrow_list=[]
         usdArray = [usd]
@@ -40,12 +41,11 @@ class BackTest():
                         if positionInProgress[i]['position'] == 'openLong':
                             
                             if actualRow['low'] < positionInProgress[i]['liquidation']:
-                                usd = 0
                                 print('/!\ YOUR LONG HAVE BEEN LIQUIDATED the',index)
                                 break
                             
                             if trade.takeProfit(actualRow, positionInProgress[i]['takeProfit'], positionInProgress[i]['position']):
-                                pr_change = (actualRow['close'] - positionInProgress[i]['price']) / positionInProgress[i]['price']
+                                pr_change = ((actualRow['close']-takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage  
                                 usdArray.append(usdArray[-1]+usd)                          
                                 sell = round(positionInProgress[i]['takeProfit'] * positionInProgress[i]['coins'], 2)
@@ -64,7 +64,8 @@ class BackTest():
                                     'price': positionInProgress[i]['takeProfit'],
                                     'usdInvest': usdInvest,
                                     'usd': usdArray[-1],
-                                    'coins': 0,
+                                    'coins' : 0,
+                                    'fees': takerFee*usdInvest*leverage,
                                     'wallet': sum(walletUsdArray) + usdArray[-1],
                                     'takeProfit' : positionInProgress[i]['takeProfit'],
                                     'stopLoss' : positionInProgress[i]['stopLoss'], 
@@ -82,7 +83,7 @@ class BackTest():
                                 
                                 
                             elif trade.stopLoss(actualRow, positionInProgress[i]['stopLoss'], positionInProgress[i]['position']):
-                                pr_change = (actualRow['close'] - positionInProgress[i]['price']) / positionInProgress[i]['price']
+                                pr_change = ((actualRow['close']-takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage      
                                 usdArray.append(usdArray[-1]+usd)              
                                 sell = round(positionInProgress[i]['stopLoss'] * positionInProgress[i]['coins'],2)
@@ -101,7 +102,8 @@ class BackTest():
                                     'price': positionInProgress[i]['stopLoss'],
                                     'usdInvest': usdInvest,
                                     'usd': usdArray[-1],
-                                    'coins': 0,
+                                    'coins' : 0,
+                                    'fees': takerFee*usdInvest*leverage,
                                     'wallet': sum(walletUsdArray) + usdArray[-1],
                                     'takeProfit' : positionInProgress[i]['takeProfit'],
                                     'stopLoss' : positionInProgress[i]['stopLoss'], 
@@ -119,7 +121,7 @@ class BackTest():
                                 
                                 
                             elif trade.closeLongPosition(actualRow) and positionInProgress[i] == 'openLong':
-                                pr_change = (actualRow['close'] - positionInProgress[i]['price']) / positionInProgress[i]['price']
+                                pr_change = ((actualRow['close']-takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage 
                                 usdArray.append(usdArray[-1]+usd)                        
                                 sell = round(actualRow['close'] * positionInProgress[i]['coins'],2)
@@ -138,7 +140,8 @@ class BackTest():
                                     'price': actualRow['close'],
                                     'usdInvest': usdInvest,
                                     'usd': usdArray[-1],
-                                    'coins': 0,
+                                    'coins' : 0,
+                                    'fees': takerFee*usdInvest*leverage,
                                     'wallet': sum(walletUsdArray) + usdArray[-1],
                                     'takeProfit' : positionInProgress[i]['takeProfit'],
                                     'stopLoss' : positionInProgress[i]['stopLoss'], 
@@ -158,12 +161,11 @@ class BackTest():
                         elif positionInProgress[i]['position'] == 'openShort':
                             
                             if actualRow['high'] > positionInProgress[i]['liquidation']:
-                                usd=0
                                 print('/!\ YOUR SHORT HAVE BEEN LIQUIDATED the',index)
                                 break
                                 
                             if trade.takeProfit(actualRow, positionInProgress[i]['takeProfit'], positionInProgress[i]['position']):
-                                pr_change = -(actualRow['close'] - positionInProgress[i]['price']) / positionInProgress[i]['price']
+                                pr_change = -((actualRow['close']+takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage  
                                 usdArray.append(usdArray[-1]+usd)                        
                                 sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - positionInProgress[i]['takeProfit'])) * positionInProgress[i]['coins'],2)
@@ -182,7 +184,8 @@ class BackTest():
                                     'price': positionInProgress[i]['takeProfit'],
                                     'usdInvest': usdInvest,
                                     'usd': usdArray[-1],
-                                    'coins': 0,
+                                    'coins' : 0,
+                                    'fees': takerFee*usdInvest*leverage,
                                     'wallet': sum(walletUsdArray) + usdArray[-1],
                                     'takeProfit' : positionInProgress[i]['takeProfit'],
                                     'stopLoss' : positionInProgress[i]['stopLoss'], 
@@ -200,7 +203,7 @@ class BackTest():
                                 
                                 
                             elif trade.stopLoss(actualRow, positionInProgress[i]['stopLoss'], positionInProgress[i]['position']):
-                                pr_change = -(actualRow['close'] - positionInProgress[i]['price']) / positionInProgress[i]['price']
+                                pr_change = -((actualRow['close']+takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage                                 
                                 usdArray.append(usdArray[-1]+usd)
                                 sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - positionInProgress[i]['stopLoss'])) * positionInProgress[i]['coins'],2)
@@ -219,7 +222,8 @@ class BackTest():
                                     'price': positionInProgress[i]['stopLoss'],
                                     'usdInvest': usdInvest,
                                     'usd': usdArray[-1],
-                                    'coins': 0,
+                                    'coins' : 0,
+                                    'fees': takerFee*usdInvest*leverage,
                                     'wallet': sum(walletUsdArray) + usdArray[-1],
                                     'takeProfit' : positionInProgress[i]['takeProfit'],
                                     'stopLoss' : positionInProgress[i]['stopLoss'], 
@@ -236,7 +240,7 @@ class BackTest():
                                 positionInProgress[i] = ''
                                 
                             elif trade.closeShortPosition(actualRow) :
-                                pr_change = -(actualRow['close'] - positionInProgress[i]['price']) / positionInProgress[i]['price']
+                                pr_change = -((actualRow['close']+takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage
                                 usdArray.append(usdArray[-1]+usd)
                                 sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - actualRow['close'])) * positionInProgress[i]['coins'],2)
@@ -255,7 +259,8 @@ class BackTest():
                                     'price': actualRow['close'],
                                     'usdInvest': usdInvest,
                                     'usd': usdArray[-1],
-                                    'coins': 0,
+                                    'coins' : 0,
+                                    'fees': takerFee*usdInvest*leverage,
                                     'wallet': sum(walletUsdArray) + usdArray[-1],
                                     'takeProfit' : positionInProgress[i]['takeProfit'],
                                     'stopLoss' : positionInProgress[i]['stopLoss'], 
@@ -290,10 +295,11 @@ class BackTest():
                             'symbol': symbols[i],
                             'date': index,
                             'position': "openLong",
-                            'price': actualRow['close'],
+                            'price': actualRow['close']+takerFee*actualRow['close'],
                             'usdInvest': usdInvest,
                             'usd': usdArray[-1],
-                            'coins': coin,
+                            'coins' : coin,
+                            'fees': takerFee*usdInvest*leverage,
                             'wallet': sum(walletUsdArray) + usdArray[-1],
                             'liquidation' : liquidation,
                             'takeProfit' : takeProfitValue,
@@ -321,10 +327,11 @@ class BackTest():
                             'symbol': symbols[i],
                             'date': index,
                             'position': "openShort",
-                            'price': actualRow['close'],
+                            'price': actualRow['close']-takerFee*actualRow['close'],
                             'usdInvest': usdInvest,
                             'usd' : usdArray[-1],
                             'coins': coin,
+                            'fees': takerFee*usdInvest*leverage,
                             'wallet': sum(walletUsdArray) + usdArray[-1],
                             'liquidation':liquidation,
                             'takeProfit' : takeProfitValue,

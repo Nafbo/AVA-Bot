@@ -2,21 +2,26 @@ import warnings
 warnings.filterwarnings('ignore')
 import pandas as pd
 from src.app.BackTest.All_indicator import All_indicator
-from src.app.BackTest.Trade import Trade
+from src.app.BackTest.Trade import *
 
 
 class BackTest():
     
-    def trade(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00', leverage=1):
+    def trade(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00',end_date=None, leverage=1):
         allIndicator = All_indicator()
-        trade = Trade()
+        # trade = Trade_2()
+        # takeProfitPercentage = 0.25
+        # stopLossPercentage = 0.04
         
         # -- Load Data --
         df = []
         dfTrades = pd.DataFrame()
         for pair in symbols:   
             df_symbol = allIndicator.indicators(pair, timeframe)
-            df_symbol = df_symbol.loc[start_date:]
+            if end_date != None:
+                df_symbol = df_symbol.loc[start_date:end_date]
+            else:
+                df_symbol = df_symbol.loc[start_date:]
             df_symbol = df_symbol.sort_index()
             df.append(df_symbol)
 
@@ -31,20 +36,18 @@ class BackTest():
         positionInProgress = [''] * len(df)
         lastIndex = df[0].index.values[1]
         
-        
-        for index, row in df[0].iterrows(): 
+        for index, row in df[0].iterrows():          
             if positionInProgress != [''] * len(df):
                 for i in range(len(df)): 
                     actualRow = df[i].loc[index]
                     if positionInProgress[i] != '':
-                        
                         if positionInProgress[i]['position'] == 'openLong':
                             
                             if actualRow['low'] < positionInProgress[i]['liquidation']:
                                 print('/!\ YOUR LONG HAVE BEEN LIQUIDATED the',index)
                                 break
                             
-                            if trade.takeProfit(actualRow, positionInProgress[i]['takeProfit'], positionInProgress[i]['position']):
+                            elif trade.takeProfit(actualRow, positionInProgress[i]['takeProfit'], positionInProgress[i]['position']):
                                 pr_change = ((actualRow['close']-takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage  
                                 usdArray.append(usdArray[-1]+usd)                          
@@ -164,7 +167,7 @@ class BackTest():
                                 print('/!\ YOUR SHORT HAVE BEEN LIQUIDATED the',index)
                                 break
                                 
-                            if trade.takeProfit(actualRow, positionInProgress[i]['takeProfit'], positionInProgress[i]['position']):
+                            elif trade.takeProfit(actualRow, positionInProgress[i]['takeProfit'], positionInProgress[i]['position']):
                                 pr_change = -((actualRow['close']+takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage  
                                 usdArray.append(usdArray[-1]+usd)                        
@@ -282,14 +285,38 @@ class BackTest():
                     actualRow = df[i].loc[index]
                     previousRow = df[i].loc[lastIndex]
                     
+###################################
+                    if symbols[i] == 'BTC/USDT':
+                        if Trade_Choice.fearAndGreed(actualRow, previousRow) == 2:# or Trade_Choice.volumeAnomaly(actualRow, previousRow) == 2:
+                            trade = Trade_2()
+                            takeProfitPercentage = 0.35
+                            stopLossPercentage = 0.1
+                            leverage = 2.5
+                        elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 1:# and Trade_Choice.volumeAnomaly(actualRow, previousRow) == 1:
+                            trade = Trade_1()
+                            takeProfitPercentage = 0.25
+                            stopLossPercentage = 0.04
+                            leverage = 2
+                        elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 3:# and Trade_Choice.volumeAnomaly(actualRow, previousRow) == 1:
+                            trade = Trade_3()
+                            takeProfitPercentage = 0.2
+                            stopLossPercentage = 0.04
+                            leverage = 2
+                        else:
+                            trade = Trade_0()
+                            takeProfitPercentage = 0.13
+                            stopLossPercentage = 0.03
+                            leverage = 1.5
+###################################  
+
                     if trade.openLongPosition(actualRow, previousRow) and positionInProgress[i] == '' and usdArray[-1]>1:
                         usdMultiplier = 1/(maxActivePositions-activePositions)  
                         usdInvest = usdArray[-1] * usdMultiplier      
                         coin = (usdInvest * leverage) / actualRow['close']
                         usdArray.append(usdArray[-1] - usdInvest)
                         walletUsdArray[i] = usdInvest
-                        takeProfitValue = actualRow['close'] + 0.1 * actualRow['close']
-                        stopLossValue = actualRow['close'] - 0.04 *actualRow['close']
+                        takeProfitValue = actualRow['close'] + takeProfitPercentage * actualRow['close']
+                        stopLossValue = actualRow['close'] - stopLossPercentage *actualRow['close']
                         liquidation = actualRow['close'] - (usdInvest/coin)
                         myrow = {
                             'symbol': symbols[i],
@@ -314,15 +341,15 @@ class BackTest():
                         myrow={} 
                         activePositions += 1
                         
-                    elif trade.openShortPosition(actualRow, previousRow) and positionInProgress[i] == '' and usdArray[-1]>1:
+                    if trade.openShortPosition(actualRow, previousRow) and positionInProgress[i] == '' and usdArray[-1]>1:
                         usdMultiplier = 1/(maxActivePositions-activePositions)  
                         usdInvest = usdArray[-1] * usdMultiplier      
                         coin = (usdInvest * leverage) / actualRow['close']
                         usdArray.append(usdArray[-1] - usdInvest)
                         walletUsdArray[i] = usdInvest
                         liquidation = actualRow['close'] + (usdInvest/coin)
-                        takeProfitValue = actualRow['close'] - 0.1 * actualRow['close']
-                        stopLossValue = actualRow['close'] + 0.04 *actualRow['close']
+                        takeProfitValue = actualRow['close'] - takeProfitPercentage * actualRow['close']
+                        stopLossValue = actualRow['close'] + stopLossPercentage *actualRow['close']
                         myrow = {
                             'symbol': symbols[i],
                             'date': index,
@@ -352,7 +379,7 @@ class BackTest():
         return(dfTrades,positionInProgress)                  
     
     
-    def buyAndHold(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00'):
+    def buyAndHold(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00', end_date=None):
         allIndicator = All_indicator()
         df = pd.DataFrame()
         dfBuyAnsHold = pd.DataFrame()
@@ -361,7 +388,10 @@ class BackTest():
         df = []
         for pair in symbols:   
             df_symbol = allIndicator.indicators(pair, timeframe)
-            df_symbol = df_symbol.loc[start_date:]
+            if end_date != None:
+                df_symbol = df_symbol.loc[start_date:end_date]
+            else:
+                df_symbol = df_symbol.loc[start_date:]
             df_symbol = df_symbol.sort_index()
             df.append(df_symbol)
         
@@ -383,6 +413,7 @@ class BackTest():
             myrow_list=[]  
             myrow={} 
         return(dfBuyAnsHold)
+    
         
         
         
@@ -390,5 +421,5 @@ class BackTest():
 if __name__ == '__main__':
     backtest = BackTest()
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
-    print(backtest.trade(pairList, '1h', start_date='2022-01-01', leverage=2))
+    print(backtest.trade(pairList, '1h', start_date='2022-01-01', end_date='2023-01-01', leverage=1.5))
     # print(backtest.buyAndHold(pairList, '1h', start_date='2017-01-01'))

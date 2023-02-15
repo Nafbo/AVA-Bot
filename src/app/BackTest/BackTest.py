@@ -51,7 +51,7 @@ class BackTest():
                                 pr_change = ((actualRow['close']-takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage  
                                 usdArray.append(usdArray[-1]+usd)                          
-                                sell = round(positionInProgress[i]['takeProfit'] * positionInProgress[i]['coins'], 2)
+                                sell = round(actualRow['close'] * positionInProgress[i]['coins'], 2)
                                 buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'],2)
                                 walletUsdArray[i] = 0
                                 if sell - buy > 0:
@@ -89,7 +89,7 @@ class BackTest():
                                 pr_change = ((actualRow['close']-takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage      
                                 usdArray.append(usdArray[-1]+usd)              
-                                sell = round(positionInProgress[i]['stopLoss'] * positionInProgress[i]['coins'],2)
+                                sell = round(actualRow['close'] * positionInProgress[i]['coins'],2)
                                 buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'],2)
                                 walletUsdArray[i] = 0
                                 if sell - buy > 0:
@@ -171,7 +171,7 @@ class BackTest():
                                 pr_change = -((actualRow['close']+takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage  
                                 usdArray.append(usdArray[-1]+usd)                        
-                                sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - positionInProgress[i]['takeProfit'])) * positionInProgress[i]['coins'],2)
+                                sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - actualRow['close'])) * positionInProgress[i]['coins'],2)
                                 buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'], 2)
                                 walletUsdArray[i] = 0
                                 if sell - buy > 0:
@@ -209,7 +209,7 @@ class BackTest():
                                 pr_change = -((actualRow['close']+takerFee*actualRow['close']) - positionInProgress[i]['price']) / positionInProgress[i]['price']
                                 usd = positionInProgress[i]['usdInvest'] + positionInProgress[i]['usdInvest']*pr_change*leverage                                 
                                 usdArray.append(usdArray[-1]+usd)
-                                sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - positionInProgress[i]['stopLoss'])) * positionInProgress[i]['coins'],2)
+                                sell = round((positionInProgress[i]['price'] + (positionInProgress[i]['price'] - actualRow['close'])) * positionInProgress[i]['coins'],2)
                                 buy = round(positionInProgress[i]['price'] * positionInProgress[i]['coins'], 2)
                                 walletUsdArray[i] = 0
                                 if sell - buy > 0:
@@ -421,5 +421,5 @@ class BackTest():
 if __name__ == '__main__':
     backtest = BackTest()
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
-    print(backtest.trade(pairList, '1h', start_date='2022-01-01', end_date='2023-01-01', leverage=1.5))
+    print(backtest.trade(pairList, '1h', start_date='2023-02-14', end_date='2023-02-15', leverage=1.5))
     # print(backtest.buyAndHold(pairList, '1h', start_date='2017-01-01'))

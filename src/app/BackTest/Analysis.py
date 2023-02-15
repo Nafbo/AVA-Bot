@@ -229,4 +229,4 @@ class Analysis ():
 if __name__ == '__main__':
     analysis = Analysis()
     pairList = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT']
-    analysis.analyzeBacktest(pairList, '1h', usd = 100, start_date='2023-01-01',end_date = '2023-02-08', leverage = 1.5)
+    analysis.analyzeBacktest(pairList, '1h', usd = 100, start_date='2019-01-01',end_date = '2023-02-08', leverage = 1.5)

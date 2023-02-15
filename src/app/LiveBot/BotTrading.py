@@ -2,7 +2,7 @@ import ta
 from datetime import datetime
 from src.app.LiveBot.BitGet import *
 from src.app.LiveBot.CryptoData import *
-from src.app.BackTest.Trade import *
+from src.app.LiveBot.Trade import *
 import json
 import requests as rq
 

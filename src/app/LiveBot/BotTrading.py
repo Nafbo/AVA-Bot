@@ -8,7 +8,7 @@ import requests as rq
 
 
 def BotTrading(pairs, apiKey, secret, password):
-    production = False
+    production = True
     id = str(110)
     url = "https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items"
     leverage = 1
@@ -106,276 +106,291 @@ def BotTrading(pairs, apiKey, secret, password):
         if positionInProgress[compte] != '' :
             if positionInProgress[compte]['position'] == 'openLong':
                 if trade.takeProfit(actualRow, positionInProgress[compte]['takeProfit'], positionInProgress[compte]['position']):
-                    sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
-                    buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
-                    if sell - buy > 0:
-                        resultat = 'good'
-                        performance = ((sell - buy)/buy)*100
-                    else:
-                        resultat = 'bad'
-                        performance = ((sell - buy)/buy)*100
-                    myrow = {
-                        'id' : id,
-                        'sortKey':str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "takeProfitHit",
-                        'price': actualRow['close'],
-                        'usdInvest': positionInProgress[compte]['usdInvest'],
-                        'usd': usd_balance,
-                        'coins' : 0,
-                        'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : positionInProgress[compte]['takeProfit'],
-                        'stopLoss' : positionInProgress[compte]['stopLoss'], 
-                        'whenBuy': positionInProgress[compte]['date'],
-                        'resultat' : resultat,
-                        'performance' : performance
-                        }
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                   
-                    if production:
+                    try:
+                        sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
+                        buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
+                        if sell - buy > 0:
+                            resultat = 'good'
+                            performance = ((sell - buy)/buy)*100
+                        else:
+                            resultat = 'bad'
+                            performance = ((sell - buy)/buy)*100
+                        myrow = {
+                            'id' : id,
+                            'sortKey':str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "takeProfitHit",
+                            'price': actualRow['close'],
+                            'usdInvest': positionInProgress[compte]['usdInvest'],
+                            'usd': usd_balance,
+                            'coins' : 0,
+                            'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : positionInProgress[compte]['takeProfit'],
+                            'stopLoss' : positionInProgress[compte]['stopLoss'], 
+                            'whenBuy': positionInProgress[compte]['date'],
+                            'resultat' : resultat,
+                            'performance' : performance
+                            }
                         close_long_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
-                    myrow={} 
-                    activePositions -= 1
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                   
+                        myrow={} 
+                        activePositions -= 1
+                    except Exception as e:
+                        print(e)
 
                 elif trade.stopLoss(actualRow, positionInProgress[compte]['takeProfit'], positionInProgress[compte]['position']):
-                    sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
-                    buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
-                    if sell - buy > 0:
-                        resultat = 'good'
-                        performance = ((sell - buy)/buy)*100
-                    else:
-                        resultat = 'bad'
-                        performance = ((sell - buy)/buy)*100
-                    myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "stopLossHit",
-                        'price': actualRow['close'],
-                        'usdInvest': positionInProgress[compte]['usdInvest'],
-                        'usd': usd_balance,
-                        'coins' : 0,
-                        'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : positionInProgress[compte]['takeProfit'],
-                        'stopLoss' : positionInProgress[compte]['stopLoss'], 
-                        'whenBuy': positionInProgress[compte]['date'],
-                        'resultat' : resultat,
-                        'performance' : performance
-                        }
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                    if production:
+                    try:
+                        sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
+                        buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
+                        if sell - buy > 0:
+                            resultat = 'good'
+                            performance = ((sell - buy)/buy)*100
+                        else:
+                            resultat = 'bad'
+                            performance = ((sell - buy)/buy)*100
+                        myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "stopLossHit",
+                            'price': actualRow['close'],
+                            'usdInvest': positionInProgress[compte]['usdInvest'],
+                            'usd': usd_balance,
+                            'coins' : 0,
+                            'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : positionInProgress[compte]['takeProfit'],
+                            'stopLoss' : positionInProgress[compte]['stopLoss'], 
+                            'whenBuy': positionInProgress[compte]['date'],
+                            'resultat' : resultat,
+                            'performance' : performance
+                            }
                         close_long_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
-                    myrow={} 
-                    activePositions -= 1
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                        myrow={} 
+                        activePositions -= 1
+                    except Exception as e:
+                        print(e)
                     
                 elif trade.closeLongPosition(actualRow, positionInProgress[compte]['takeProfit'], positionInProgress[compte]['position']):
-                    sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
-                    buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
-                    if sell - buy > 0:
-                        resultat = 'good'
-                        performance = ((sell - buy)/buy)*100
-                    else:
-                        resultat = 'bad'
-                        performance = ((sell - buy)/buy)*100
-                    myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "closeLong",
-                        'price': actualRow['close'],
-                        'usdInvest': positionInProgress[compte]['usdInvest'],
-                        'usd': usd_balance,
-                        'coins' : 0,
-                        'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : positionInProgress[compte]['takeProfit'],
-                        'stopLoss' : positionInProgress[compte]['stopLoss'], 
-                        'whenBuy': positionInProgress[compte]['date'],
-                        'resultat' : resultat,
-                        'performance' : performance
-                        }
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                    if production:
+                    try:
+                        sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
+                        buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
+                        if sell - buy > 0:
+                            resultat = 'good'
+                            performance = ((sell - buy)/buy)*100
+                        else:
+                            resultat = 'bad'
+                            performance = ((sell - buy)/buy)*100
+                        myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "closeLong",
+                            'price': actualRow['close'],
+                            'usdInvest': positionInProgress[compte]['usdInvest'],
+                            'usd': usd_balance,
+                            'coins' : 0,
+                            'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : positionInProgress[compte]['takeProfit'],
+                            'stopLoss' : positionInProgress[compte]['stopLoss'], 
+                            'whenBuy': positionInProgress[compte]['date'],
+                            'resultat' : resultat,
+                            'performance' : performance
+                            }
                         close_long_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
-                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)                   
-                    myrow={} 
-                    activePositions -= 1
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)  
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                 
+                        myrow={} 
+                        activePositions -= 1
+                    except Exception as e:
+                        print(e)
 
             elif positionInProgress[compte]['position'] == 'openShort':
                 if trade.takeProfit(actualRow, positionInProgress[compte]['takeProfit'], positionInProgress[compte]['position']):
-                    sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
-                    buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
-                    if sell - buy > 0:
-                        resultat = 'good'
-                        performance = ((sell - buy)/buy)*100
-                    else:
-                        resultat = 'bad'
-                        performance = ((sell - buy)/buy)*100
-                    myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "takeProfitHit",
-                        'price': actualRow['close'],
-                        'usdInvest': positionInProgress[compte]['usdInvest'],
-                        'usd': usd_balance,
-                        'coins' : 0,
-                        'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : positionInProgress[compte]['takeProfit'],
-                        'stopLoss' : positionInProgress[compte]['stopLoss'], 
-                        'whenBuy': positionInProgress[compte]['date'],
-                        'resultat' : resultat,
-                        'performance' : performance
-                        }
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                    if production:
+                    try:
+                        sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
+                        buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
+                        if sell - buy > 0:
+                            resultat = 'good'
+                            performance = ((sell - buy)/buy)*100
+                        else:
+                            resultat = 'bad'
+                            performance = ((sell - buy)/buy)*100
+                        myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "takeProfitHit",
+                            'price': actualRow['close'],
+                            'usdInvest': positionInProgress[compte]['usdInvest'],
+                            'usd': usd_balance,
+                            'coins' : 0,
+                            'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : positionInProgress[compte]['takeProfit'],
+                            'stopLoss' : positionInProgress[compte]['stopLoss'], 
+                            'whenBuy': positionInProgress[compte]['date'],
+                            'resultat' : resultat,
+                            'performance' : performance
+                            }
                         close_short_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
-                    myrow={} 
-                    activePositions -= 1
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                        myrow={} 
+                        activePositions -= 1
+                    except Exception as e:
+                        print(e)
                     
                 elif trade.stopLoss(actualRow, positionInProgress[compte]['takeProfit'], positionInProgress[compte]['position']):
-                    sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
-                    buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
-                    if sell - buy > 0:
-                        resultat = 'good'
-                        performance = ((sell - buy)/buy)*100
-                    else:
-                        resultat = 'bad'
-                        performance = ((sell - buy)/buy)*100
-                    myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "stopLossHit",
-                        'price': actualRow['close'],
-                        'usdInvest': positionInProgress[compte]['usdInvest'],
-                        'usd': usd_balance,
-                        'coins' : 0,
-                        'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : positionInProgress[compte]['takeProfit'],
-                        'stopLoss' : positionInProgress[compte]['stopLoss'], 
-                        'whenBuy': positionInProgress[compte]['date'],
-                        'resultat' : resultat,
-                        'performance' : performance
-                        }
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                    if production:
+                    try:
+                        sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
+                        buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
+                        if sell - buy > 0:
+                            resultat = 'good'
+                            performance = ((sell - buy)/buy)*100
+                        else:
+                            resultat = 'bad'
+                            performance = ((sell - buy)/buy)*100
+                        myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "stopLossHit",
+                            'price': actualRow['close'],
+                            'usdInvest': positionInProgress[compte]['usdInvest'],
+                            'usd': usd_balance,
+                            'coins' : 0,
+                            'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : positionInProgress[compte]['takeProfit'],
+                            'stopLoss' : positionInProgress[compte]['stopLoss'], 
+                            'whenBuy': positionInProgress[compte]['date'],
+                            'resultat' : resultat,
+                            'performance' : performance
+                            }
                         close_short_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
-                    myrow={} 
-                    activePositions -= 1
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                        myrow={} 
+                        activePositions -= 1
+                    except Exception as e:
+                        print(e)
 
                 elif trade.closeShortPosition(actualRow, positionInProgress[compte]['takeProfit'], positionInProgress[compte]['position']):
-                    sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
-                    buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
-                    if sell - buy > 0:
-                        resultat = 'good'
-                        performance = ((sell - buy)/buy)*100
-                    else:
-                        resultat = 'bad'
-                        performance = ((sell - buy)/buy)*100
-                    myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "closeShort",
-                        'price': actualRow['close'],
-                        'usdInvest': positionInProgress[compte]['usdInvest'],
-                        'usd': usd_balance,
-                        'coins' : 0,
-                        'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : positionInProgress[compte]['takeProfit'],
-                        'stopLoss' : positionInProgress[compte]['stopLoss'], 
-                        'whenBuy': positionInProgress[compte]['date'],
-                        'resultat' : resultat,
-                        'performance' : performance
-                        }
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                    if production:
+                    try:
+                        sell = round(actualRow['close'] * positionInProgress[compte]['coins'], 2)
+                        buy = round(positionInProgress[compte]['price'] * positionInProgress[compte]['coins'],2)
+                        if sell - buy > 0:
+                            resultat = 'good'
+                            performance = ((sell - buy)/buy)*100
+                        else:
+                            resultat = 'bad'
+                            performance = ((sell - buy)/buy)*100
+                        myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "closeShort",
+                            'price': actualRow['close'],
+                            'usdInvest': positionInProgress[compte]['usdInvest'],
+                            'usd': usd_balance,
+                            'coins' : 0,
+                            'fees': takerFee*positionInProgress[compte]['usdInvest']*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : positionInProgress[compte]['takeProfit'],
+                            'stopLoss' : positionInProgress[compte]['stopLoss'], 
+                            'whenBuy': positionInProgress[compte]['date'],
+                            'resultat' : resultat,
+                            'performance' : performance
+                            }
                         close_short_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
-                    myrow={} 
-                    activePositions -= 1
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                        myrow={} 
+                        activePositions -= 1
+                    except Exception as e:
+                        print(e)
 
-        if activePositions < maxActivePositions:
-            if  trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1: 
-                usdMultiplier = 1/(maxActivePositions-activePositions)  
-                usdInvest = usd_balance * usdMultiplier   
-                coin = (usdInvest * leverage) / actualRow['close']
-                takeProfitValue = actualRow['close'] + takeProfitPercentage * actualRow['close']
-                stopLossValue = actualRow['close'] - stopLossPercentage *actualRow['close']
-                myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "openLong",
-                        'price': actualRow['close'],
-                        'usdInvest': usdInvest,
-                        'usd': usd_balance,
-                        'coins' : coin,
-                        'fees': takerFee*usdInvest*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : takeProfitValue,
-                        'stopLoss' : stopLossValue, 
-                        'whenBuy': 'nan',
-                        'resultat' : 'nan',
-                        'performance' : 'nan'
-                        }
-                rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                long_quantity = float(usdInvest / actualRow['close'])
-                if production:
+        if activePositions < maxActivePositions:   
+            if  trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+                try:    
+                    usdMultiplier = 1/(maxActivePositions-activePositions)  
+                    usdInvest = usd_balance * usdMultiplier   
+                    coin = (usdInvest * leverage) / actualRow['close']
+                    takeProfitValue = actualRow['close'] + takeProfitPercentage * actualRow['close']
+                    stopLossValue = actualRow['close'] - stopLossPercentage *actualRow['close']
+                    myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "openLong",
+                            'price': actualRow['close'],
+                            'usdInvest': usdInvest,
+                            'usd': usd_balance,
+                            'coins' : coin,
+                            'fees': takerFee*usdInvest*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : takeProfitValue,
+                            'stopLoss' : stopLossValue, 
+                            'whenBuy': 'nan',
+                            'resultat' : 'nan',
+                            'performance' : 'nan'
+                            }
+                    long_quantity = float(usdInvest / actualRow['close'])
                     bitget.place_market_order(pair, "buy", long_quantity, reduce=False)
-                myrow={} 
-                activePositions += 1
+                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                    myrow={} 
+                    activePositions += 1
+                except Exception as e:
+                    print(e)
                 
-            if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1:
-                usdMultiplier = 1/(maxActivePositions-activePositions)  
-                usdInvest = usd_balance * usdMultiplier      
-                coin = (usdInvest * leverage) / actualRow['close']
-                takeProfitValue = actualRow['close'] - takeProfitPercentage * actualRow['close']
-                stopLossValue = actualRow['close'] + stopLossPercentage *actualRow['close']
-                myrow = {
-                        'id' : id,
-                        'sortKey': str(pair+str(index)),
-                        'symbol': pair,
-                        'date': str(index),
-                        'position': "openShort",
-                        'price': actualRow['close'],
-                        'usdInvest': usdInvest,
-                        'usd': usd_balance,
-                        'coins' : coin,
-                        'fees': takerFee*usdInvest*leverage,
-                        'wallet': wallet,
-                        'takeProfit' : takeProfitValue,
-                        'stopLoss' : stopLossValue, 
-                        'whenBuy': 'nan',
-                        'resultat' : 'nan',
-                        'performance' : 'nan'
-                        }
-                rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
-                short_quantity_in_usd = usdInvest * leverage
-                short_quantity = float(bitget.convert_amount_to_precision(pair, float(bitget.convert_amount_to_precision(pair, short_quantity_in_usd / actualRow['close']))))
-                if production:
+            if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+                try: 
+                    usdMultiplier = 1/(maxActivePositions-activePositions)  
+                    usdInvest = usd_balance * usdMultiplier      
+                    coin = (usdInvest * leverage) / actualRow['close']
+                    takeProfitValue = actualRow['close'] - takeProfitPercentage * actualRow['close']
+                    stopLossValue = actualRow['close'] + stopLossPercentage *actualRow['close']
+                    myrow = {
+                            'id' : id,
+                            'sortKey': str(pair+str(index)),
+                            'symbol': pair,
+                            'date': str(index),
+                            'position': "openShort",
+                            'price': actualRow['close'],
+                            'usdInvest': usdInvest,
+                            'usd': usd_balance,
+                            'coins' : coin,
+                            'fees': takerFee*usdInvest*leverage,
+                            'wallet': wallet,
+                            'takeProfit' : takeProfitValue,
+                            'stopLoss' : stopLossValue, 
+                            'whenBuy': 'nan',
+                            'resultat' : 'nan',
+                            'performance' : 'nan'
+                            }
+                    short_quantity_in_usd = usdInvest * leverage
+                    short_quantity = float(bitget.convert_amount_to_precision(pair, float(bitget.convert_amount_to_precision(pair, short_quantity_in_usd / actualRow['close']))))
                     bitget.place_market_order(pair, "sell", short_quantity, reduce=False)
-                myrow={} 
-                activePositions += 1
+                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                    myrow={} 
+                    activePositions += 1
+                except Exception as e:
+                    print(e)
                 
-        compte+=1
-        
+        compte+=1      
     return
                 
         

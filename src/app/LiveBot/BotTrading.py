@@ -40,12 +40,12 @@ def BotTrading(pairs, apiKey, secret, password):
                 trade = Trade_2()
                 takeProfitPercentage = 0.35
                 stopLossPercentage = 0.1
-                leverage = 3
+                leverage = 5
             elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 1:
                 trade = Trade_1()
-                takeProfitPercentage = 0.25
+                takeProfitPercentage = 0.2
                 stopLossPercentage = 0.04
-                leverage = 2
+                leverage = 3
             elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 3:
                 trade = Trade_3()
                 takeProfitPercentage = 0.2

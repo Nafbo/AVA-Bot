@@ -1,7 +1,7 @@
 import warnings
 warnings.filterwarnings('ignore')
 import pandas as pd
-from src.app.BackTest.All_indicator import All_indicator
+from src.app.BackTest.All_Indicator import All_indicator
 
 
 class Trade_Choice():

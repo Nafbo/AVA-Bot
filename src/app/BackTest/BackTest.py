@@ -295,19 +295,19 @@ class BackTest():
                             leverage = 5
                         elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 1:# and Trade_Choice.volumeAnomaly(actualRow, previousRow) == 1:
                             trade = Trade_1()
-                            takeProfitPercentage = 0.25
+                            takeProfitPercentage = 0.2
                             stopLossPercentage = 0.04
                             leverage = 3
                         elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 3:# and Trade_Choice.volumeAnomaly(actualRow, previousRow) == 1:
                             trade = Trade_3()
                             takeProfitPercentage = 0.2
-                            stopLossPercentage = 0.04
+                            stopLossPercentage = 0.03
                             leverage = 2
                         else:
                             trade = Trade_0()
                             takeProfitPercentage = 0.13
                             stopLossPercentage = 0.03
-                            leverage = 1.5
+                            leverage = 1
 ###################################  
 
                     if trade.openLongPosition(actualRow, previousRow) and positionInProgress[i] == '' and usdArray[-1]>1:

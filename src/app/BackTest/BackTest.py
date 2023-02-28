@@ -1,8 +1,9 @@
 import warnings
 warnings.filterwarnings('ignore')
 import pandas as pd
-from src.app.BackTest.All_indicator import All_indicator
 from src.app.BackTest.Trade import *
+from src.app.BackTest.All_Indicator import *
+
 
 
 class BackTest():
@@ -291,12 +292,12 @@ class BackTest():
                             trade = Trade_2()
                             takeProfitPercentage = 0.35
                             stopLossPercentage = 0.1
-                            leverage = 2.5
+                            leverage = 5
                         elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 1:# and Trade_Choice.volumeAnomaly(actualRow, previousRow) == 1:
                             trade = Trade_1()
                             takeProfitPercentage = 0.25
                             stopLossPercentage = 0.04
-                            leverage = 2
+                            leverage = 3
                         elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 3:# and Trade_Choice.volumeAnomaly(actualRow, previousRow) == 1:
                             trade = Trade_3()
                             takeProfitPercentage = 0.2

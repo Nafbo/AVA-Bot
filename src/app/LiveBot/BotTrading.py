@@ -1,4 +1,3 @@
-import ta
 from datetime import datetime
 from src.app.LiveBot.BitGet import *
 from src.app.LiveBot.CryptoData import *

@@ -3,6 +3,8 @@ import pandas as pd
 import time
 from multiprocessing.pool import ThreadPool as Pool
 import numpy as np
+import hmac
+import base64
 
 
 class Bitget():
@@ -47,11 +49,8 @@ class Bitget():
                 symbol, 
                 'market', 
                 side, 
-                self.convert_amount_to_precision(symbol, amount),
-                None,
-                params={"reduceOnly": reduce,
-                        'type':'margin', 
-                        'isIsolated': 'TRUE'}
+                amount,
+                params={"reduceOnly": reduce}
             )
         except BaseException as err:
             raise Exception(err)
@@ -59,10 +58,10 @@ class Bitget():
     def get_open_position(self,symbol=None): 
         '''Sert à savoir si il y a une position ouverte'''
         try:
-            positions = self._session.fetchPositions(symbol)
+            positions = self._session.fetchPositions([symbol])
             truePositions = []
             for position in positions:
-                if float(position['contracts']) > 0:
+                if float(positions[0]['contractSize']) > 0:
                     truePositions.append(position)
             return truePositions
         except BaseException as err:
@@ -83,7 +82,16 @@ class Bitget():
             except:
                 return 0
             
-        
+    def sign(self, message, secret_key):
+        mac = hmac.new(bytes(secret_key, encoding='utf8'), bytes(message, encoding='utf-8'), digestmod='sha256')
+        d = mac.digest()
+        return base64.b64encode(d)
+
+
+    def pre_hash(self, timestamp, method, request_path, body):
+        return str(timestamp) + str.upper(method) + request_path + body  
+    
+       
 if __name__ == '__main__':
     bitget = Bitget()
     

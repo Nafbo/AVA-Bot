@@ -1,3 +1,5 @@
+import sys
+sys.path.append("./AVA-Bot")
 from datetime import datetime
 from src.app.LiveBot.BitGet import *
 from src.app.LiveBot.CryptoData import *
@@ -7,7 +9,7 @@ import requests as rq
 
 
 def BotTrading(pairs, apiKey, secret, password):
-    production = True
+    production = False
     id = str(110)
     url = "https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items"
     leverage = 1

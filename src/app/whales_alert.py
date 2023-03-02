@@ -2,6 +2,14 @@ import tweepy
 import time
 
 def analyze_whale_alert_tweets():
+    
+    '''Using the twitter API to retrieve the latest tweets from an account about whales with a lot of BTC
+
+    
+        Returns:
+        Return(String): dangerous or very dangerous or normal if there is something concerning BTC
+
+    '''
     # Configuration de l'authentification Twitter
     auth = tweepy.OAuthHandler("88dldRnuq6fLPQKkX8azrCd5p", "WTZDb3JRQUjZVRu6LhQNhIVzoQpZ2Cd2i6ePKnRATeQnBuNx6g")
     auth.set_access_token("1435977329524752387-xa4DXdjkxgYNhbBJbdJZgySGC2YjRy", "CneEP3iDzDhiho3UDhAFjnPTvdUBcVAsluoH574urkINb")

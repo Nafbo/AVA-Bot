@@ -1,6 +1,13 @@
 from pytrends.request import TrendReq
 
 def average_trend():
+    '''Using of the google trend to know the searches carried out around the world and see if there are searches related to bitcoin
+
+    
+        Returns:
+        Return(String): vogue or not_vogue whether bitcoin is currently trending worldwide
+
+    '''
     keywords = ["Bitcoin","blockchain","crypto-monnaie","transaction", "décentralisation"]
     period = 'today 1-m'
     # Initialiser l'objet TrendReq avec vos informations de connexion Google

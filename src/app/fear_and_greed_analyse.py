@@ -1,7 +1,15 @@
 import requests
 import time
 
+
+
 def check_fng_index():
+    '''Retrieves information from the fear and greed index
+    
+        Returns:
+    
+        Return(String) green (>=75), neutral (between 25 and 75) or red (<=25)
+    '''
     
     url = "https://api.alternative.me/fng/"
     response = requests.get(url)

@@ -8,6 +8,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 def analyze_fed_news_for_btc():
+    '''Scraping of the FED to know the latest legislation concerning BTC or USD
+
+    
+        Returns:
+        Return(String): good_news or bad_news if there is something concerning BTC or USD
+
+    '''
+    
+    
+    
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)

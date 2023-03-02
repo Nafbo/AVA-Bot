@@ -5,6 +5,13 @@ import warnings
 warnings.filterwarnings("ignore")
 
 def analyse_sentiment_bitcoin():
+    '''Using the twitter API to retrieve the latest tweets from somes bitcoin influencers accounts about BTC, using Tweepy to know the polarity of tweets
+
+    
+        Returns:
+        Return(String): confident or cautious if it's a good or bad news
+
+    '''
     # Configuration de l'API Twitter
     consumer_key = "88dldRnuq6fLPQKkX8azrCd5p"
     consumer_secret = "WTZDb3JRQUjZVRu6LhQNhIVzoQpZ2Cd2i6ePKnRATeQnBuNx6g"

@@ -16,18 +16,18 @@ def analyze_whale_alert_tweets():
             # Analyse du tweet pour déterminer s'il est dangereux ou normal
             num_emojis = tweet.text.count("🚨")
             if num_emojis == 2 or num_emojis == 3:
-                danger_level = "Dangereux"
+                return "dangereux"
             elif num_emojis > 3 :
-                danger_level = "Très Dangereux, Fluctuation du BTC à prévoir"
+                return "très_dangereux"
             else:
-                danger_level = "Normal"
+                return "normal"
 
-            text_without_links = tweet.text
-            for url in tweet.entities.get('urls'):
-                text_without_links = text_without_links.replace(url['url'], '')
+            #text_without_links = tweet.text
+            #for url in tweet.entities.get('urls'):
+                #text_without_links = text_without_links.replace(url['url'], '')
 
             # Affichage du tweet en entier avec l'indication de son niveau de danger
-            return f"WHALES : \nTweet suivant, posté le {tweet.created_at},avec {num_emojis} emojis 🚨:\n--> {danger_level}\n--> {text_without_links}\n------------------------\n"
+            #return f"WHALES : \nTweet suivant, posté le {tweet.created_at},avec {num_emojis} emojis 🚨:\n--> {danger_level}\n--> {text_without_links}\n------------------------\n"
             
 
     

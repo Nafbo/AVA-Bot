@@ -39,12 +39,12 @@ def analyze_fed_news_for_btc():
     for sentence in sentences:
         sentiment = sentiment_analyzer.polarity_scores(sentence)['compound']
         if ("bitcoin" or "crypto" or "cryptomonnaie" or "crypto-actifs") in sentence.lower() and sentiment >= 0.05:
-            return "Bonnes nouvelles pour le BTC actuellement:", sentence
+            return "bonnes_nouvelles"
         elif ("discount rate" or "credit rate" or "unemployment rate" or "inflation") in sentence.lower() and sentiment >= 0.05:
-            return "Bonnes nouvelles pour le BTC actuellement:", sentence
+            return "bonnes_nouvelles"
         elif ("discount rate" or "credit rate" or "unemployment rate" or "inflation") in sentence.lower() and sentiment <= -0.05:
-            return "Mauvaises nouvelles pour le BTC actuellement:", sentence
+            return "mauvaises_nouvelles"
         elif ("bitcoin" or "crypto" or "cryptomonnaie" or "crypto-actifs") in sentence.lower() and sentiment <= -0.05:
-            return "Mauvaises nouvelles pour le BTC actuellement:", sentence
+            return "mauvaises_nouvelles"
     else :
-        return "FED : pas de nouvelles pour le BTC actuellement"
+        return "pas_de_nouvelles"

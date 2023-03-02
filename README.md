@@ -7,37 +7,20 @@ crontab -e
 option 1
 rajouter en bas du code : 0 * * * * python3 AVA-Bot/src/app/LiveBot/BotTrading.py >> cronlog.log
 
-# AVA-Crypto
-<p>AVA Crypto is a dashboard that allows you to have a global view of your crypto wallet.</p>
-<p>Thanks to Covalent and Coingecko API, we give you the possibility to have all balance, history, and transactions of your crypto wallets. You can also have the global balance of all your wallets. Lastly, AVA Crypto offers you the current price in a selection of cryptocurrencies.</p>
-<p>To visualize all these features, we have developed a Dash application , which is deployable locally, or globally using Heroku.</p>
+# AVA-Bot
+<p>AVA Bot is a trading robot that will help you make money without you having to do anything.</p>
+<p>Thanks to CCXT and BitGet API, we give you the possibility to have  functional trading strategy but not only Indeed thanks to the anlayse of the sentiments of the crypto currencies market, with the help of the Twitter API, the Fear and Greed and the scrapping of the FED website, we realize an accurate analysis of the sentiments of this so complex market that are the crypto currencies.</p> 
+<p>But in parallel, using the ccxt api, we carry out an analysis of the market using several indicators.</p>
+<p>All this allows us to have a reliable and testable strategy, which we use in our automated trading robot.</p>
+<p>With this trading robot you will be able to choose the way it works, the risk you accept in your trade but also the crypto currencies you want to trade and how many simultaneous open positions you want.</p>
+<p>To visualize all these features, we have developed a React application , which is deployable locally, or globally using AWS.</p>
 <p>Finally, we have linked a database to our app, in this way your informations remains when you log into your account.</p>
 
-## Locally deployable (with Dash)
-<p>Install <code>requirements.txt</code> to have all the necessary libraries to launch our app</p>
-<pre><code>pip install -r requirements.txt</code></pre>
-<p>Now launch the <code>main.py</code> file to run the dash application locally on your web browser</p>
-<p>To finish you just have to click on the link that dash provided to launch the application.</p>
 
-## Globally deployable (with Heroku)
-<p>Before you can deploy our code using heroku, you must create an account on : </p>
-<p><link>https://dashboard.heroku.com/apps</link></p>
-<p>Login into Heroku</p>
-<pre><code>heroku login</code></pre>
-<p>Clone the repository github heroku</p>
-<pre><code>heroku git:clone -a avacrypto</code>
-<code>cd avacrypto</code></pre>
-<p>After that, you have to build the project and restart it</p>
-<pre><code>heroku plugins:install heroku-builds</code>
-<code>heroku builds:cancel</code>
-<code>heroku restart</code></pre>
-<p>To finish, deploy the application in Heroku</p>
-<pre><code>git add .</code>
-<code>git commit -am "YOUR COMMIT"</code>
-<code>git push --force heroku main</code></pre>
-
-## Continuous deployment
-<p>Thanks to GitHub 'Actions', we have implemented a continuous deployment, which, when you push your code to our repository, the application will automatically be redeployed with the changes you have made.</p>
-<p>You can find our application deployed by clicking on the following link :</p>
-<p><link>https://avacrypto.herokuapp.com/</link></p>
+## Deploy your bot (in AWS)
+<p>First you need to have an AWS account and connect to it (on the root service).</p>
+<p>You need to create an EC2 instances and to connect to it. I invite you to follow this tutorial to do it.<p>
+<p><link>https://www.youtube.com/watch?v=lxSNeF7BAII&ab_channel=StephaneMaarek</link></p>
+<p>When you are connect to your command terminal you need to clone the LiveBot branch of this github:</p>
+<pre><code>git clone --single-branch -branch LiveBot </code></pre>
 

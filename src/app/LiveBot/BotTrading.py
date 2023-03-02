@@ -1,6 +1,5 @@
 import sys
 sys.path.append("./AVA-Bot")
-from datetime import datetime
 from src.app.LiveBot.BitGet import *
 from src.app.LiveBot.CryptoData import *
 from src.app.LiveBot.Trade import *
@@ -8,14 +7,25 @@ import json
 import requests as rq
 
 
-def BotTrading(pairs, apiKey, secret, password):
-    production = False
-    id = str(110)
+def BotTrading(pairs, apiKey, secret, password, id, production, maxActivePositions):
+    '''Trading Robot Code with Strategy
+    
+    Parameters:
+    pairs (array): The crypto-currencies you want to trade
+    apiKey (string): API Key of Bitget
+    secretKey (string): Secret Key of Bitget
+    password (string): Paswword of the API Key of Bitget
+    id (string): Account ID
+    production (boolean): True if you want to trade, False if you want to pause the robot
+    maxActivePositions (int): Maximum number of orders open at the same time
+    
+    Returns:
+    Nothing
+    '''
     url = "https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items"
     leverage = 1
     takerFee = 0.00051
     wallet, usd_balance = bitget.get_usdt_equity() #usd_balance= ce que j'ai pour le moment/ wallet= wallet total
-    maxActivePositions = 3
     activePositions = 0
     positionInProgress = [''] * len(pairs)
     df = CryptoData().LoadData(pairs, 1000)
@@ -46,7 +56,7 @@ def BotTrading(pairs, apiKey, secret, password):
                 trade = Trade_1()
                 takeProfitPercentage = 0.2
                 stopLossPercentage = 0.04
-                leverage = 1#3
+                leverage = 3
             elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 3:
                 trade = Trade_3()
                 takeProfitPercentage = 0.2
@@ -444,4 +454,7 @@ if __name__ == '__main__':
         password=password3,
         )
     pairList = ['BTC/USDT:USDT', 'ETH/USDT:USDT', 'BNB/USDT:USDT', 'XRP/USDT:USDT', 'ADA/USDT:USDT']
-    BotTrading(pairList, apiKey1, secret2, password3)
+    id = str(110)
+    production = False
+    maxActivePositions = 3
+    BotTrading(pairList, apiKey1, secret2, password3, id, production, maxActivePositions)

@@ -7,12 +7,31 @@ warnings.filterwarnings('ignore')
 class CryptoData():
     
     def get_n_columns(self, df, columns, n=1):
+        '''Shifts & column of a row and adds it in a new column
+    
+            Parameters:
+            df (DataFrame): The dataframe with all the price data 
+            columns (string): Name of what column do you want to change
+            n (int): Of how many row do you want to shift
+            
+            Returns:
+            df (DataFrame): Return the new dataframe with the new column
+            '''
         df = df.copy()
         for col in columns:
             df["n"+str(n)+"_"+col] = df[col].shift(n)
         return(df)
         
     def Indicators(self, pair, limit):
+        '''Creation of the dataframe with all the indicators
+    
+            Parameters:
+            pair (array): All the crypto currency do you want to trade
+            limit (date): Limit of the date 
+            
+            Returns:
+            df (DataFrame): Return the new dataframe with the indicators
+            '''
         df = Bitget().get_more_historical(pair, limit, '1h')
         df.drop(columns=df.columns.difference(['open','high','low','close','volume']), inplace=True)
 
@@ -55,6 +74,15 @@ class CryptoData():
         return(df)
     
     def LoadData(self, pairs, limit):
+        '''Load the price data
+    
+            Parameters:
+            pair (array): All the crypto currency do you want to trade
+            limit (date): Limit of the date 
+            
+            Returns:
+            df (DataFrame): Return the dataframe with the all the base informations
+            '''
         df = []
         for pair in pairs:   
             df_symbol = self.Indicators(pair, limit)

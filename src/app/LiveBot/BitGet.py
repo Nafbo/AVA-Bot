@@ -24,7 +24,16 @@ class Bitget():
         self.market = self._session.load_markets()
 
     def get_more_historical(self, symbol, limit, timeframe='1h'):
-        '''Récupère les données de maintenant jusqu'à limit'''
+        '''Retrieves data from now until limit
+    
+            Parameters:
+            symbol (array): The crypto-currencies you want to trade
+            limit (date): date limit to which you want to download the course history
+            timeframe (string): Time interval between two candles     
+            
+            Returns:
+            result.sort_index() (DataFrame): All data sorted by date
+            '''
         full_result = []
         def worker(i):
             try:
@@ -43,7 +52,17 @@ class Bitget():
         return (result.sort_index())
 
     def place_market_order(self, symbol, side, amount, reduce=False):
-        '''Ouvrir un ordre'''
+        '''Open order market
+    
+            Parameters:
+            symbol (array): The crypto-currencies you want to trade
+            side (date): sell or buy
+            amount (float): amount in usdt to invest   
+            reduce (boolean): False to open an order and True to close an order
+            
+            Returns:
+            Nothing
+            '''
         try:
             return self._session.createOrder(
                 symbol, 
@@ -56,7 +75,14 @@ class Bitget():
             raise Exception(err)
 
     def get_open_position(self,symbol=None): 
-        '''Sert à savoir si il y a une position ouverte'''
+        '''Whether there is an open position
+    
+            Parameters:
+            symbol (array): The crypto-currencies you want to trade
+        
+            Returns:
+            truePositions (array): Open position information in a json
+            '''
         try:
             positions = self._session.fetchPositions([symbol])
             truePositions = []
@@ -68,27 +94,63 @@ class Bitget():
             raise TypeError("An error occured in get_open_position", err)
         
     def convert_amount_to_precision(self, symbol, amount):
-        '''Permet d'avoir notre compte usdt avec précision'''
+        '''Allows us to have our usdt account accurately according to a crypto currency
+    
+            Parameters:
+            symbol (array): The crypto-currencies you want to trade
+            amount (float): Amount in usdt to invest
+            Returns:
+            self._session.amount_to_precision(symbol, amount) (int): Usdt account accurately according to a crypto currency
+            '''
         return self._session.amount_to_precision(symbol, amount)
     
     def get_usdt_equity(self):
-            try:
-                usdt_equity = float(self._session.fetch_balance()["info"][0]["usdtEquity"])
-                available = float(self._session.fetch_balance()["info"][0]["available"])
-            except BaseException as err:
-                raise Exception("An error occured", err)
-            try:
-                return usdt_equity, available
-            except:
-                return 0
+        '''Have your balance and wallet in usdt
+    
+            Parameters:
+            Nothing
+            
+            Returns:
+            usdt_equity (float): Wallet total
+            available (float): Total of usdt available
+            '''
+        try:
+            usdt_equity = float(self._session.fetch_balance()["info"][0]["usdtEquity"])
+            available = float(self._session.fetch_balance()["info"][0]["available"])
+        except BaseException as err:
+            raise Exception("An error occured", err)
+        try:
+            return usdt_equity, available
+        except:
+            return 0
             
     def sign(self, message, secret_key):
+        '''Sign a message for api BitGet
+    
+            Parameters:
+            message (json): What you want to sign
+            secret_key (string): Secret Key of the BitGet API
+            
+            Returns:
+            base64.b64encode(d) (string): Return the sign message in base64
+            '''
         mac = hmac.new(bytes(secret_key, encoding='utf8'), bytes(message, encoding='utf-8'), digestmod='sha256')
         d = mac.digest()
         return base64.b64encode(d)
 
 
     def pre_hash(self, timestamp, method, request_path, body):
+        '''Sign a message for api BitGet
+    
+            Parameters:
+            timestamp (int): Actual Time
+            method (string): With what methode do you want to transfert the message
+            request_path (string): The acces path
+            body (json): What do you want the send
+            
+            Returns:
+            (string): Return the hashed message
+            '''
         return str(timestamp) + str.upper(method) + request_path + body  
     
        

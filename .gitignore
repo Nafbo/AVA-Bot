@@ -1,5 +1,6 @@
 # created by virtualenv automatically
 env
+env_app
 __pycache__
 setup.py
 Crypto_Database

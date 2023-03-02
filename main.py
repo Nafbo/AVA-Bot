@@ -5,8 +5,6 @@ from src.app.influenceurs_analyse import analyse_sentiment_bitcoin
 from src.app.fed_analyse import analyze_fed_news_for_btc
 from src.app.whales_alert import analyze_whale_alert_tweets
 from src.app.bitcoin_trend import average_trend
-import time
-import schedule
 
 def main():
 

@@ -46,7 +46,7 @@ def BotTrading(pairs, apiKey, secret, password):
                 trade = Trade_1()
                 takeProfitPercentage = 0.2
                 stopLossPercentage = 0.04
-                leverage = 3
+                leverage = 1#3
             elif Trade_Choice.fearAndGreed(actualRow, previousRow) == 3:
                 trade = Trade_3()
                 takeProfitPercentage = 0.2
@@ -77,6 +77,10 @@ def BotTrading(pairs, apiKey, secret, password):
             r = rq.get(url2).json()
             df2 = pd.DataFrame(r)  
             df2 = df2[df2['symbol'] == pair].iloc[-1]
+            if df2['position'] == 'openLong':
+                coins = float(positions_data[1]['info']['marketPrice']) * float(positions_data[0]["contractSize"])
+            else: 
+                coins = float(positions_data[0]['info']['marketPrice']) * float(positions_data[1]["contractSize"])
             myrow = {
                     'id' : id,
                     'sortKey': str(pair+str(index)),
@@ -86,7 +90,7 @@ def BotTrading(pairs, apiKey, secret, password):
                     'price': df2['price'],
                     'usdInvest': df2['usdInvest'],
                     'usd': df2['usd'],
-                    'coins' : float(positions_data[1]['info']['marketPrice']) * float(positions_data[0]["contractSize"]),
+                    'coins' : coins,
                     'fees': df2['fees'],
                     'wallet': df2['wallet'],
                     'takeProfit' : df2['takeProfit'],
@@ -97,7 +101,9 @@ def BotTrading(pairs, apiKey, secret, password):
                     }
             positionInProgress[compte] = myrow
             activePositions+=1
+            compte+=1
         else:
+            positionInProgress[compte] = ''
             compte+=1
     compte = 0
     for pair in pairs:
@@ -136,6 +142,9 @@ def BotTrading(pairs, apiKey, secret, password):
                             }
                         close_long_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)  
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                   
                         myrow={} 
                         activePositions -= 1
@@ -171,6 +180,9 @@ def BotTrading(pairs, apiKey, secret, password):
                             'performance' : performance
                             }
                         close_long_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)  
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
                         bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
@@ -208,6 +220,8 @@ def BotTrading(pairs, apiKey, secret, password):
                             }
                         close_long_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)  
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
+                        bitget.place_market_order(pair, "sell", close_long_quantity, reduce=True)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                 
                         myrow={} 
                         activePositions -= 1
@@ -245,6 +259,9 @@ def BotTrading(pairs, apiKey, secret, password):
                             }
                         close_short_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)  
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
                         activePositions -= 1
@@ -280,6 +297,9 @@ def BotTrading(pairs, apiKey, secret, password):
                             'performance' : performance
                             }
                         close_short_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)  
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
                         bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
@@ -317,6 +337,9 @@ def BotTrading(pairs, apiKey, secret, password):
                             }
                         close_short_quantity = float(bitget.convert_amount_to_precision(pair, positionInProgress[compte]['coins']))
                         bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)  
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
+                        bitget.place_market_order(pair, "buy", close_short_quantity, reduce=True)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
                         activePositions -= 1
@@ -324,10 +347,15 @@ def BotTrading(pairs, apiKey, secret, password):
                         print(e)
 
         if activePositions < maxActivePositions:   
-            if  trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+            if trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+                f2 = open("src/app/LiveBot/TradeMax.json")
+                TradeMax = json.load(f2)
+                f2.close()
                 try:    
                     usdMultiplier = 1/(maxActivePositions-activePositions)  
-                    usdInvest = usd_balance * usdMultiplier   
+                    usdInvest = usd_balance * usdMultiplier  
+                    if usdInvest > TradeMax[pair][str(leverage)]:
+                        usdInvest = TradeMax[pair][str(leverage)]
                     coin = (usdInvest * leverage) / actualRow['close']
                     takeProfitValue = actualRow['close'] + takeProfitPercentage * actualRow['close']
                     stopLossValue = actualRow['close'] - stopLossPercentage *actualRow['close']
@@ -358,9 +386,14 @@ def BotTrading(pairs, apiKey, secret, password):
                     print(e)
                 
             if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+                f2 = open("src/app/LiveBot/TradeMax.json")
+                TradeMax = json.load(f2)
+                f2.close()
                 try: 
                     usdMultiplier = 1/(maxActivePositions-activePositions)  
-                    usdInvest = usd_balance * usdMultiplier      
+                    usdInvest = usd_balance * usdMultiplier 
+                    if usdInvest > TradeMax[pair][str(leverage)]:
+                        usdInvest = TradeMax[pair][str(leverage)]     
                     coin = (usdInvest * leverage) / actualRow['close']
                     takeProfitValue = actualRow['close'] - takeProfitPercentage * actualRow['close']
                     stopLossValue = actualRow['close'] + stopLossPercentage *actualRow['close']
@@ -382,8 +415,7 @@ def BotTrading(pairs, apiKey, secret, password):
                             'resultat' : 'nan',
                             'performance' : 'nan'
                             }
-                    short_quantity_in_usd = usdInvest * leverage
-                    short_quantity = float(bitget.convert_amount_to_precision(pair, float(bitget.convert_amount_to_precision(pair, short_quantity_in_usd / actualRow['close']))))
+                    short_quantity = float(usdInvest / actualRow['close']) 
                     bitget.place_market_order(pair, "sell", short_quantity, reduce=False)
                     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                     myrow={} 

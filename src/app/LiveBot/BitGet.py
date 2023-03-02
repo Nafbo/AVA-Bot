@@ -60,8 +60,9 @@ class Bitget():
         try:
             positions = self._session.fetchPositions([symbol])
             truePositions = []
+            # print(positions[0])
             for position in positions:
-                if float(positions[0]['contractSize']) > 0:
+                if float(positions[1]['contractSize']) > 0 or float(positions[0]['contractSize'] > 0): #contracts sur ubuntu
                     truePositions.append(position)
             return truePositions
         except BaseException as err:

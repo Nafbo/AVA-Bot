@@ -1,10 +1,4 @@
-# AVA-Bot
-initié instances AWS (avec unbuntu)
-git clone une branche
-bash insatall.sh
-bash env_var_setup.sh
-crontab -e
-option 1
+
 rajouter en bas du code : 0 * * * * python3 AVA-Bot/src/app/LiveBot/BotTrading.py >> cronlog.log
 
 # AVA-Bot
@@ -22,5 +16,18 @@ rajouter en bas du code : 0 * * * * python3 AVA-Bot/src/app/LiveBot/BotTrading.p
 <p>You need to create an EC2 instances and to connect to it. I invite you to follow this tutorial to do it.<p>
 <p><link>https://www.youtube.com/watch?v=lxSNeF7BAII&ab_channel=StephaneMaarek</link></p>
 <p>When you are connect to your command terminal you need to clone the LiveBot branch of this github:</p>
-<pre><code>git clone --single-branch -branch LiveBot </code></pre>
+<pre><code>git clone --single-branch -branch LiveBot https://github.com/Nafbo/AVA-Bot.git</code></pre>
+<p>After you need to install the different package (updates and requirements):</p>
+<pre><code>bash insatall.sh</code></pre>
+<pre><code>bash env_var_setup.sh</code></pre>
+<p>Check that your code works properly by running it:</p>
+<pre><code>python3 AVA-Bot/src/app/LiveBot/TradinBot.py</code></pre>
+<p>When your code is ready, you need to créate a crontab to have your code run every hour:</p>
+<pre><code>crontab -e</code></pre>
+<p>Chosoe the 1 option.</p> 
+<p>Added at the end of the displayed code the following line to confirm the automatic launch of the code</p>
+<pre><code>0 * * * * python3 AVA-Bot/src/app/LiveBot/BotTrading.py >> cronlog.log</code></pre>
+<p>The cronlog.log file will be your error history or what is returned by your code.</p>
+<p>You have now a ready trading Bot.</p>
+
 

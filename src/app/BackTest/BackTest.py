@@ -9,6 +9,20 @@ from src.app.BackTest.All_Indicator import *
 class BackTest():
     
     def trade(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00',end_date=None, leverage=1):
+        '''Mimics cryptocurrency market conditions to test the strategy
+    
+            Parameters:
+            symbols (array): All the crypto currency do you want to trade
+            timeframe (string): Interval between two candles
+            usd (int) : tarting USD Balance
+            start_date (date): Starte date of the date range
+            end_date (date): End date of the date range
+            leverage (int): Leverage for trading
+            
+            Returns:
+            dfTrades (DataFrame): All the trade informations
+            positionInProgress (array): List of the trades in progress
+            '''  
         allIndicator = All_indicator()
         # trade = Trade_2()
         # takeProfitPercentage = 0.25
@@ -381,6 +395,18 @@ class BackTest():
     
     
     def buyAndHold(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00', end_date=None):
+        '''Mimics cryptocurrency market conditions to test the buy and hold of all the cryptocurrency
+    
+            Parameters:
+            symbols (array): All the crypto currency do you want to trade
+            timeframe (string): Interval between two candles
+            usd (int) : tarting USD Balance
+            start_date (date): Starte date of the date range
+            end_date (date): End date of the date range
+            
+            Returns:
+            dfBuyAnsHold (DataFrame): All the trade informations
+            '''  
         allIndicator = All_indicator()
         df = pd.DataFrame()
         dfBuyAnsHold = pd.DataFrame()

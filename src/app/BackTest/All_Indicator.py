@@ -13,6 +13,15 @@ class All_indicator():
         
         
     def load_data_from_db(self, symbol, timeframe):
+        '''Load the price data
+    
+            Parameters:
+            pair (array): All the crypto currency do you want to trade
+            timeframe (string): Interval between two candles
+            
+            Returns:
+            df (DataFrame): Return the dataframe with the all the base informations
+            '''
         filePath = self.path_to_data+timeframe+'/'+symbol.replace('/','')+'.p'
         dbfile = open(filePath,'rb')
         df = pickle.load(dbfile)
@@ -20,24 +29,31 @@ class All_indicator():
         return(df)
     
     def get_n_columns(self, df, columns, n=1):
+        '''Shifts & column of a row and adds it in a new column
+    
+            Parameters:
+            df (DataFrame): The dataframe with all the price data 
+            columns (string): Name of what column do you want to change
+            n (int): Of how many row do you want to shift
+            
+            Returns:
+            df (DataFrame): Return the new dataframe with the new column
+            '''
         df = df.copy()
         for col in columns:
             df["n"+str(n)+"_"+col] = df[col].shift(n)
         return(df)
-    
-    def chop(self, high, low, close, window=14):
-        tr1 = pd.DataFrame(high - low).rename(columns = {0:'tr1'})
-        tr2 = pd.DataFrame(abs(high - close.shift(1))).rename(columns = {0:'tr2'})
-        tr3 = pd.DataFrame(abs(low - close.shift(1))).rename(columns = {0:'tr3'})
-        frames = [tr1, tr2, tr3]
-        tr = pd.concat(frames, axis = 1, join = 'inner').dropna().max(axis = 1)
-        atr = tr.rolling(1).mean()
-        highh = high.rolling(window).max()
-        lowl = low.rolling(window).min()
-        chop = 100 * np.log10((atr.rolling(window).sum()) / (highh - lowl)) / np.log10(window)
-        return pd.Series(chop, name="CHOP")
 
     def indicators(self, symbol, timeframe):
+        '''Creation of the dataframe with all the indicators
+    
+            Parameters:
+            symbol (array): All the crypto currency do you want to trade
+            timeframe (string): Interval between two candles 
+            
+            Returns:
+            df (DataFrame): Return the new dataframe with the indicators
+            '''
         df = self.load_data_from_db(symbol, timeframe)
         
         # df['tr1'] = (df['high'] - df['low'])

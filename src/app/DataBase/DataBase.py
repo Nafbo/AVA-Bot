@@ -16,6 +16,17 @@ class DataBase():
         
         
     def get_historical_from_api(self, symbol, timeframe, start_date, limit=1000):
+        '''Get the price information from the CCXT API
+    
+            Parameters:
+            symbol (string): The crypto currency do you want to have the price historical
+            timeframe (string): Interval between two candles
+            start_date (date): Starte date of the date range
+            limit (int): Number of cnadle do you want to download in the same time
+            
+            Returns:
+            result (DataFrame): All the price informations
+            ''' 
         start_date = self._session.parse8601(start_date)
         temp_data = self._session.fetch_ohlcv(symbol, timeframe, start_date, limit=limit)
         dtemp = pd.DataFrame(temp_data)
@@ -41,6 +52,17 @@ class DataBase():
     
     
     def download_data(self, symbols, timeframes, start_date='2017-01-01T00:00:00'):
+        '''Download in local the price information
+    
+            Parameters:
+            symbols (array): All the crypto currency do you want to have the price historical
+            timeframes (array): All the interval between two candles
+            start_date (date): Starte date of the date range
+            limit (int): Number of cnadle do you want to download in the same time
+            
+            Returns:
+            Nothing
+            ''' 
         for symbol in symbols:
             for tf in timeframes:
                 print(f'-> downloding symbol {symbol} for timeframe {tf}')
@@ -59,6 +81,15 @@ class DataBase():
       
                 
     def update_data(self, symbols, timeframes):
+        '''Update in local the price information
+    
+            Parameters:
+            symbols (array): All the crypto currency do you want to have the price historical
+            timeframes (array): All the interval between two candles
+            
+            Returns:
+            Nothing
+            ''' 
         for symbol in symbols:
             for tf in timeframes:
                 fileName = self.path_to_data+tf+'/'+symbol.replace('/','')+'.p'

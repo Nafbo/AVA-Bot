@@ -9,6 +9,19 @@ import seaborn as sns
 class Analysis ():
     
     def analyzeBacktest(self, symbols, timeframe, usd=100, start_date='2019-01-01T00:00:00',end_date=None, leverage=1):
+        '''Backtest analysis
+    
+            Parameters:
+            symbols (array): All the crypto currency do you want to trade
+            timeframe (string): Interval between two candles
+            usd (int) : tarting USD Balance
+            start_date (date): Starte date of the date range
+            end_date (date): End date of the date range
+            leverage (int): Leverage for trading
+            
+            Returns:
+            Nothing
+            '''
         backtest = BackTest()
         dfTrades,positionInProgress = backtest.trade(symbols, timeframe, usd, start_date, end_date, leverage)
         dfBuyAndHold = backtest.buyAndHold(symbols, timeframe, usd, start_date,end_date)
@@ -162,6 +175,14 @@ class Analysis ():
         return()
     
     def plot_bar_by_month(self, dfTrades):
+        '''Plot the graphic
+    
+            Parameters:
+            dfTrades (DataFrame): All the trades information
+            
+            Returns:
+            Nothing
+            '''
         sns.set(rc={'figure.figsize':(11.7,8.27)})
         lastMonth = int(dfTrades.iloc[-1]['date'].month)
         lastYear = int(dfTrades.iloc[-1]['date'].year)

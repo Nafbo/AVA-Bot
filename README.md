@@ -1,6 +1,3 @@
-
-rajouter en bas du code : 0 * * * * python3 AVA-Bot/src/app/LiveBot/BotTrading.py >> cronlog.log
-
 # AVA-Bot
 <p>AVA Bot is a trading robot that will help you make money without you having to do anything.</p>
 <p>Thanks to CCXT and BitGet API, we give you the possibility to have  functional trading strategy but not only Indeed thanks to the anlayse of the sentiments of the crypto currencies market, with the help of the Twitter API, the Fear and Greed and the scrapping of the FED website, we realize an accurate analysis of the sentiments of this so complex market that are the crypto currencies.</p> 

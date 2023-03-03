@@ -18,12 +18,12 @@
 <pre><code>bash insatall.sh</code></pre>
 <pre><code>bash env_var_setup.sh</code></pre>
 <p>Check that your code works properly by running it:</p>
-<pre><code>python3 AVA-Bot/src/app/LiveBot/TradinBot.py</code></pre>
+<pre><code>python3 AVA-Bot/main.py</code></pre>
 <p>When your code is ready, you need to créate a crontab to have your code run every hour:</p>
 <pre><code>crontab -e</code></pre>
 <p>Chosoe the 1 option.</p> 
 <p>Added at the end of the displayed code the following line to confirm the automatic launch of the code</p>
-<pre><code>0 * * * * python3 AVA-Bot/src/app/LiveBot/BotTrading.py >> cronlog.log</code></pre>
+<pre><code>0 * * * * python3 AVA-Bot/main.py >> cronlog.log</code></pre>
 <p>The cronlog.log file will be your error history or what is returned by your code.</p>
 <p>You have now a ready trading Bot.</p>
 

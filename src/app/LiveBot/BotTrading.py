@@ -446,16 +446,7 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
 
 
 if __name__ == '__main__':
-    f = open("src/app/LiveBot/secret.json")
-    secret = json.load(f)
-    f.close()
-    
-    apiKey1 = secret["bitget_exemple"]["apiKey"]
-    secret2 = secret["bitget_exemple"]["secret"]
-    password3 = secret["bitget_exemple"]["password"]
-    
-    pairList = ['BTC/USDT:USDT', 'ETH/USDT:USDT', 'BNB/USDT:USDT', 'XRP/USDT:USDT', 'ADA/USDT:USDT']
-    id = str(110)
-    running = False
-    maxActivePositions = 3
-    BotTrading(pairList, apiKey1, secret2, password3, id, running, maxActivePositions)
+    id = 'victor.bonnaf@gmail.com'
+    url = "https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/{}".format(id)
+    r = rq.get(url).json()
+    BotTrading(r[0]['pairList'], r[0]['APIkey'], r[0]['APIsecret'], r[0]['APIpassword'], r[0]['id'], r[0]['running'], r[0]['maxActivePositions'])

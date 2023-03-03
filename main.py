@@ -57,7 +57,7 @@ if __name__ == "__main__":
     sentiment_analyse=main()
     timestamp = str(int(time.time() * 1000))
     myrow = {
-        'id':date_str ,
+        'id':timestamp ,
         'Sentiment_marche':sentiment_analyse,
         }
     url ="https://u3ruvos9xf.execute-api.eu-west-1.amazonaws.com/items"

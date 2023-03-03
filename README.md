@@ -15,8 +15,8 @@
 <p>When you are connect to your command terminal you need to clone the LiveBot branch of this github:</p>
 <pre><code>git clone --single-branch --branch SentimentalStrategy https://github.com/Nafbo/AVA-Bot.git</code></pre>
 <p>After you need to install the different package (updates and requirements):</p>
-<pre><code>bash insatall.sh</code></pre>
-<pre><code>bash env_var_setup.sh</code></pre>
+<pre><code>bash AVA-Bot/install.sh</code></pre>
+<pre><code>bash AVA-Bot/env_var_setup.sh</code></pre>
 <p>Check that your code works properly by running it:</p>
 <pre><code>python3 AVA-Bot/main.py</code></pre>
 <p>When your code is ready, you need to créate a crontab to have your code run every 15 min:</p>
@@ -32,8 +32,8 @@
 <p>Clone the LiveBot branch in the instances</p>
 <pre><code>git clone --single-branch --branch LiveBot https://github.com/Nafbo/AVA-Bot.git</code></pre>
 <p>After you need to install the different package (updates and requirements):</p>
-<pre><code>bash insatall.sh</code></pre>
-<pre><code>bash env_var_setup.sh</code></pre>
+<pre><code>bash AVA-Bot/install.sh</code></pre>
+<pre><code>bash AVA-Bot/env_var_setup.sh</code></pre>
 <p>Check that your code works properly by running it:</p>
 <pre><code>python3 AVA-Bot/main.py</code></pre>
 <p>When your code is ready, you need to créate a crontab to have your code run every hour:</p>

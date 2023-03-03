@@ -1,3 +1,4 @@
+(https://www.youtube.com/watch?v=oG4_mxySO7Q&ab_channel=QASCRIPT)
 # AVA-Bot
 <p>AVA Bot is a trading robot that will help you make money without you having to do anything.</p>
 <p>Thanks to CCXT and BitGet API, we give you the possibility to have  functional trading strategy but not only Indeed thanks to the anlayse of the sentiments of the crypto currencies market, with the help of the Twitter API, the Fear and Greed and the scrapping of the FED website, we realize an accurate analysis of the sentiments of this so complex market that are the crypto currencies.</p> 
@@ -13,7 +14,7 @@
 <p>You need to create an EC2 instances and to connect to it. I invite you to follow this tutorial to do it.<p>
 <p><link>https://www.youtube.com/watch?v=lxSNeF7BAII&ab_channel=StephaneMaarek</link></p>
 <p>When you are connect to your command terminal you need to clone the LiveBot branch of this github:</p>
-<pre><code>git clone --single-branch --branch SentimentalStrategy https://github.com/Nafbo/AVA-Bot.git</code></pre>
+<pre><code>git clone --single-branch --branch Adrian https://github.com/Nafbo/AVA-Bot.git</code></pre>
 <p>After you need to install the different package (updates and requirements):</p>
 <pre><code>bash AVA-Bot/install.sh</code></pre>
 <pre><code>bash AVA-Bot/env_var_setup.sh</code></pre>

@@ -1,5 +1,6 @@
 import warnings
 import time
+import datetime
 import requests as rq
 warnings.filterwarnings('ignore')
 from src.app.fear_and_greed_analyse import check_fng_index
@@ -56,9 +57,11 @@ def main():
 if __name__ == "__main__":
     sentiment_analyse=main()
     timestamp = str(int(time.time() * 1000))
+    date = datetime.datetime.fromtimestamp(int(timestamp) / 1000.0)
+    date_formatee = date.strftime('%Y-%m-%d %H:%M:%S')
     myrow = {
-        'id':timestamp ,
-        'Sentiment_marche':sentiment_analyse,
+        'user_name':date_formatee ,
+        'sentiment_marche':sentiment_analyse
         }
     url ="https://u3ruvos9xf.execute-api.eu-west-1.amazonaws.com/items"
     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})

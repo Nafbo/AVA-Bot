@@ -1,5 +1,6 @@
 import requests
 import nltk
+nltk.download('vader_lexicon')
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from nltk.sentiment import SentimentIntensityAnalyzer

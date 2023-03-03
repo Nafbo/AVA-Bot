@@ -69,8 +69,8 @@ if __name__ == "__main__":
     date = datetime.datetime.fromtimestamp(timestamp)
     date_str = date.strftime("%Y-%m-%d %H:%M:%S")
     myrow = {
-        'id':date_str ,
-        'Sentiment_marche':sentiment_analyse,
+        'user_name':date_str,
+        'sentiment_marche':sentiment_analyse,
         }
     url ="https://u3ruvos9xf.execute-api.eu-west-1.amazonaws.com/items"
     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})

@@ -7,7 +7,7 @@ import json
 import requests as rq
 
 
-def BotTrading(pairs, apiKey, secret, password, id, production, maxActivePositions):
+def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions):
     '''Trading Robot Code with Strategy
     
     Parameters:
@@ -16,12 +16,18 @@ def BotTrading(pairs, apiKey, secret, password, id, production, maxActivePositio
     secretKey (string): Secret Key of Bitget
     password (string): Paswword of the API Key of Bitget
     id (string): Account ID
-    production (boolean): True if you want to trade, False if you want to pause the robot
+    runnig (boolean): True if you want to trade, False if you want to pause the robot
     maxActivePositions (int): Maximum number of orders open at the same time
     
     Returns:
     Nothing
     '''
+    bitget = Bitget(
+        apiKey=apiKey,
+        secret=secret,
+        password=password,
+        )
+    
     url = "https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items"
     leverage = 1
     takerFee = 0.00051
@@ -357,7 +363,7 @@ def BotTrading(pairs, apiKey, secret, password, id, production, maxActivePositio
                         print(e)
 
         if activePositions < maxActivePositions:   
-            if trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+            if trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and running == True: 
                 f2 = open("src/app/LiveBot/TradeMax.json")
                 TradeMax = json.load(f2)
                 f2.close()
@@ -395,7 +401,7 @@ def BotTrading(pairs, apiKey, secret, password, id, production, maxActivePositio
                 except Exception as e:
                     print(e)
                 
-            if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and production == True: 
+            if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and running == True: 
                 f2 = open("src/app/LiveBot/TradeMax.json")
                 TradeMax = json.load(f2)
                 f2.close()
@@ -448,13 +454,8 @@ if __name__ == '__main__':
     secret2 = secret["bitget_exemple"]["secret"]
     password3 = secret["bitget_exemple"]["password"]
     
-    bitget = Bitget(
-        apiKey=apiKey1,
-        secret=secret2,
-        password=password3,
-        )
     pairList = ['BTC/USDT:USDT', 'ETH/USDT:USDT', 'BNB/USDT:USDT', 'XRP/USDT:USDT', 'ADA/USDT:USDT']
     id = str(110)
-    production = False
+    running = False
     maxActivePositions = 3
-    BotTrading(pairList, apiKey1, secret2, password3, id, production, maxActivePositions)
+    BotTrading(pairList, apiKey1, secret2, password3, id, running, maxActivePositions)

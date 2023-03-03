@@ -25,4 +25,3 @@ def check_fng_index():
         return "neutre"
 
         #time.sleep(24 * 60 * 60)
-check_fng_index()

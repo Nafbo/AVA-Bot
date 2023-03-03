@@ -58,4 +58,3 @@ def analyse_sentiment_bitcoin():
         return "prudent"
 
 
-analyse_sentiment_bitcoin()

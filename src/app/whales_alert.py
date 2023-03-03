@@ -38,10 +38,7 @@ def analyze_whale_alert_tweets():
             #return f"WHALES : \nTweet suivant, posté le {tweet.created_at},avec {num_emojis} emojis 🚨:\n--> {danger_level}\n--> {text_without_links}\n------------------------\n"
             
 
-    
 
-    # Pause pour ne pas dépasser les limites d'accès à l'API Twitter
-    time.sleep(60)
     
 
     

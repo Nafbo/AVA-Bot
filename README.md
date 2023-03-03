@@ -13,7 +13,7 @@
 <p>You need to create an EC2 instances and to connect to it. I invite you to follow this tutorial to do it.<p>
 <p><link>https://www.youtube.com/watch?v=lxSNeF7BAII&ab_channel=StephaneMaarek</link></p>
 <p>When you are connect to your command terminal you need to clone the LiveBot branch of this github:</p>
-<pre><code>git clone --single-branch -branch SentimentalStrategy https://github.com/Nafbo/AVA-Bot.git</code></pre>
+<pre><code>git clone --single-branch --branch SentimentalStrategy https://github.com/Nafbo/AVA-Bot.git</code></pre>
 <p>After you need to install the different package (updates and requirements):</p>
 <pre><code>bash insatall.sh</code></pre>
 <pre><code>bash env_var_setup.sh</code></pre>
@@ -30,7 +30,7 @@
 ## Deploy your trading bot (in AWS)
 <p>You need to create an other EC2 instances and connect it:</p>
 <p>Clone the LiveBot branch in the instances</p>
-<pre><code>git clone --single-branch -branch LiveBot https://github.com/Nafbo/AVA-Bot.git</code></pre>
+<pre><code>git clone --single-branch --branch LiveBot https://github.com/Nafbo/AVA-Bot.git</code></pre>
 <p>After you need to install the different package (updates and requirements):</p>
 <pre><code>bash insatall.sh</code></pre>
 <pre><code>bash env_var_setup.sh</code></pre>

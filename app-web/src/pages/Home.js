@@ -1,3 +1,11 @@
+/* import Carouselbot from "./carousel"
+ */
+
 export default function Home() {
-    return <h1>Home</h1>
+    return(
+    <div >
+      {/* <Carouselbot/>
+ */} gzrighzpoi
+    </div>
+      )
   }

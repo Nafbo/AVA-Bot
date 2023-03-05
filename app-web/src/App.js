@@ -8,6 +8,9 @@ import { Route, Routes } from "react-router-dom"
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
+
+
+
 function App() {
   return (
     <>
@@ -24,5 +27,7 @@ function App() {
     </>
   )
 }
+
+
 
 export default App

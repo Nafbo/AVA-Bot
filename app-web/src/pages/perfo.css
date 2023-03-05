@@ -1,0 +1,90 @@
+
+.perfo {
+
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+
+   display:grid ;
+   grid-template-columns: 50% 50%;
+   grid-template-rows: repeat(4,1fr)  ;
+   justify-content: center;
+   grid-gap:1.50rem;
+
+   font-family: Arial;
+   font-style: normal;
+   text-align: center;
+    
+
+
+
+}
+
+
+
+#balance{
+    border-color: rgb(6, 138, 94);
+    border-style: dashed;
+
+    /* padding-bottom: 15rem; */
+    grid-area: 1 / 2 / 2 / 1;
+}
+
+#currencies{
+    border-color: rgb(6, 138, 94);
+    border-style: dashed;
+
+    grid-row: 2 / 3 ;
+    grid-column: 1 / 2; 
+    height: 300px;
+    overflow-y: auto;
+}
+
+#tableau{
+      overflow-y: auto;
+}
+#tableau td:nth-child(1) {
+    width: 10%;
+  }
+#tableau td:nth-child(2) {
+width: 10%;
+}
+
+
+
+DataTable thead{
+    position: sticky;
+    top: 0px;
+    margin: 0 0 0 0;
+}
+.datatable{
+    background-color: #1E1F25;
+    border-radius: 20px;
+    height: 244px;
+    padding: 0 10px 10px 10px;
+    overflow: scroll;
+}
+
+#running{
+    border-color: rgb(6, 138, 94);
+    border-style: dashed;
+
+    grid-row: 3 / 4 ;
+    grid-column: 1 / 2;
+}
+
+#place{
+    border-color: rgb(6, 138, 94);
+    border-style: dashed;
+
+    grid-row: 4 / 5 ;
+    grid-column: 1 / 2;
+}
+
+#transaction{
+    border-color: rgb(6, 138, 94);
+    border-style: dashed;
+
+    grid-row: 1 / 5 ;
+    grid-column: 2 / 3;
+}
+

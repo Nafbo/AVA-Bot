@@ -45,12 +45,12 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
 ####################################################################
     url_sentimentalStrategy = "https://u3ruvos9xf.execute-api.eu-west-1.amazonaws.com/items"
     r = rq.get(url_sentimentalStrategy).json()
-    df = pd.DataFrame(r)
-    df = df.sort_values('user_name')
-    df = df[-4:]
+    df_sentiment = pd.DataFrame(r)
+    df_sentiment = df_sentiment.sort_values('user_name')
+    df_sentiment = df_sentiment[-4:]
     moyenneList = []
     for i in range(4):
-        moyenneList.append(int(df.iloc[i]['sentiment_marche'][0]))
+        moyenneList.append(int(df_sentiment.iloc[i]['sentiment_marche'][0]))
     moyenne = round(sum(moyenneList)/len(moyenneList))
     if moyenne == 5:
         trade = Trade_2()

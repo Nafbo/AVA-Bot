@@ -87,10 +87,11 @@ def main():
         
 
 if __name__ == "__main__":
-    sentiment_analyse=main()
+    sentiment_analyse = main()
     timestamp = str(int(time.time() * 1000))
     date = datetime.datetime.fromtimestamp(int(timestamp) / 1000.0)
     date_formatee = date.strftime('%Y-%m-%d %H:%M:%S')
+    print(sentiment_analyse)
     myrow = {
         'user_name':date_formatee ,
         'sentiment_marche':sentiment_analyse

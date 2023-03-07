@@ -2,12 +2,13 @@ import sys
 sys.path.append("./AVA-Bot")
 from src.app.LiveBot.BitGet import *
 from src.app.LiveBot.CryptoData import *
+from src.app.Telegram.message import *
 from src.app.LiveBot.Trade import *
 import json
 import requests as rq
 
 
-def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions):
+def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions, telegram, chat_id):
     '''Trading Robot Code with Strategy
     
     Parameters:
@@ -164,6 +165,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                   
                         myrow={} 
                         activePositions -= 1
+                        if telegram == True:
+                            Telegram(chat_id).messageClose('openLong', str(index), resultat, pair, 'take profit touché', performance, round(positionInProgress[compte]['usdInvest'] * performance), actualRow['close'])
                     except Exception as e:
                         print(e)
 
@@ -203,6 +206,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
                         activePositions -= 1
+                        if telegram == True:
+                            Telegram(chat_id).messageClose('openLong', str(index), resultat, pair, 'stop loss touché', performance, round(positionInProgress[compte]['usdInvest'] * performance), actualRow['close'])
                     except Exception as e:
                         print(e)
                     
@@ -241,6 +246,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})                 
                         myrow={} 
                         activePositions -= 1
+                        if telegram == True:
+                            Telegram(chat_id).messageClose('openLong', str(index), resultat, pair, 'indicateur touché', performance, round(positionInProgress[compte]['usdInvest'] * performance), actualRow['close'])
                     except Exception as e:
                         print(e)
 
@@ -281,6 +288,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
                         activePositions -= 1
+                        if telegram == True:
+                            Telegram(chat_id).messageClose('openShort', str(index), resultat, pair, 'take profit touché', performance, round(positionInProgress[compte]['usdInvest'] * performance), actualRow['close'])
                     except Exception as e:
                         print(e)
                     
@@ -320,6 +329,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
                         activePositions -= 1
+                        if telegram == True:
+                            Telegram(chat_id).messageClose('openShort', str(index), resultat, pair, 'stop loss touché', performance, round(positionInProgress[compte]['usdInvest'] * performance), actualRow['close'])
                     except Exception as e:
                         print(e)
 
@@ -359,6 +370,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                         rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                         myrow={} 
                         activePositions -= 1
+                        if telegram == True:
+                            Telegram(chat_id).messageClose('openShort', str(index), resultat, pair, 'indicateur touché', performance, round(positionInProgress[compte]['usdInvest'] * performance), actualRow['close'])
                     except Exception as e:
                         print(e)
 
@@ -398,6 +411,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                     myrow={} 
                     activePositions += 1
+                    if telegram == True:
+                        Telegram(chat_id).messageOpen("openLong", str(index), pair, usdInvest, actualRow['close'], leverage, stopLossValue, takeProfitValue)
                 except Exception as e:
                     print(e)
                 
@@ -436,6 +451,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions)
                     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                     myrow={} 
                     activePositions += 1
+                    if telegram == True:
+                        Telegram(chat_id).messageOpen("openShort", str(index), pair, usdInvest, actualRow['close'], leverage, stopLossValue, takeProfitValue)
                 except Exception as e:
                     print(e)
                 
@@ -449,4 +466,4 @@ if __name__ == '__main__':
     id = 'victor.bonnaf@gmail.com'
     url = "https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/{}".format(id)
     r = rq.get(url).json()
-    BotTrading(r[0]['pairList'], r[0]['APIkey'], r[0]['APIsecret'], r[0]['APIpassword'], r[0]['id'], r[0]['running'], r[0]['maxActivePositions'])
+    BotTrading(r[0]['pairList'], r[0]['APIkey'], r[0]['APIsecret'], r[0]['APIpassword'], r[0]['id'], r[0]['running'], r[0]['maxActivePositions'], r[0]['telegram'],r[0]['chat_id'])

@@ -1,0 +1,9 @@
+Rajouter:
+- telegram: True ou False
+- chat_id: string()
+
+
+git branch -m Adrian SentimentalStrategy
+git fetch origin
+git branch -u origin/SentimentalStrategy SentimentalStrategy 
+git remote set-head origin -a

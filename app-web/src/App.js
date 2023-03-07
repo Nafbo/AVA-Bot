@@ -1,4 +1,5 @@
 import Navbar from "./Navbar"
+import Popup from "./Popup"
 import Backtests from "./pages/Backtests"
 import Home from "./pages/Home"
 import Performance from "./pages/Performance"
@@ -14,7 +15,9 @@ import { loadFull } from "tsparticles";
 function App() {
   return (
     <>
+      
       <Navbar />
+      <Popup/>
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />

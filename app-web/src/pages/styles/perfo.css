@@ -1,0 +1,104 @@
+
+.perfo {
+
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+
+   display:grid ;
+   grid-template-columns: 50% 35rem;
+   grid-template-rows: 10rem 250px 10rem 10rem ;  /* ou 1fr pour la 2eme */
+   justify-content: center;
+   
+   grid-gap:1.50rem;
+
+   font-family: Arial;
+   font-style: normal;
+   text-align: center;
+}
+
+p{
+    font-size: 25px;
+}
+
+h1{
+    color: #000000;
+    opacity: 0.57;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+#balance{
+/*     border-color: rgb(6, 138, 94);
+    border-style: dashed; */
+    background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+    box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+    border-radius: 17px;
+    /* padding-bottom: 15rem; */
+    grid-area: 1 / 2 / 2 / 1;
+}
+
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+
+#currencies{
+    background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+    box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+    border-radius: 17px;
+
+    grid-row: 2 / 3 ;
+    grid-column: 1 / 2; 
+   /*  height: 300px; */
+    overflow-y: auto;
+}
+/* #title{
+    position:sticky;
+} */
+
+/* #tableau{
+     /*  overflow-y: auto; 
+  
+} */
+
+#tableau td:nth-child(1) {
+    width: 10%;
+  }
+#tableau td:nth-child(2) {
+width: 10%;
+}
+
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+#running{
+    background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+    box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+    border-radius: 17px;
+
+    grid-row: 3 / 4 ;
+    grid-column: 1 / 2;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+
+#place{
+    background:  rgba(238,238,238,1) ;
+    box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+    border-radius: 17px;
+
+    grid-row: 4 / 5 ;
+    grid-column: 1 / 2;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------- */
+
+#transaction{
+    background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+    box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+    border-radius: 17px;
+
+    grid-row: 1 / 5 ;
+    grid-column: 2 / 3;
+}
+

@@ -1,0 +1,82 @@
+.home{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(4, 1fr) ;
+
+    justify-content: center;
+    grid-gap:1.50rem;
+ 
+    font-family: Arial;
+    font-style: normal;
+    text-align: center;
+
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+
+#imagerobot{
+        border-color: rgb(6, 138, 94);
+        border-style: dashed;
+       /*  background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+        box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+        border-radius: 17px; */
+        /* padding-bottom: 15rem; */
+        grid-row: 1 / 5 ;
+        grid-column: 1 / 2;
+        
+       
+    }
+#robot1{
+    width: auto;
+    height: auto;
+}
+
+
+#Title{
+        border-color: rgb(6, 138, 94);
+        border-style: dashed;
+        /*  background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+        box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+        border-radius: 17px; */
+        /* padding-bottom: 15rem; */
+        grid-row: 1 / 2 ;
+        grid-column: 2 / 3;
+
+    }
+
+#Name{
+        border-color: rgb(6, 138, 94);
+        border-style: dashed;
+        /*  background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+        box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+        border-radius: 17px; */
+        /* padding-bottom: 15rem; */
+        grid-row: 2 / 3 ;
+        grid-column: 2 / 3;
+
+    }
+
+#Personnality{
+        border-color: rgb(6, 138, 94);
+        border-style: dashed;
+        /*  background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+        box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+        border-radius: 17px; */
+        /* padding-bottom: 15rem; */
+        grid-row: 3 / 4 ;
+        grid-column: 2 / 3;
+
+    }
+
+#launch{
+        border-color: rgb(6, 138, 94);
+        border-style: dashed;
+        /*  background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+        box-shadow: 8px 8px 8px rgba(87, 85, 85, 0.25);
+        border-radius: 17px; */
+        /* padding-bottom: 15rem; */
+        grid-row: 4 / 5 ;
+        grid-column: 2 / 3;
+
+    }

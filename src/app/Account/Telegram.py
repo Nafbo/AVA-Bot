@@ -5,6 +5,3 @@ message = "Valoche est a la ramasse"
 url = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}".format(TOKEN, chat_id, message)
 
 print(requests.get(url).json())
-
-# url = "https://api.telegram.org/bot{}/getUpdates".format(TOKEN)
-# print(requests.get(url).json())

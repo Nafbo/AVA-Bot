@@ -129,7 +129,7 @@ class All_indicator():
         df['FEAR'] = df.FEAR.astype(float)
         df = df.drop(['fearResult'], axis=1)
 
-        df["CHOP"] = self.chop(df['high'],df['low'],df['close'],window=14)
+        # df["CHOP"] = self.chop(df['high'],df['low'],df['close'],window=14)
         
         return(df)   
     

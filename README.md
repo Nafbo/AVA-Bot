@@ -15,7 +15,7 @@
 <p>When you are connect to your command terminal you need to download Google Chrome and his driver on your instances. For that we invit you to follow this video:</p>
 <p><link>https://www.youtube.com/watch?v=oG4_mxySO7Q&ab_channel=QASCRIPT</link></p>
 <p>After you need to clone the Adrian branch of this github:</p>
-<pre><code>git clone --single-branch --branch Adrian https://github.com/Nafbo/AVA-Bot.git</code></pre>
+<pre><code>git clone --single-branch --branch SentimentalStrategy https://github.com/Nafbo/AVA-Bot.git</code></pre>
 <p>After you need to install the different package (updates and requirements):</p>
 <pre><code>bash AVA-Bot/install.sh</code></pre>
 <pre><code>bash AVA-Bot/env_var_setup.sh</code></pre>

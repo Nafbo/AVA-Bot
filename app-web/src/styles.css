@@ -5,8 +5,37 @@
   body {
     margin: 0;
     background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
+    /* background: rgba(108, 161, 255, 0.5); */
+    
+  }
+
+
+/* @import "compass/css3";
+
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+  body {
+    background-color: #eee;
+    min-height: 100%;
+    color: #fff;
+    /* //@include background-image(radial-gradient(center, #eee 0%,#bbb 100%)); */
+/*     background-image: url('http://isaacsuttell.com/img/justine.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Raleway, sans-serif;
+  } */ 
+
+  #title {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    z-index: 100;
+    color: #fff;
   }
   
+
+
   .container {
     margin: 2rem;
    
@@ -91,10 +120,29 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 9999;
+  }
+
+/*   .popup__content {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
   }
+  
+  .popup__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .popup__close:hover {
+    color: #555;
+  } */
   

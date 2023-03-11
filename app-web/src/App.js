@@ -1,5 +1,5 @@
 import Navbar from "./Navbar"
-import Popup from "./Popup"
+import Popup from "./popup"
 /* import Animate from"./animate" */
 import Backtests from "./pages/Backtests"
 import Home from "./pages/Home"

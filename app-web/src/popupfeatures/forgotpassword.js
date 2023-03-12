@@ -94,10 +94,10 @@ export const Forgotpassword = (props) => {
         <h3> Reset your password </h3>
         <form className="login-form" onSubmit={handleSubmitPassword}>
           <label> Create a new password <img className="password-icon" src={showPassword ? hideIcon : showIcon} alt={showPassword ? "Hide password" : "Show password"} onClick={togglePasswordVisibility} /> </label> 
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="new password" id="pass" name="pass" required />
+          <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="new password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[&_\-\{\}\(\)@])([a-zA-Z]{5,})" required title="at least 5 characters and one number, including one uppercase letter and one special character (&_-{}()@)" />
           
           <label> Confirmed the new password <img className="password-icon" src={showPassword ? hideIcon : showIcon} alt={showPassword ? "Hide password" : "Show password"} onClick={togglePasswordVisibility}/> </label>
-          <input value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="confirmed password" id="pass" name="pass" required />
+          <input value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="confirmed password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[&_\-\{\}\(\)@])([a-zA-Z]{5,})" required title="at least 5 characters and one number, including one uppercase letter and one special character (&_-{}()@)"  />
           
           <button className="boutonlogin" type="submit"  disabled={password !== passwordConfirmed}> Réinitialiser le mot de passe </button>
         </form>
@@ -110,7 +110,7 @@ export const Forgotpassword = (props) => {
         <h3> Reset your password </h3>
         <form className="login-form" onSubmit={handleSubmitEmail}>
           <label htmlFor="email"> Your email  </label>
-          <input type="email" value={id} onChange={(e) => setId(e.target.value)} placeholder="your email" require/>
+          <input type="email" value={id} onChange={(e) => setId(e.target.value)} placeholder="your email" required/>
           <button className="boutonlogin" type="submit"> Réinitialiser le mot de passe </button>
         </form>
         <button className="link-btnretour" onClick={() => props.onFormSwitch('login')}>return</button>

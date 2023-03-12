@@ -116,7 +116,7 @@ export const Register = (props) => {
                     <label htmlFor="email">Email</label>
                     <input value={id} onChange={(e) => setId(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" required />
                     <label htmlFor="password">Password  <img className="password-icon" src={showPassword ? hideIcon : showIcon} alt={showPassword ? "Hide password" : "Show password"} onClick={togglePasswordVisibility}  /> </label> 
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="your password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[a-z])(?=.*\d).{5,}" required title="at least 5 characters and one number, including one uppercase letter and one special character"/>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="your password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[&_\-\{\}\(\)@])([a-zA-Z]{5,})" required title="at least 5 characters and one number, including one uppercase letter and one special character (&_-{}()@)"/>
                     
                 </div>
                 <div className="droiteregister"> 

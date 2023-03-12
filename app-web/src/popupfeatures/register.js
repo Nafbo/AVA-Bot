@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import showIcon from '../assets/eye.png';
 import hideIcon from '../assets/eye_open.png';
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const Register = (props) => {
@@ -14,47 +15,27 @@ export const Register = (props) => {
     const [APIsecret, setApiSecret] = useState('');
     const [password, setPassword] = useState('');
 
-
-
+    const [rememberMe, setRememberMe] = useState(false);
+    
     const saltRounds = 10
 
-
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
     const handleSubmit = async (event) => {
         event.preventDefault();
         
-/*         // Vérifier que tous les champs sont remplis
-      /*   if (/* !username || */ /* !id /* || !image */ /* || !APIkey || !APIpassword || !APIsecret || !password) { */ 
-            /* alert('Veuillez remplir tous les champs');
-            return;
-        } */ 
-    
-        // Vérifier que l'email est valide
-/*         const idRegex = /\S+@\S+\.\S+/;
-        if (!idRegex.test(id)) {
-            alert('Veuillez entrer une adresse e-mail valide');
-            return;
-        } */
-    
-        // Vérifier que le mot de passe a au moins 8 caractères
-/*         if (password.length < 5) {
-            alert('Le mot de passe doit avoir au moins 5 caractères');
-            return;
-        } */
-    
             // Création d'un objet à partir des données saisies
           
         try {
-          const hashedPassword = await bcrypt.hash(password, saltRounds);    
+          const hashedPassword = await bcrypt.hash(password, saltRounds);   
+          const hashedAPIKey = await bcrypt.hash(APIkey, saltRounds);  
+          const hashedAPISecret = await bcrypt.hash(APIsecret, saltRounds);    
+          const hashedApiPassword = await bcrypt.hash(APIpassword, saltRounds);   
           const data={
                       id: id,
                       password: hashedPassword, 
                       username: username,
-                      APIkey: APIkey,
-                      APIsecret: APIsecret,
-                      APIpassword: APIpassword,
+                      APIkey: hashedAPIKey,
+                      APIsecret: hashedAPISecret,
+                      APIpassword: hashedApiPassword,
                       pairList :"Nan",
                       maxActivePositions: "Nan",
                       running : "NaN"
@@ -74,31 +55,66 @@ export const Register = (props) => {
 
             if (response.ok) {
               setShowPopup(false);
-            } else {
+
+              if (rememberMe) {
+                const key = uuidv4();
+
+                const cookieOptions = {
+                  maxAge: 30 * 24 * 60 * 60, // Durée de validité de 30 jours
+                  path: '/',
+                };
+                
+                document.cookie = `sessionKey=${key}; ${cookieOptions}`;
+            }} else {
               throw new Error('Une erreur s\'est produite.');
             }
           } catch (error) {
             console.error('Erreur:', error);
           }
-/*             .then(response => {
-              if (response.ok) {
-                return response.json();
-              } else {
-                throw new Error('Une erreur s\'est produite.');
-              }
-            })
-            .then(data => {
-              console.log(data); 
-              setShowPopup(false);
-            })
-            .catch(error => {
-              console.error('Erreur:', error);
-            }); */
         };
      
+      const checkSession = async () => {
+        const cookie = document.cookie.split('; ').find(row => row.startsWith('sessionKey='));
+        if (cookie) {
+        const sessionKey = cookie.split('=')[1];
+        // Envoi de la requête POST au serveur pour vérifier la validité du cookie
+        const url = `https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${sessionKey}`
+        const response = await fetch(url,{
+            method: 'GET',
+            mode : 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json'
+            },
+        });
+        if (response.ok) {
+            // Si le cookie est valide, l'utilisateur est authentifié automatiquement
+            setShowPopup(false);
+        } else {
+            // Si le cookie n'est pas valide, le supprimer
+            document.cookie = `sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        }
+        }
+      };      
+      
+      useEffect(() => {
+    
+        checkSession();
+    /*     const popupStateCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('popupState='));
+        if (popupStateCookie) {
+          const popupState = popupStateCookie.split('=')[1];
+          setShowPopup(popupState !== 'hidden');
+        } */
+      }, []);
 
-        
+      const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+      };
 
+      
+    const handleRememberMeChange = (e) => {
+        setRememberMe(e.target.checked);
+    };
       
     return (
          
@@ -116,7 +132,7 @@ export const Register = (props) => {
                     <label htmlFor="email">Email</label>
                     <input value={id} onChange={(e) => setId(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" required />
                     <label htmlFor="password">Password  <img className="password-icon" src={showPassword ? hideIcon : showIcon} alt={showPassword ? "Hide password" : "Show password"} onClick={togglePasswordVisibility}  /> </label> 
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="your password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[&_\-\{\}\(\)@])([a-zA-Z]{5,})" required title="at least 5 characters and one number, including one uppercase letter and one special character (&_-{}()@)"/>
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="your password" id="pass" name="pass"  pattern="(?=.*\d)(?=.*[A-Z])(?=.*[&(){}_-]).{5,}"  required title="Password must be at least 5 characters long and include at least one number, one uppercase letter, and one special character (&(){}_-)."/>
                     
                 </div>
                 <div className="droiteregister"> 
@@ -127,9 +143,11 @@ export const Register = (props) => {
                     <label htmlFor="apiSecret">API Secret</label>
                     <input value={APIsecret} onChange={(e) => setApiSecret(e.target.value)} type="password" placeholder="your API Secret" id="apiSecret" name="apiSecret" required/>
                 </div>
-            
+
+                
                 <button className="boutonlogin2"  type="submit">Create Account</button>
             </form>
+            <label className="rememberme2" htmlFor="remember-me"><input type="checkbox" id="remember-me"  name="remember-me" checked={rememberMe} onChange={handleRememberMeChange} /> Remember me </label>
         <button className="link-btn2" onClick={() => props.onFormSwitch('login')}>Already have an account? Login here.</button>
     </div>
     )}

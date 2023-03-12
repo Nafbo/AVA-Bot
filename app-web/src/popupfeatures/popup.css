@@ -3,6 +3,7 @@
 .Popup {
     text-align: center;
     display: flex;
+    margin-top:5%;
     height: 50%;
     align-items: center;
     justify-content: center;
@@ -128,7 +129,7 @@
 
   .link-btn2 {
     background: none;
-    margin-top: 2.50rem;
+    margin-top: 0.50rem;
     border: none;
     color: #4b4b4b;
     text-decoration: underline;
@@ -154,3 +155,16 @@
     border: none;
   }
   
+  .rememberme{
+    align-self: self-end;
+    color: #4b4b4b;
+    font-size: 13px; 
+    margin-top: 0.25rem;
+  }
+
+  .rememberme2{
+    align-self: self-end;
+    color: #4b4b4b;
+    font-size: 13px; 
+    margin-top: 2.5rem;; 
+  }

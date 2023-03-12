@@ -94,10 +94,10 @@ export const Forgotpassword = (props) => {
         <h3> Reset your password </h3>
         <form className="login-form" onSubmit={handleSubmitPassword}>
           <label> Create a new password <img className="password-icon" src={showPassword ? hideIcon : showIcon} alt={showPassword ? "Hide password" : "Show password"} onClick={togglePasswordVisibility} /> </label> 
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="new password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[&_\-\{\}\(\)@])([a-zA-Z]{5,})" required title="at least 5 characters and one number, including one uppercase letter and one special character (&_-{}()@)" />
+          <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="new password" id="pass" name="pass" pattern="(?=.*\d)(?=.*[A-Z])(?=.*[&(){}_-]).{5,}"  required title="Password must be at least 5 characters long and include at least one number, one uppercase letter, and one special character (&(){}_-)." />
           
           <label> Confirmed the new password <img className="password-icon" src={showPassword ? hideIcon : showIcon} alt={showPassword ? "Hide password" : "Show password"} onClick={togglePasswordVisibility}/> </label>
-          <input value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="confirmed password" id="pass" name="pass" pattern="(?=.*[A-Z])(?=.*[&_\-\{\}\(\)@])([a-zA-Z]{5,})" required title="at least 5 characters and one number, including one uppercase letter and one special character (&_-{}()@)"  />
+          <input value={passwordConfirmed} onChange={(e) => setPasswordConfirmed(e.target.value)} type={showPassword ? 'text' : 'password'} placeholder="confirmed password" id="pass" name="pass"  pattern="(?=.*\d)(?=.*[A-Z])(?=.*[&(){}_-]).{5,}"  required />
           
           <button className="boutonlogin" type="submit"  disabled={password !== passwordConfirmed}> Réinitialiser le mot de passe </button>
         </form>

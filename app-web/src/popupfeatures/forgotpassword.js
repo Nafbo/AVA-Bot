@@ -56,14 +56,16 @@ export const Forgotpassword = (props) => {
       return;
     }
   
-    const data={ 
-      id: id,
-      password: hashedPassword,  
+    const data = { 
+      password: hashedPassword 
     }
   
-    const url = `https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items`
+    const url = `https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`
+    console.log(url)
+    console.log(data)
+    console.log(id)
     fetch(url, {
-      method: 'PUT',
+      method: 'PATCH',
       mode : 'cors',
       headers: {
         'Access-Control-Allow-Origin': '*',

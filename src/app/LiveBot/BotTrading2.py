@@ -389,7 +389,7 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                         print(e)
 
         if activePositions < maxActivePositions:   
-            if trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and running == True: 
+            if trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1: 
                 f2 = open("src/app/LiveBot/TradeMax.json") #Ajouter AVA-Bot/ pour unbuntu
                 TradeMax = json.load(f2)
                 f2.close()
@@ -420,7 +420,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                             'performance' : 'nan'
                             }
                     long_quantity = float(usdInvest / actualRow['close'])
-                    bitget.place_market_order(pair, "buy", long_quantity, reduce=False)
+                    if running == True:
+                        bitget.place_market_order(pair, "buy", long_quantity, reduce=False)
                     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                     myrow={} 
                     activePositions += 1
@@ -429,7 +430,7 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                 except Exception as e:
                     print(e)
                 
-            if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and running == True: 
+            if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1: 
                 f2 = open("src/app/LiveBot/TradeMax.json") #Ajouter AVA-Bot/ pour unbuntu
                 TradeMax = json.load(f2)
                 f2.close()
@@ -461,7 +462,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                             }
                     short_quantity = float(usdInvest / actualRow['close']) 
                     bitget.place_market_order(pair, "sell", short_quantity, reduce=False)
-                    rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
+                    if running == True:
+                        rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})
                     myrow={} 
                     activePositions += 1
                     if telegram == True:

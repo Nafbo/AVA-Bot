@@ -16,6 +16,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "jquery": "^3.6.3",
+    "js-cookie": "^3.0.1",
     "mdb-react-ui-kit": "^5.1.0",
     "mdbreact": "^4.6.1",
     "mui-datatables": "^4.3.0",

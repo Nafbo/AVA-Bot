@@ -6,8 +6,15 @@ import image3 from '../assets/robot3.png';
 import image4 from '../assets/robot4.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/home.css"
+import getCookie from "./features/getcookies"
+import React, { useState, useEffect } from "react"; 
 
 export default function Home() {
+
+  const userId = getCookie('userId');
+
+  
+
     return(
     
     <div className='home'> 
@@ -21,7 +28,7 @@ export default function Home() {
       </div>
 
       <div id='Name'> 
-        <h3> Name : </h3> <p> Bob </p>
+        <h3> Name : </h3> <p> {userId} </p>
       </div>
 
       <div id='Personnality'> 

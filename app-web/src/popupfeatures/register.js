@@ -36,9 +36,11 @@ export const Register = (props) => {
                       APIkey: hashedAPIKey,
                       APIsecret: hashedAPISecret,
                       APIpassword: hashedApiPassword,
-                      pairList :"Nan",
-                      maxActivePositions: "Nan",
-                      running : "NaN"
+                      pairList :[{"S":"BTC/USDT:USDT"},{"S":"ETH/USDT:USDT"},{"S":"BNB/USDT:USDT"},{"S":"XRP/USDT:USDT"},{"S":"ADA/USDT:USDT"}],
+                      maxActivePositions: 3,
+                      running : true,
+                      telegram: false,
+                      chat_id: "NaN",
                       }
           
       

@@ -10,6 +10,7 @@ export const Login = (props) => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     
+    
     const [rememberMe, setRememberMe] = useState(false);
     /* const key = uuidv4(); */
     /* document.cookie = "sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; */
@@ -50,7 +51,9 @@ export const Login = (props) => {
                       path: '/',
                     };
                     
-                    document.cookie = `sessionKey=${key}; ${cookieOptions}`;
+                    document.cookie = `sessionKey=${key}; ${cookieOptions}; /* httpOnly; */ secure`;
+                    document.cookie = `userId=${data[0].id}; ${cookieOptions}; /* httpOnly; */ secure`;
+
                     
 
                    /*  // Stockage de l'état du popup dans le cookie
@@ -87,6 +90,8 @@ export const Login = (props) => {
         });
         if (response.ok) {
             // Si le cookie est valide, l'utilisateur est authentifié automatiquement
+            const user = await response.json();
+            setId(user.id);
             setShowPopup(false);
         } else {
             // Si le cookie n'est pas valide, le supprimer
@@ -98,12 +103,16 @@ export const Login = (props) => {
   useEffect(() => {
     
     checkSession();
+
 /*     const popupStateCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('popupState='));
     if (popupStateCookie) {
       const popupState = popupStateCookie.split('=')[1];
       setShowPopup(popupState !== 'hidden');
     } */
+
   }, []);
+
+
       const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
       };

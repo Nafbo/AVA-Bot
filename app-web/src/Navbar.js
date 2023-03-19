@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React /* { useState } */ from 'react';
 import { Link, useMatch, useResolvedPath } from "react-router-dom"
-import img from './assets/avalogo.png'
 
 export default function Navbar() {
 
-  const [showMenu, setShowMenu] = useState(false);
+ /*  const [showMenu, setShowMenu] = useState(false); */
 
-  function handleMenuClick() {
+/*   function handleMenuClick() {
     setShowMenu(!showMenu);
   }
-
+ */
   return (
     <nav className="nav">
       <div class="logo-container">

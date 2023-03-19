@@ -9,7 +9,7 @@ export const Forgotpassword = (props) => {
   const [id, setId] = useState("");
   const [item, setItem] = useState(null);
   const [tokenSent, setTokenSent] = useState(false);
-  const [token, setToken] = useState("");
+  const [/* token */, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmed, setPasswordConfirmed] = useState("");
   const [resetSuccess, setResetSuccess] = useState(false);

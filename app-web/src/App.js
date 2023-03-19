@@ -1,6 +1,5 @@
 import Navbar from "./Navbar"
 import Popup from "./popupfeatures/popup"
-/* import Animate from"./animate" */
 import News from "./pages/News"
 import Home from "./pages/Home"
 import Performance from "./pages/Performance"
@@ -9,9 +8,6 @@ import Aboutyou from "./pages/Aboutyou"
 import Aboutus from "./pages/Aboutus"
 import { Route, Routes } from "react-router-dom"
 
-
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
 
 
 

@@ -71,7 +71,7 @@ class Performance extends Component{
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
 
           <div id="currencies"> 
-            <h1 id="title"> CryptoCurrencies </h1>
+            <h1> CryptoCurrencies </h1>
             <table id="tableau">
                   <thead>
                     <tr>

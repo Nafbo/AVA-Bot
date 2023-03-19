@@ -5,7 +5,7 @@
     margin-right: 0.25rem;
 
    display:grid ;
-   grid-template-columns: 50% 35rem;
+   grid-template-columns: 50% 50%;
    grid-template-rows: 10rem 250px 10rem 10rem ;  /* ou 1fr pour la 2eme */
    justify-content: center;
    

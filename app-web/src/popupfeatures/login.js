@@ -14,6 +14,7 @@ export const Login = (props) => {
     const [rememberMe, setRememberMe] = useState(false);
     /* const key = uuidv4(); */
     /* document.cookie = "sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; */
+    /* document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; */
     const handleSubmit = async (e) => {
       e.preventDefault();
   
@@ -40,6 +41,7 @@ export const Login = (props) => {
               console.log(passwordMatch)
               if (passwordMatch) {
                   console.log('Utilisateur connecté');
+                  document.cookie = `userId=${data[0].id}; maxAge: 30 * 24 * 60 * 60;  path: '/' ; /* httpOnly; */ secure`;
                   setShowPopup(false);
 
                    // Création du cookie si "Remember Me" est coché
@@ -52,8 +54,7 @@ export const Login = (props) => {
                     };
                     
                     document.cookie = `sessionKey=${key}; ${cookieOptions}; /* httpOnly; */ secure`;
-                    document.cookie = `userId=${data[0].id}; ${cookieOptions}; /* httpOnly; */ secure`;
-
+                    
                     
 
                    /*  // Stockage de l'état du popup dans le cookie
@@ -90,12 +91,11 @@ export const Login = (props) => {
         });
         if (response.ok) {
             // Si le cookie est valide, l'utilisateur est authentifié automatiquement
-            const user = await response.json();
-            setId(user.id);
             setShowPopup(false);
         } else {
             // Si le cookie n'est pas valide, le supprimer
             document.cookie = `sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+            document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
         }
         }
     };

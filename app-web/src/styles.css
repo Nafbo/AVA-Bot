@@ -35,14 +35,16 @@
   }
   
 
-
   .container {
-    margin: 2rem;
-   
+    margin-top:1rem;
+    /* max-width: 100%;  */
+    
 
     /* 
     text-align: center; */
-  }
+  } 
+  
+
 
   
   

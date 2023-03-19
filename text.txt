@@ -1,7 +1,0 @@
-Rajouter:
-- telegram: True ou False
-- chat_id: string()
-
-A faire:
-- mode: (string) manual or automatic
-- withMode: (string) strong medium calm

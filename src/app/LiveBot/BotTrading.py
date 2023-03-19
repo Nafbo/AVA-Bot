@@ -8,7 +8,7 @@ import json
 import requests as rq
 
 
-def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions, telegram, chat_id):
+def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions, telegram, chat_id, mode, withMode):
     '''Trading Robot Code with Strategy
     
     Parameters:
@@ -51,7 +51,7 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
         headers_marginMode = {'ACCESS-KEY': apiKey,'ACCESS-SIGN': signStr,'ACCESS-PASSPHRASE': password,'ACCESS-TIMESTAMP': timestamp,'locale': 'en-US','Content-Type': 'application/json'}
         rq.post(url_marginMode, headers=headers_marginMode, data=body_str)
 ######################################################################
-        if pair == 'BTC/USDT:USDT':
+        if pair == 'BTC/USDT:USDT' and mode == 'automatic':
             actualRow = df[compte].iloc[-1]
             previousRow = df[compte].iloc[-2]
             if Trade_Choice.fearAndGreed(actualRow, previousRow) == 2:
@@ -70,6 +70,23 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                 stopLossPercentage = 0.04
                 leverage = 2
             else:
+                trade = Trade_0()
+                takeProfitPercentage = 0.13
+                stopLossPercentage = 0.03
+                leverage = 1
+                
+        if mode == 'manual':
+            if withMode == 'hard':
+                trade = Trade_2()
+                takeProfitPercentage = 0.35
+                stopLossPercentage = 0.1
+                leverage = 5
+            elif withMode == 'medium':
+                trade = Trade_1()
+                takeProfitPercentage = 0.2
+                stopLossPercentage = 0.04
+                leverage = 3
+            elif withMode == 'soft':
                 trade = Trade_0()
                 takeProfitPercentage = 0.13
                 stopLossPercentage = 0.03
@@ -466,4 +483,4 @@ if __name__ == '__main__':
     id = 'victor.bonnaf@gmail.com'
     url = "https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/{}".format(id)
     r = rq.get(url).json()
-    BotTrading(r[0]['pairList'], r[0]['APIkey'], r[0]['APIsecret'], r[0]['APIpassword'], r[0]['id'], r[0]['running'], r[0]['maxActivePositions'], r[0]['telegram'],r[0]['chat_id'])
+    BotTrading(r[0]['pairList'], r[0]['APIkey'], r[0]['APIsecret'], r[0]['APIpassword'], r[0]['id'], r[0]['running'], r[0]['maxActivePositions'], r[0]['telegram'],r[0]['chat_id'], r[0]['mode'], r[0]['withMode'])

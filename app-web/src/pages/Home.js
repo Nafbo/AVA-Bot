@@ -6,43 +6,64 @@ import image3 from '../assets/robot3.png';
 import image4 from '../assets/robot4.png'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/home.css"
-import getCookie from "./features/getcookies"
-import React /* , { useState, useEffect }  */from "react"; 
+import getCookie from "./features/getcookies"/* om "react"; */
+import React, {Component} from "react" 
 
-export default function Home() {
+class Home extends Component {
 
-  const userId = getCookie('userId');
-
-  
-
-    return(
-    
-    <div className='home'> 
-      
-      <div id="gauche">
-        <img src={image1} id="robot1" alt="robot 1"/>     
-      </div>
-
-      <div className='droite'> 
-      <div id='Title'>
-        <h1> Your AVA Bot</h1>
-      </div>
-
-      <div id='Name'> 
-        <h3> Name : </h3> <p> {userId} </p>
-      </div>
-
-      <div id='Personnality'> 
-        <h3> Personnality </h3>
-        <p> automatic / manuel </p>
-      </div>
-
-      <div id='launch'> 
-        <h3> Launch Me ! </h3>
-      </div>
-      </div>
-
-      
-    </div>
-      )
+  constructor(props) {
+    super(props);
+    this.state = {
+      donnees: []
+    };
+    this.tableRef = React.createRef();
   }
+  
+    componentDidMount(){
+      fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/miermona@gmail.com`,  )
+        .then((response) => {
+        return response.json()
+        })
+        .then((result) => {
+          this.setState({donnees: result})
+        }); 
+        
+        
+    }
+  
+    render(){
+      return(
+    
+        <div className='home'> 
+          
+          <div id="gauche">
+            <img src={image1} id="robot1" alt="robot 1"/>     
+          </div>
+
+          <div className='droite'> 
+          <div id='Title'>
+            <h1> Your AVA Bot</h1>
+          </div>
+
+          <div id='Name'> 
+            <h3> Name : </h3> <p> {this.state.donnees[0]?.username} </p>
+          </div>
+
+          <div id='Personnality'> 
+            <h3> Personnality </h3>
+            <p> automatic / manuel </p>
+          </div>
+
+          <div id='launch'> 
+            <h3> Launch Me ! </h3>
+          </div>
+          </div>
+
+          
+        </div>
+          )
+    }
+    
+  }
+
+  export default Home

@@ -53,7 +53,7 @@ export const Login = (props) => {
                     
                     document.cookie = `sessionKey=${key}; ${cookieOptions}; /* httpOnly; */ secure`;
                     document.cookie = `userId=${data[0].id}; ${cookieOptions}; /* httpOnly; */ secure`;
-
+                    
                     
 
                    /*  // Stockage de l'état du popup dans le cookie
@@ -90,8 +90,8 @@ export const Login = (props) => {
         });
         if (response.ok) {
             // Si le cookie est valide, l'utilisateur est authentifié automatiquement
-            const user = await response.json();
-            setId(user.id);
+            /* const user = await response.json();
+            setId(user.id); */
             setShowPopup(false);
         } else {
             // Si le cookie n'est pas valide, le supprimer

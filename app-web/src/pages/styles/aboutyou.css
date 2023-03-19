@@ -1,0 +1,72 @@
+.account {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 50px;
+  }
+  
+  #imagerobot {
+    width: 200px;
+    height: auto;
+    margin-right: 60px;
+  }
+  
+  .rightaccount {
+    flex-grow: 1;
+  }
+  
+  #titleaccount {
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  #idaccount,
+  #passwordaccount,
+  #apiaccount,
+  #telegramaccount {
+    margin-bottom: 30px;
+    padding: 20px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+  }
+  
+  #idaccount h3,
+  #passwordaccount h3,
+  #apiaccount h3,
+  #telegramaccount h3{
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  #idaccount h5,
+  #passwordaccount h5,
+  #apiaccount h5,
+  #telegramaccount h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .apiinfo {
+    margin-left: 20px;
+  }
+  
+  #logoutaccount {
+    background-color: #f9c6c9;
+    border-radius: 20px;
+    padding: 10px 20px;
+    display: inline-block;
+    cursor: pointer;
+    float: right; /* Ajout de la propriété float */
+  }
+  
+  #logoutaccount:hover {
+    background-color: #ff767f;
+  }
+  
+  #logoutaccount h3 {
+    margin: 0;
+    color: #fff;
+    font-weight: bold;
+  }

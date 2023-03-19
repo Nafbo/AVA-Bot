@@ -15,7 +15,7 @@ export default function Navbar() {
         <CustomLink to="/History">History</CustomLink>
       </ul>
 
-      <Link to="/account" className="logo">
+      <Link to="/Aboutyou" className="logo">
          <img src={require("./assets/account.png")}/>
       </Link>
 

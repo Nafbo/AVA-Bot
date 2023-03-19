@@ -18,11 +18,12 @@ export default function Home() {
     return(
     
     <div className='home'> 
-
-      <div id="imagerobot">
+      
+      <div id="gauche">
         <img src={image1} id="robot1" alt="robot 1"/>     
       </div>
 
+      <div className='droite'> 
       <div id='Title'>
         <h1> Your AVA Bot</h1>
       </div>
@@ -39,6 +40,8 @@ export default function Home() {
       <div id='launch'> 
         <h3> Launch Me ! </h3>
       </div>
+      </div>
+
       
     </div>
       )

@@ -1,11 +1,12 @@
 import Navbar from "./Navbar"
 import Popup from "./popupfeatures/popup"
 /* import Animate from"./animate" */
-import Backtests from "./pages/Backtests"
+import News from "./pages/News"
 import Home from "./pages/Home"
 import Performance from "./pages/Performance"
-import History from "./pages/History"
+import Wallet from "./pages/Wallet"
 import Aboutyou from "./pages/Aboutyou"
+import Aboutus from "./pages/Aboutus"
 import { Route, Routes } from "react-router-dom"
 
 
@@ -26,9 +27,10 @@ function App() {
         
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Backtests" element={<Backtests />} />
+          <Route path="/News" element={<News />} />
           <Route path="/Performance" element={<Performance />} />
-          <Route path="/History" element={<History />} />
+          <Route path="/Wallet" element={<Wallet />} />
+          <Route path="/Aboutus" element={<Aboutus />} />
           <Route path="/Aboutyou" element={<Aboutyou />} />
         </Routes>
       </div>

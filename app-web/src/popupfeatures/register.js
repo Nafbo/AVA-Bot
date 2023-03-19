@@ -3,6 +3,7 @@ import showIcon from '../assets/eye.png';
 import hideIcon from '../assets/eye_open.png';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+import { Fernet } from 'cryptography';
 
 
 export const Register = (props) => {
@@ -16,7 +17,29 @@ export const Register = (props) => {
     const [password, setPassword] = useState('');
 
     const [rememberMe, setRememberMe] = useState(false);
-    
+
+    const keyFile = './mykey.key';
+
+    fetch(keyFile)
+      .then(response => response.arrayBuffer())
+      .then(buffer => {
+        // Create a Fernet instance with the key
+        const key = new Uint8Array(buffer);
+        const f = new Fernet(key);
+        
+        // Use the Fernet instance to encrypt or decrypt data 
+        const encryptedAPIKey = f.encrypt(APIkey);
+        const encryptedAPISecret = f.encrypt(APIsecret);
+        const encryptedAPIpassword= f.encrypt(APIpassword);
+        console.log(encryptedAPISecret);
+
+        const apidecrypted = f.decrypt(encryptedAPISecret)
+        const apidecrypted2 = apidecrypted.decode()
+        console.log(apidecrypted2);
+      });
+          
+   
+  
     const saltRounds = 10
 
     const handleSubmit = async (event) => {
@@ -25,17 +48,14 @@ export const Register = (props) => {
             // Création d'un objet à partir des données saisies
           
         try {
-          const hashedPassword = await bcrypt.hash(password, saltRounds);   
-          const hashedAPIKey = await bcrypt.hash(APIkey, saltRounds);  
-          const hashedAPISecret = await bcrypt.hash(APIsecret, saltRounds);    
-          const hashedApiPassword = await bcrypt.hash(APIpassword, saltRounds);   
+          const hashedPassword = await bcrypt.hash(password, saltRounds);    
           const data={
                       id: id,
                       password: hashedPassword, 
                       username: username,
-                      APIkey: hashedAPIKey,
-                      APIsecret: hashedAPISecret,
-                      APIpassword: hashedApiPassword,
+                      APIkey: encryptedAPIKey,
+                      APIsecret: encryptedAPISecret,
+                      APIpassword: encryptedAPIpassword,
                       pairList :[{"S":"BTC/USDT:USDT"},{"S":"ETH/USDT:USDT"},{"S":"BNB/USDT:USDT"},{"S":"XRP/USDT:USDT"},{"S":"ADA/USDT:USDT"}],
                       maxActivePositions: 3,
                       running : true,

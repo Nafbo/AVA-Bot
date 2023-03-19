@@ -1,148 +1,141 @@
 * {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(153deg, rgba(238, 238, 238, 1) 41%, rgba(240, 240, 240, 1) 79%);
+}
+
+#title {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  z-index: 100;
+  color: #fff;
+}
+
+/* .container {
+  margin: 2rem;
+} */
+
+.nav {
+  background-color: #1E1E1E;
+  font-family: Arial;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  color: #777777;
+  opacity: 0.57;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: .25rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.nav li.active {
+  color: #FFFF;
+}
+
+.nav li:hover {
+  color: #FFFF;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+
+}
+
+
+.menu-btn {
+  display: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.menu-icon {
+  display: block;
+  width: 1.5rem;
+  height: 0.25rem;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  position: relative;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  position: absolute;
+  left: 0;
+}
+
+.menu-icon::before {
+  transform: translateY(-0.5rem);
+}
+
+.menu-icon::after {
+  transform: translateY(0.5rem);
+}
+
+/* Media queries */
+
+@media screen and (max-width: 767px) {
+    
   
-  body {
-    margin: 0;
-    background: linear-gradient(153deg, rgba(238,238,238,1) 41%, rgba(240,240,240,1) 79%);
-    /* background: rgba(108, 161, 255, 0.5); */
+    .logo-container {
+      flex: 1 1 100%;
+      margin-bottom: 1rem;
+    }
+    
+    .menu-btn {
+      display: block;
+    }
     
   }
 
-
-/* @import "compass/css3";
-
-@import url(https://fonts.googleapis.com/css?family=Raleway);
-  body {
-    background-color: #eee;
-    min-height: 100%;
-    color: #fff;
-    /* //@include background-image(radial-gradient(center, #eee 0%,#bbb 100%)); */
-/*     background-image: url('http://isaacsuttell.com/img/justine.jpg');
-    background-size: cover;
-    background-position: center;
-    font-family: Raleway, sans-serif;
-  } */ 
-
-  #title {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-    letter-spacing: 0.1em;
-    z-index: 100;
-    color: #fff;
-  }
   
 
-
-  .container {
-    margin: 2rem;
-   
-
-    /* 
-    text-align: center; */
-  }
-
-  
-  
-  .nav {
-    background-color: #1E1E1E;
-    font-family: Arial;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    color: #777777;
-    opacity: 0.57;
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    padding: 0 1rem;
-  }
-  
-  
- /*  .logo {
-    font-size: 2rem;
-    justify-content: start;
-  }
-
-  .hpbh{
-    justify-content: center;
-  }
- */
-
-  .nav ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    ;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-  
-  .nav a {
-    color: inherit;
-    text-decoration: none;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: .25rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-  
-  .nav li.active {
-    color: #FFFF;
-  }
-  
-  .nav li:hover {
-    color: #FFFF;
-  }
-
-
-
-
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9998;
-  }
-  
-  .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-  }
-
-/*   .popup__content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    max-width: 600px;
-    width: 100%;
-    position: relative;
-  }
-  
-  .popup__close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  .popup__close:hover {
-    color: #555;
-  } */
-  

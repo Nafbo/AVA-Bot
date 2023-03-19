@@ -62,7 +62,7 @@ class Performance extends Component{
       <div className="perfo"> 
           
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
-
+          <div className="gauche"> 
           <div id="balance"> 
             <h1> Balance </h1>
               <p  /* key={somme.id} */>{somme.toFixed(2)} USD</p>
@@ -71,7 +71,7 @@ class Performance extends Component{
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
 
           <div id="currencies"> 
-            <h1 id="title"> CryptoCurrencies </h1>
+            <h1> CryptoCurrencies </h1>
             <table id="tableau">
                   <thead>
                     <tr>
@@ -105,8 +105,9 @@ class Performance extends Component{
           </div>
 
           {/* ----------------------------------------------------------------------------------------------------------------------------- */}
-        
-          <div id="transaction"> 
+          </div>
+
+          <div id="droite"> 
             <h1> Transactions </h1>
             <table id="tableau" ref={this.tableRef}>
               <thead>
@@ -127,7 +128,6 @@ class Performance extends Component{
               </tbody>
             </table>
           </div>
-
 
 
 

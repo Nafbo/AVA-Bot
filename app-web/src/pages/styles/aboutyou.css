@@ -1,72 +1,121 @@
-.account {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-top: 50px;
+/* Pour les écrans ayant une largeur maximale de 768px, par exemple pour les téléphones et les tablettes en mode portrait */
+@media only screen and (max-width: 768px) {
+    .account {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    #imagerobot {
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
+    
+    #titleaccount {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    #logoutaccount {
+      margin-top: 20px;
+      float: none;
+    }
+    
+    #idaccount,
+    #passwordaccount,
+    #apiaccount,
+    #telegramaccount {
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    
+    #idaccount h3,
+    #passwordaccount h3,
+    #apiaccount h3,
+    #telegramaccount h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    
+    #idaccount h5,
+    #passwordaccount h5,
+    #apiaccount h5,
+    #telegramaccount h5 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
   }
   
-  #imagerobot {
-    width: 200px;
-    height: auto;
-    margin-right: 60px;
+  /* Pour les écrans ayant une largeur minimale de 769px, par exemple pour les ordinateurs */
+  @media only screen and (min-width: 769px) {
+    .account {
+      align-items: flex-start;
+    }
+    
+    #imagerobot {
+      margin-right: 60px;
+    }
+    
+    #titleaccount {
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    #logoutaccount {
+      float: right;
+    }
+    
+    #idaccount,
+    #passwordaccount,
+    #apiaccount,
+    #telegramaccount {
+      margin-bottom: 30px;
+      padding: 20px;
+      width: 100%;
+      border-radius: 10px;
+      background-color: #f7f7f7;
+    }
+    
+    #idaccount h3,
+    #passwordaccount h3,
+    #apiaccount h3,
+    #telegramaccount h3{
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    #idaccount h5,
+    #passwordaccount h5,
+    #apiaccount h5,
+    #telegramaccount h5 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .apiinfo {
+      margin-left: 20px;
+    }
+    
+    #logoutaccount {
+      background-color: #f9c6c9;
+      border-radius: 20px;
+      padding: 10px 20px;
+      display: inline-block;
+      cursor: pointer;
+    }
+    
+    #logoutaccount:hover {
+      background-color: #ff767f;
+    }
+    
+    #logoutaccount h3 {
+      margin: 0;
+      color: #fff;
+      font-weight: bold;
+    }
   }
   
-  .rightaccount {
-    flex-grow: 1;
-  }
+
+
   
-  #titleaccount {
-    font-size: 36px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  
-  #idaccount,
-  #passwordaccount,
-  #apiaccount,
-  #telegramaccount {
-    margin-bottom: 30px;
-    padding: 20px;
-    width: 100%;
-    border-radius: 10px;
-    background-color: #f7f7f7;
-  }
-  
-  #idaccount h3,
-  #passwordaccount h3,
-  #apiaccount h3,
-  #telegramaccount h3{
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  #idaccount h5,
-  #passwordaccount h5,
-  #apiaccount h5,
-  #telegramaccount h5 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .apiinfo {
-    margin-left: 20px;
-  }
-  
-  #logoutaccount {
-    background-color: #f9c6c9;
-    border-radius: 20px;
-    padding: 10px 20px;
-    display: inline-block;
-    cursor: pointer;
-    float: right; /* Ajout de la propriété float */
-  }
-  
-  #logoutaccount:hover {
-    background-color: #ff767f;
-  }
-  
-  #logoutaccount h3 {
-    margin: 0;
-    color: #fff;
-    font-weight: bold;
-  }

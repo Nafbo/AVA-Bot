@@ -5,7 +5,6 @@ import Backtests from "./pages/Backtests"
 import Home from "./pages/Home"
 import Performance from "./pages/Performance"
 import History from "./pages/History"
-import Account from "./pages/Account"
 import { Route, Routes } from "react-router-dom"
 
 
@@ -29,7 +28,6 @@ function App() {
           <Route path="/Backtests" element={<Backtests />} />
           <Route path="/Performance" element={<Performance />} />
           <Route path="/History" element={<History />} />
-          <Route path="/Account" element={<Account />} />
         </Routes>
       </div>
       

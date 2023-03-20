@@ -39,7 +39,7 @@ def getUsers(id):
     '''
     url = "https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/{}".format(id)
     r = rq.get(url).json()
-    with open('mykey.key', 'rb') as mykey:
+    with open('AVA-Bot/mykey.key', 'rb') as mykey: # Ajouter AVA-Bot/ sur ubuntu
         key = mykey.read()
     APIkey = r[0]['APIkey']
     APIsecret = r[0]['APIsecret']

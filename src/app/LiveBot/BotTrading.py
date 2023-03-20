@@ -394,7 +394,7 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
 
         if activePositions < maxActivePositions:   
             if trade.openLongPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and running == True: 
-                f2 = open("src/app/LiveBot/TradeMax.json") #Ajouter AVA-Bot/ pour unbuntu
+                f2 = open("AVA-Bot/src/app/LiveBot/TradeMax.json") #Ajouter AVA-Bot/ pour unbuntu
                 TradeMax = json.load(f2)
                 f2.close()
                 try:    
@@ -434,7 +434,7 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                     print(e)
                 
             if trade.openShortPosition(actualRow, previousRow) and positionInProgress[compte] == '' and usd_balance>1 and running == True: 
-                f2 = open("src/app/LiveBot/TradeMax.json") #Ajouter AVA-Bot/ pour unbuntu
+                f2 = open("AVA-Bot/src/app/LiveBot/TradeMax.json") #Ajouter AVA-Bot/ pour unbuntu
                 TradeMax = json.load(f2)
                 f2.close()
                 try: 

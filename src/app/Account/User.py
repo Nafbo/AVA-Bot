@@ -141,13 +141,10 @@ def decrypt(encrypted, passphrase):
 
 
 password = "asdbchituenHGUBUYfdoznchioryoizf".encode()
-ct_b64 = "U2FsdGVkX19crpaLa5yIZcrRLgaIAH3fLGNLs2xDt5Y="
+ct_b64 = "U2FsdGVkX19NqFbsRQaxInvQLi9THdss6H1Po3mTBlJjDJilL8Roj9oDNhGh1VqdfQVnFdp1pWjbVWhZZxfrWxMZoFlKn+QHuZb5PMDwO4olDzxJT4hWDW7TtEY4tLqj"
 
-# pt = decrypt(ct_b64, password)
-# print("pt", pt.decode())
-pt2 = encrypt('YES', password)
-print("pt2", pt2)
-
+pt = decrypt(ct_b64, password)
+print("pt", pt.decode())
 
 
 # if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import getCookie from "./features/getcookies"
-import image1 from '../assets/robot1.png';
+import image1 from '../assets/logo_simple.png';
 import "./styles/aboutyou.css"
 
 export default function Aboutyou() {
@@ -21,9 +21,9 @@ export default function Aboutyou() {
 
     return (
         <div className="account">
-            <div className="leftaccount">
-                <img id="imagerobot" src={image1}  alt="robot 1"/>     
-            </div>
+            
+            <img id="logoava" src={image1}  alt="ava logo"/>     
+            
             <div className="rightaccount">
                 <h1 id="titleaccount">Welcome to your account</h1>
                 <div id='idaccount'>

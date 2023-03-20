@@ -25,17 +25,18 @@ export const Register = (props) => {
     const [rememberMe, setRememberMe] = useState(false);
 
   
-    const secretKey = 'ZeU0CLZ6BZUfZV3aPr_GNKZ59Vo5-vfwOmM0Jk_Txfk=';
+    const secretKey = 'asdbchituenHGUBUYfdoznchioryoizf';
+    
 /*       const binaryKey = atob(secretKey);
       const key = CryptoJS.enc.Hex.parse(binaryKey);
 
       const encryptedAPISecret = 'U2FsdGVkX1+QchChsABSGhk/na0QC0J++lLTIaMCf2Q=';
       const decryptedAPISecret = CryptoJS.AES.decrypt(encryptedAPISecret, key).toString(CryptoJS.enc.Utf8);
 
-      console.log(decryptedAPISecret);
+      console.log(decryptedAPISecret); */
 
      
-           */
+          
 /*     useEffect(() => {
       async function loadPyodideAndRun() {
           // Charge Pyodide depuis une URL distante
@@ -128,6 +129,7 @@ export const Register = (props) => {
             });
 
             if (response.ok) {
+              document.cookie = `userId=${data.id}; maxAge: 30 * 24 * 60 * 60; path: '/'; /* httpOnly; */ secure`;
               setShowPopup(false);
 
               if (rememberMe) {
@@ -139,6 +141,7 @@ export const Register = (props) => {
                 };
                 
                 document.cookie = `sessionKey=${key}; ${cookieOptions}`;
+
             }} else {
               throw new Error('Une erreur s\'est produite.');
             }

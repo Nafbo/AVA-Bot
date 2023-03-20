@@ -40,6 +40,7 @@ export const Login = (props) => {
               console.log(passwordMatch)
               if (passwordMatch) {
                   console.log('Utilisateur connecté');
+                  document.cookie = `userId=${data[0].id}; maxAge: 30 * 24 * 60 * 60; path: '/'; /* httpOnly; */ secure`;
                   setShowPopup(false);
 
                    // Création du cookie si "Remember Me" est coché
@@ -52,7 +53,6 @@ export const Login = (props) => {
                     };
                     
                     document.cookie = `sessionKey=${key}; ${cookieOptions}; /* httpOnly; */ secure`;
-                    document.cookie = `userId=${data[0].id}; ${cookieOptions}; /* httpOnly; */ secure`;
                     
                     
 

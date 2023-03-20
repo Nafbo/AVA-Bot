@@ -4,8 +4,11 @@
   margin-top: 50px;
 }
 
-#droite {
+#tradeinfo,
+#longtradeinfo,
+#shorttradeinfo {
   width: 100%;
+  margin-bottom: 30px;
   padding: 2rem;
   box-sizing: border-box;
   border-radius: 10px;
@@ -20,13 +23,14 @@
 #balance,
 #currencies,
 #running,
-#place{
+#place,
+#generalinfo{
   margin-bottom: 30px;
   padding: 20px;
   width: 100%;
   border-radius: 10px;
   background-color: #f7f7f7;
-}
+} 
 
 #balance p {
   font-size: 2rem;
@@ -46,6 +50,7 @@
 #tableau {
   border-collapse: collapse;
   width: 100%;
+  margin-top:1rem;
 }
 
 #tableau th,

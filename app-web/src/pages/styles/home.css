@@ -6,6 +6,11 @@
     margin-top: 50px;
   }
   
+/*   .elementsgrid {
+    display: flex;
+    flex-direction: row;
+  } */
+
   #robot1 {
     width: 200px;
     height: auto;
@@ -21,23 +26,37 @@
     font-size: 36px;
   }
   
+ 
   #Name h3,
   #Personnality h3 {
     font-size: 24px;
     margin-bottom: 10px;
   }
   
-  #Name p,
+  #Name p{
+    font-size: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    color:  #25a4ffc5;
+    
+  }
+  
+  
   #Personnality p {
     font-size: 18px;
     margin-bottom: 10px;
+    text-align: center;
   }
   
   #launch {
     background-color: #f9c6c9;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 10px ;
+    text-align: center;
+    justify-items: center;
+    width: 25%;
     display: inline-block;
+    /* right : 50%; */
     cursor: pointer;
   }
   
@@ -50,15 +69,96 @@
     color: #fff;
     font-weight: bold;
   }
+
+  
   
   #Name,
-  #Personnality{
+  #Personnality,
+  #Options{
     margin-bottom: 30px;
-    padding: 20px;
     width: 100%;
     border-radius: 10px;
     background-color: #f7f7f7;
+    padding:10px;
   }
+
+  #Personnality button{
+    background-color: #25a4ff60;
+    border-radius: 20px;
+    margin-top:10px;
+    padding: 10px 20px;
+    border : none;
+    display: inline-block;
+    cursor: pointer;
+    
+  }
+
+
+
+  .auto{
+    margin-right:5rem;
+  }
+
+  
+  #Personnality button:focus {
+    background-color:  #25a4ffc5;
+}
+
+  #Personnality button:hover {
+    background-color:  #25a4ffc5;
+  }
+
+  #divhide{
+    justify-items: center;
+    align-items: center;
+  }
+  #divhide h3{
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top : 20px;
+    
+  }
+ .calm :hover{
+  background-color:  #25a4ffc5;
+ }
+
+ .calm :focus {
+  background-color:  #07131bc5;
+}
+ 
+#Options {
+  display: flex;
+  flex-direction: column;
+}
+
+#Options label{
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+#Options input {
+  margin-bottom: 10px;
+  width:100%;
+}
+
+#Options button {
+  background-color: #25a4ff60;
+  border-radius: 20px;
+  margin-top:10px;
+  padding: 10px 20px;
+  align-self: center;
+  border : none;
+  display: inline-block;
+  cursor: pointer;
+  width :50%
+}
+
+#Options p{
+  text-align: end;
+  font-size: 15px;
+  margin-bottom: 0.25rem;
+}
   
   @media (min-width: 768px) {
     .home {

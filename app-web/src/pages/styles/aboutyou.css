@@ -5,9 +5,12 @@
       align-items: center;
     }
     
-    #imagerobot {
-      margin-right: 0;
-      margin-bottom: 30px;
+
+    #logoava {
+      width: 5rem;
+      height: 5rem;
+      align-self: center;
+      padding-bottom:0.55rem;
     }
     
     #titleaccount {
@@ -17,9 +20,27 @@
     }
     
     #logoutaccount {
-      margin-top: 20px;
-      float: none;
+      background-color: #fa878f;
+      border-radius: 20px;
+      padding: 10px 20px;
+      display: inline-block;
+      cursor: pointer;
+      float: right;
+      border: none;
+      color:white;
     }
+    
+    #logoutaccount:hover {
+      background-color: #ff767f;
+    }
+    
+    #logoutaccount h3 {
+      margin: 0;
+      color: #fff;
+      font-weight: bold;
+    }
+
+
     
     #idaccount,
     #passwordaccount,
@@ -52,8 +73,10 @@
       align-items: flex-start;
     }
     
-    #imagerobot {
-      margin-right: 60px;
+    #logoava {
+      align-items: center;
+      padding-bottom:0.55rem;
+    
     }
     
     #titleaccount {
@@ -62,9 +85,6 @@
       text-align: center;
     }
     
-    #logoutaccount {
-      float: right;
-    }
     
     #idaccount,
     #passwordaccount,
@@ -98,11 +118,14 @@
     }
     
     #logoutaccount {
-      background-color: #f9c6c9;
+      background-color: #fa878f;
       border-radius: 20px;
       padding: 10px 20px;
       display: inline-block;
       cursor: pointer;
+      float: right;
+      border: none;
+      color:white;
     }
     
     #logoutaccount:hover {

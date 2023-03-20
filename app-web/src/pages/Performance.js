@@ -70,13 +70,34 @@ class Performance extends Component{
 
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
 
+        <div id="generalinfo"> 
+          <h1> General Informations </h1>
+          <p> Total fees </p>
+          <p> Final Balance </p>
+          <p> Performances </p>
+          <p> Buy&Hold </p>
+          <p> Performance vs Buy&Hold </p>
+          <p> Best trade </p>
+          <p> Worst trade </p>
+        </div>
+
+        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
+
+
+       {/* ----------------------------------------------------------------------------------------------------------------------------- */}
+
           <div id="currencies"> 
-            <h1> CryptoCurrencies </h1>
+            <h1> Pair Result</h1>
             <table id="tableau">
                   <thead>
                     <tr>
-                      <th>Symbol</th>
-                      <th>Coins</th>
+                      <th>Trades</th>
+                      <th>Pair</th>
+                      <th>Sum-result</th>
+                      <th>Mean-Trade</th>
+                      <th>Worst-Trade</th>
+                      <th>Best-Trade</th>
+                      <th>Win-Rate</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -84,31 +105,67 @@ class Performance extends Component{
                       <tr key={i}>
                         <td>{d.symbol.substring(0, 3)}</td>
                         <td>{d.coins.toFixed(5)}</td>
+                        <td>{d.coins.toFixed(5)}</td>
+                        <td>{d.coins.toFixed(5)}</td>
+                        <td>{d.coins.toFixed(5)}</td>
+                        <td>{d.coins.toFixed(5)}</td>
+                        <td>{d.coins.toFixed(5)}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table> 
           </div>
           
-         {/* ----------------------------------------------------------------------------------------------------------------------------- */}
-
-          <div id="running"> 
-            <h1> Running </h1>
-            <p> for 16 hours </p>
-          </div>
-
-         {/* ----------------------------------------------------------------------------------------------------------------------------- */}
 
           <div id="place"> 
-            <h1> Place </h1>
-            <p> binance </p>
+            <h1> Running Information</h1>
+            <p> Bot on  </p>
+            <p> Starting date  </p>
+            <p> Ending date  </p>
+            <p> Starting balance  </p>
+            <p> Leverage use  </p>
           </div>
 
           {/* ----------------------------------------------------------------------------------------------------------------------------- */}
           </div>
 
           <div id="droite"> 
-            <h1> Transactions </h1>
+              <div id="tradeinfo"> 
+                <h1> Trades Informations</h1>
+                <p> Number of trades </p>
+                <p> Number of positives trades  </p>
+                <p> Number of negatives trades  </p>
+                <p> Trades win rate ratio  </p>
+                <p> Average trades performances  </p>
+                <p> Average positive performances  </p>
+                <p> Average negative performances  </p>
+              </div>
+
+              <div id="longtradeinfo"> 
+                <h1> Long Trades Information</h1>
+                <p> Number of long trades </p>
+                <p> Average long trades performances  </p>
+                <p> Best long trade </p>
+                <p> Worst long trade  </p>
+                <p> Number of positives long trades  </p>
+                <p> Number of negatives long trades  </p>
+                <p> Long trade win rate ratio  </p>
+              </div>
+
+              <div id="shorttradeinfo"> 
+                <h1> Short Trades Information</h1>
+                <p> Number of short trades </p>
+                <p> Average short trades performances  </p>
+                <p> Best short trade </p>
+                <p> Worst short trade  </p>
+                <p> Number of positives short trades  </p>
+                <p> Number of negatives long trades  </p>
+                <p> Long trade win rate ratio  </p>
+              </div>
+
+
+
+            {/* <h1> Transactions </h1>
             <table id="tableau" ref={this.tableRef}>
               <thead>
                 <tr>
@@ -126,7 +183,7 @@ class Performance extends Component{
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table> */}
           </div>
 
 

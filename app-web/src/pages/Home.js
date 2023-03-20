@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/home.css"
 import getCookie from "./features/getcookies"/* om "react"; */
 import React, {Component} from "react" 
-import Select from 'react-select';
 
 class Home extends Component {
 

@@ -3,10 +3,6 @@ import showIcon from '../assets/eye.png';
 import hideIcon from '../assets/eye_open.png';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
-import  Fernet  from 'fernet';
-/* import {spawn} from 'child_process'; */
-import pyodide from 'pyodide';
-import {loadPyodide, runPython} from 'pyodide'
 import CryptoJS from 'crypto-js'
 
 

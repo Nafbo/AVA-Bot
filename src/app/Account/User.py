@@ -54,9 +54,12 @@ def getUsers(id):
     id (string): id of the user
     
     Returns:
+    myrow (json): all the account information
     '''
     with open('mykey.key', 'rb') as mykey:
         key = mykey.read()
+    # key = 'ma_clé_secrète'
+    # key = key.encode()
     f = Fernet(key)
     url = "https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/{}".format(id)
     r = rq.get(url).json()
@@ -94,7 +97,59 @@ def getUsers(id):
         }
     return(myrow)
     
+from Crypto import Random
+from Crypto.Cipher import AES
+import base64
+from hashlib import md5
 
-if __name__ == '__main__':
-    createUser()
-    print(getUsers('victor.bonnaf@gmail.com'))
+BLOCK_SIZE = 16
+
+def pad(data):
+    length = BLOCK_SIZE - (len(data) % BLOCK_SIZE)
+    return data + (chr(length)*length).encode()
+
+def unpad(data):
+    return data[:-(data[-1] if type(data[-1]) == int else ord(data[-1]))]
+
+def bytes_to_key(data, salt, output=48):
+    assert len(salt) == 8, len(salt)
+    data += salt
+    key = md5(data).digest()
+    final_key = key
+    while len(final_key) < output:
+        key = md5(key + data).digest()
+        final_key += key
+    return final_key[:output]
+
+def encrypt(message, passphrase):
+    salt = Random.new().read(8)
+    key_iv = bytes_to_key(passphrase, salt, 32+16)
+    key = key_iv[:32]
+    iv = key_iv[32:]
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    return base64.b64encode(b"Salted__" + salt + aes.encrypt(pad(message).decode()))
+
+def decrypt(encrypted, passphrase):
+    encrypted = base64.b64decode(encrypted)
+    assert encrypted[0:8] == b"Salted__"
+    salt = encrypted[8:16]
+    key_iv = bytes_to_key(passphrase, salt, 32+16)
+    key = key_iv[:32]
+    iv = key_iv[32:]
+    aes = AES.new(key, AES.MODE_CBC, iv)
+    return unpad(aes.decrypt(encrypted[16:]))
+
+
+password = "asdbchituenHGUBUYfdoznchioryoizf".encode()
+ct_b64 = "U2FsdGVkX19crpaLa5yIZcrRLgaIAH3fLGNLs2xDt5Y="
+
+# pt = decrypt(ct_b64, password)
+# print("pt", pt.decode())
+pt2 = encrypt('YES', password)
+print("pt2", pt2)
+
+
+
+# if __name__ == '__main__':
+    # createUser()
+    # print(getUsers('victor.bonnaf@gmail.com'))

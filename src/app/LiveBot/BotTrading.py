@@ -473,7 +473,8 @@ def BotTrading(pairs, apiKey, secret, password, id, running, maxActivePositions,
                 except Exception as e:
                     print(e)
                 
-        compte+=1      
+        compte+=1   
+    print(str(int(time.time() * 1000)))
     return
                 
         

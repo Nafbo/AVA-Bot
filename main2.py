@@ -16,6 +16,7 @@ if __name__ == '__main__':
     #     r = getUsers(r1[i]['id'])
     #     main(r['pairList'], r['APIkey'], r['APIsecret'], r['APIpassword'], r['id'], r['running'], r['maxActivePositions'], r['telegram'],r['chat_id'], r['mode'], r['withMode'])
    
-    id = 'victor.bonnaf@gmail.com'
+    id = 'victor2.bonnaf2@gmail.com'
     r = getUsers(id)
     main(r['pairList'], r['APIkey'], r['APIsecret'], r['APIpassword'], r['id'], r['running'], r['maxActivePositions'], r['telegram'],r['chat_id'],r['mode'], r['withMode'])
+   

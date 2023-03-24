@@ -1,14 +1,14 @@
 import "./styles/perfo.css"
-import $ from 'jquery';
 import 'datatables.net';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import getCookie from "./features/getcookies"
 
 
 
 function Performance() {
-  const API_URL = 'https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/victor.bonnaf@gmail.com';
+
+
  
  
   const [data, setData] = useState([]);
@@ -44,8 +44,9 @@ function Performance() {
 
 
   useEffect(() => {
+    const id = getCookie('userId');
     const fetchData = async () => {
-      const result = await axios(API_URL);
+      const result = await axios(`https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/${id}`);
       setData(result.data);
     };
     fetchData();

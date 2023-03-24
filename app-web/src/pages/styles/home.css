@@ -48,16 +48,20 @@
     text-align: center;
   }
   
-  #launch {
+  .launch {
     background-color: #f9c6c9;
+    color: white;
+    border: none;
     border-radius: 20px;
-    padding: 10px ;
+    font-size: 2rem;
     text-align: center;
     justify-items: center;
     width: 25%;
-    display: inline-block;
-    /* right : 50%; */
     cursor: pointer;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    
   }
   
   #launch:hover {

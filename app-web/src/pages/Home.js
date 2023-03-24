@@ -5,9 +5,10 @@ import image1 from '../assets/robot1.png';
 import image3 from '../assets/robot3.png';
 import image4 from '../assets/robot4.png'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles/home.css"
-import getCookie from "./features/getcookies"/* om "react"; */
-import React, {Component} from "react" 
+import "./styles/home.css";
+import getCookie from "./features/getcookies";/* om "react"; */
+import React, {Component} from "react" ;
+import axios from 'axios';;
 
 class Home extends Component {
 
@@ -20,10 +21,11 @@ class Home extends Component {
       donnees: [],
       maxpos: '',
       pairlist: '',
+      isLaunched: false,
       running: false,
     };
     this.tableRef = React.createRef();
-   
+
     
   }
   
@@ -34,7 +36,8 @@ class Home extends Component {
         return response.json()
         })
         .then((result) => {
-          this.setState({donnees: result})
+          console.log(result)
+          this.setState({ donnees: result })
         }); 
     }
 
@@ -67,8 +70,6 @@ class Home extends Component {
               console.log(error);
             }) 
         }
-
-
   
     handleAutomaticClick = () => {  
       const id = getCookie('userId');
@@ -89,10 +90,6 @@ class Home extends Component {
           console.log(error);
         });
     }
-
-
-
-
 
   
     handleManualClick = () => {
@@ -137,35 +134,26 @@ class Home extends Component {
       event.preventDefault();
       this.updateData();
     };
+
+    handleClick = () => {
+      const id = getCookie('userId');
+      const { isLaunched}= this.state;
+      const running = !isLaunched;
+  
+      axios.patch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, { running })
+        .then(response => {
+          this.setState({
+            isLaunched: !isLaunched,
+            running: running
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
     
 
-
-    handleLaunch() {
-      const running = this.state.running;
-      console.log(running)
-      // Utiliser la méthode fetch() ou axios pour envoyer une requête PATCH à l'API
-      const id = getCookie('userId');
-      fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          running: !running,
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          running: data.running,
-        });  
-       
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    }
-   
+    
     render(){
       return(
     
@@ -221,13 +209,14 @@ class Home extends Component {
 
           </div>
 
-          <div id='launch' onClick={this.handleLaunch}> 
-            <h3 alt={this.state.running ? true : false}>{this.state.running ? "Stop me !" : "Launch Me!"}</h3>
+        
+          <div classname="lauchnbutton">
+          <button className="launch"  onClick={this.handleClick}>
+              {this.state.isLaunched ? 'Stop me ! ' : 'Launch me !'}
+            </button>
           </div>
+        </div> 
 
-          
-
-        </div>
           
         </div>
           )

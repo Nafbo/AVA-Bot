@@ -155,6 +155,7 @@ class Home extends Component {
 
     
     render(){
+      const launchClass = this.state.isLaunched ? 'launch--stopped' : 'launch--launched';
       return(
     
         <div className='home'> 
@@ -164,11 +165,11 @@ class Home extends Component {
           </div>
 
           <div className='droite'> 
-          <div id='Title'>
-            <h1> Your AVA Bot</h1>
-          </div>
+            <div id='Title'>
+              <h1> Your AVA Bot</h1>
+            </div>
 
-          <div className='elementsgrid'> 
+          
             <div className='gauche2'> 
 
               <div id='Name'> 
@@ -180,8 +181,9 @@ class Home extends Component {
                 <p> <button className='auto' onClick={this.handleAutomaticClick}> automatic </button> <button  className={`manuel ${this.state.withMode === 'manual' ? 'active' : ''}`} onClick={this.handleManualClick} > manual </button>  </p>
                 
                 <div id="divhide" style = {{display:"none"}}>
-                  <h3> Choose your bot's personality</h3>
-                  <button className="calm" onClick={() => this.handleOptionClick('calm')}> calm </button> 
+                  <h5> - Manual mode activated - </h5>
+                  <h3>Choose your bot's personality</h3>
+                  <button className="calm" onClick={() => this.handleOptionClick('calm')} > calm </button> 
                   <button className="medium" onClick={() => this.handleOptionClick('medium')}> medium </button> 
                   <button className="aggressive" onClick={() => this.handleOptionClick('aggressive')}> aggressive </button>  
                 </div>
@@ -202,20 +204,20 @@ class Home extends Component {
                     <label htmlFor="pairlist">Pairlist</label>
                     <input value={this.state.pairlist} onChange={(e) => this.setState({pairlist: e.target.value})} id="pairlist" placeholder="Pairlist" required/>
                     <p> actual pairlist : {this.state.donnees[0]?.pairList}</p>  
-                </form> 
+                  </form> 
                   <button type="submit">Save these preferences</button>
                 </div>
             </div>
 
-          </div>
+          
 
         
-          <div classname="lauchnbutton">
-          <button className="launch"  onClick={this.handleClick}>
-              {this.state.isLaunched ? 'Stop me ! ' : 'Launch me !'}
+          
+            <button className={`launch ${launchClass}`}  onClick={this.handleClick}>
+                {this.state.isLaunched ? 'Stop me ! ' : 'Launch me !'}
             </button>
-          </div>
-        </div> 
+
+          </div> 
 
           
         </div>

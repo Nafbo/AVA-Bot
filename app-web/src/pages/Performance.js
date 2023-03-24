@@ -1,60 +1,227 @@
 import "./styles/perfo.css"
-import React, {Component} from "react"
 import $ from 'jquery';
 import 'datatables.net';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 
 
+function Performance() {
+  const API_URL = 'https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/victor.bonnaf@gmail.com';
+ 
+ 
+  const [data, setData] = useState([]);
+  const [totalBalance, setTotalBalance] = useState(0);
+  const [totalFees, setTotalFees] = useState(0);
+  const [finalBalance, setFinalBalance] = useState(0);
+  const [totalPerformances, setTotalPerformances] = useState(0);
+  const [bestTrade, setBestTrade] = useState({});
+  const [worstTrade, setWorstTrade] = useState({});
+  const [pairStats, setPairStats] = useState([]);
+  const [numOfTrades, setNumOfTrades] = useState(0);
+  const [numOfPositives, setNumOfPositives] = useState(0);
+  const [numOfNegatives, setNumOfNegatives] = useState(0);
+  const [avgTradePerformance, setAvgTradePerformance] = useState(0);
+  const [avgPositivePerformance, setAvgPositivePerformance] = useState(0);
+  const [avgNegativePerformance, setAvgNegativePerformance] = useState(0);
+  const [tradesWinRateRatio, setTradesWinRateRatio] = useState(0);
+  const [numOfLongTrades, setNumOfLongTrades] = useState(0);
+  const [AvgLongTradePerformance, setAvgLongTradePerformance] = useState(0);
+  const [BestLongTrade, setBestLongTrade] = useState(0);
+  const [WorstLongTrade, setWorstLongTrade] = useState(0);
+  const [NumOfPositiveLongTrades, setNumOfPositiveLongTrades] = useState(0);
+  const [NumOfNegativeLongTrades, setNumOfNegativeLongTrades] = useState(0);
+  const [LongTradesWinRateRatio, setLongTradesWinRateRatio] = useState(0);
+  const [numOfShortTrades, setNumOfShortTrades] = useState(0);
+  const [AvgShortTradePerformance, setAvgShortTradePerformance] = useState(0);
+  const [BestShortTrade, setBestShortTrade] = useState(0);
+  const [WorstShortTrade, setWorstShortTrade] = useState(0);
+  const [NumOfPositiveShortTrades, setNumOfPositiveShortTrades] = useState(0);
+  const [NumOfNegativeShortTrades, setNumOfNegativeShortTrades] = useState(0);
+  const [ShortTradesWinRateRatio, setShortTradesWinRateRatio] = useState(0);
 
 
-class Performance extends Component{
 
-  /* ------- API ------- */
-  constructor(props) {
-    super(props);
-    this.state = {
-      donnees: []
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(API_URL);
+      setData(result.data);
     };
-    this.tableRef = React.createRef();
-  }
-  
-    componentDidMount(){
-      fetch("https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/1",  )
-        .then((response) => {
-        return response.json()
-        })
-        .then((result) => {
-          this.setState({donnees: result})
-        }); 
-        
-      this.initDataTable();
-        
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // calcul de la somme balance
+    const balanceSum = data.reduce((acc, item) => acc + item.usd, 0);
+    setTotalBalance(balanceSum);
+
+    // calcul de la somme des frais
+    const feesSum = data.reduce((acc, item) => acc + item.fees, 0);
+    setTotalFees(feesSum);
+
+    // récupération du solde final (dernière ligne de la colonne wallet)
+    const finalWalletBalance = data[data.length - 1]?.wallet || 0;
+    setFinalBalance(finalWalletBalance);
+
+    // calcul de la somme des performances
+    const performancesSum = data.reduce((acc, item) => {
+      if (!isNaN(item.performance)) {
+        return acc + item.performance;
+      }
+      return acc;
+    }, 0);
+    setTotalPerformances(performancesSum);
+
+     // tri des données par date
+     const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+
+    // recherche de la meilleure performance
+    const best = sortedData.reduce((max, item) => {
+      if (!isNaN(item.performance) && item.performance > max.performance) {
+        return item;
+      }
+      return max;
+    }, { performance: -Infinity });
+    setBestTrade(best);
+
+    // recherche de la pire performance
+    const worst = sortedData.reduce((min, item) => {
+      if (!isNaN(item.performance) && item.performance < min.performance) {
+        return item;
+      }
+      return min;
+    }, { performance: Infinity });
+    setWorstTrade(worst);
+
+  // Calculating Pair Stats
+  const pairs = [...new Set(data.filter((item) => !isNaN(item.performance)).map((item) => item.symbol))];
+  const pairStats = pairs.map((pair) => {
+    const filteredData = data.filter((item) => item.symbol === pair && !isNaN(item.performance));
+    const trade = filteredData.length;
+    const sumResult = filteredData.reduce((acc, item) => acc + item.performance, 0);
+    const meanTrade = sumResult / filteredData.length;
+    const worstTrade = Math.min(...filteredData.map((item) => item.performance));
+    const bestTrade = Math.max(...filteredData.map((item) => item.performance));
+    const goodTrades = filteredData.filter((item) => item.resultat === "good").length;
+    const winRate = goodTrades / filteredData.length;
+    return {
+      trade,
+      pair,
+      sumResult,
+      meanTrade,
+      worstTrade,
+      bestTrade,
+      winRate,
+    };
+  });
+  setPairStats(pairStats);
+
+  // calculate trade info 
+
+  const openPositions = data.filter((item) => item.position === "openLong" || item.position === "openShort");
+  const numOfTrades = openPositions.length;
+  const numOfPositives = openPositions.filter((item) => item.resultat === "good").length;
+  const numOfNegatives = openPositions.filter((item) => item.resultat === "bad").length;
+  const sumAllPerformances = openPositions.reduce((acc, item) => {
+    if (!isNaN(item.performance)) {
+      return acc + parseFloat(item.performance);
+    } else {
+      return acc;
     }
+  }, 0);
+  const sumPositivePerformances = openPositions.reduce((acc, item) => {
+    if (item.resultat === "good" && !isNaN(item.performance)) {
+      return acc + parseFloat(item.performance);
+    } else {
+      return acc;
+    }
+  }, 0);
+  const sumNegativePerformances = openPositions.reduce((acc, item) => {
+    if (item.resultat === "bad" && !isNaN(item.performance)) {
+      return acc + parseFloat(item.performance);
+    } else {
+      return acc;
+    }
+  }, 0);
+  const avgTradePerformance = sumAllPerformances / numOfTrades;
+  const avgPositivePerformance = sumPositivePerformances / numOfPositives;
+  const avgNegativePerformance = sumNegativePerformances / numOfNegatives;
+  const tradesWinRateRatio = numOfPositives / numOfTrades;
 
+  setNumOfTrades(numOfTrades);
+  setNumOfPositives(numOfPositives);
+  setNumOfNegatives(numOfNegatives);
+  setAvgTradePerformance(avgTradePerformance);
+  setAvgPositivePerformance(avgPositivePerformance);
+  setAvgNegativePerformance(avgNegativePerformance);
+  setTradesWinRateRatio(tradesWinRateRatio);
 
-    initDataTable = () => {
-      $(this.tableRef.current).DataTable({
-        paging: true, // activer la pagination
-        pageLength: 5, // par défaut, afficher 5 valeurs par page
-        scrollY: '50%', // ajouter un scroll vertical à la table
-        retrieve:true,
-        lengthChange: true, // activer la modification de la longueur de page
-        pageLengthOptions: [2, 4, 5] // définir les options de longueur de page
-      });
-    };
+  // Long trade info
+let numOfLongTrades = 0;
+let sumLongTradePerformance = 0;
+let avgLongTradePerformance = 0;
+let bestLongTrade = 0;
+let worstLongTrade = 0;
+let numOfPositiveLongTrades = 0;
+let numOfNegativeLongTrades = 0;
+let longTradesWinRateRatio = 0;
 
+const filteredDatalong = data.filter((item) => item.position === "openLong" && !isNaN(item.performance));
 
-  /* ----------------------------------------------------------------------------- */
-    
-    render(){
+if (filteredDatalong.length > 0) {
+  numOfLongTrades = filteredDatalong.length;
+  sumLongTradePerformance = filteredDatalong.reduce((acc, item) => acc + item.performance, 0);
+  avgLongTradePerformance = sumLongTradePerformance / numOfLongTrades;
+  bestLongTrade = filteredDatalong.reduce((prev, current) => (prev.performance > current.performance ? prev : current));
+  worstLongTrade = filteredDatalong.reduce((prev, current) => (prev.performance < current.performance ? prev : current));
+  numOfPositiveLongTrades = filteredDatalong.filter((item) => item.resultat === "good").length;
+  numOfNegativeLongTrades = filteredDatalong.filter((item) => item.resultat === "bad").length;
+  longTradesWinRateRatio = numOfPositiveLongTrades / numOfLongTrades;
+}
 
-      /* ---- Somme Balance ---- */
-      let somme = 0;
-      this.state.donnees.forEach(d => {
-        somme += d.usd;
-      });
-      /* ---------------------- */
+  setNumOfLongTrades(numOfLongTrades);
+  setAvgLongTradePerformance(avgLongTradePerformance);
+  setBestLongTrade(bestLongTrade);
+  setWorstLongTrade(worstLongTrade);
+  setNumOfPositiveLongTrades(numOfPositiveLongTrades);
+  setNumOfNegativeLongTrades(numOfNegativeLongTrades);
+  setLongTradesWinRateRatio(longTradesWinRateRatio);
+
+//short trade info
+  // Number of Short trades
+  
+  let numOfShortTrades=0;
+  let sumShortTradePerformance = 0;
+  let avgShortTradePerformance = 0;
+  let bestShortTrade = 0;
+  let worstShortTrade = 0;
+  let numOfPositiveShortTrades = 0;
+  let numOfNegativeShortTrades = 0;
+  let shortTradesWinRateRatio = 0;
+  
+  // Short trade info
+  const filteredDatashort = data.filter((item) => item.position === "openShort" && !isNaN(item.performance));
+  if (filteredDatalong.length > 0) {
+  numOfShortTrades = filteredDatashort.length;
+  sumShortTradePerformance = filteredDatashort.reduce((acc, item) => acc + item.performance, 0);
+  avgShortTradePerformance = numOfShortTrades > 0 ? sumShortTradePerformance / numOfShortTrades : 0;
+  bestShortTrade = filteredDatashort.reduce((prev, current) => (prev.performance > current.performance ? prev : current));
+  worstShortTrade = filteredDatashort.reduce((prev, current) => (prev.performance < current.performance ? prev : current));
+  numOfPositiveShortTrades = filteredDatashort.filter((item) => item.resultat === "good").length;
+  numOfNegativeShortTrades = filteredDatashort.filter((item) => item.resultat === "bad").length;
+  shortTradesWinRateRatio = numOfPositiveLongTrades / numOfLongTrades;
+  }
+  setNumOfShortTrades(numOfShortTrades);
+  setAvgShortTradePerformance(avgShortTradePerformance);
+  setBestShortTrade(bestShortTrade);
+  setWorstShortTrade(worstShortTrade);
+  setNumOfPositiveShortTrades(numOfPositiveShortTrades);
+  setNumOfNegativeShortTrades(numOfNegativeShortTrades);
+  setShortTradesWinRateRatio(shortTradesWinRateRatio);
+
+  }, [data]);
 
 
       return (
@@ -65,20 +232,21 @@ class Performance extends Component{
           <div className="gauche"> 
           <div id="balance"> 
             <h1> Balance </h1>
-              <p  /* key={somme.id} */>{somme.toFixed(2)} USD</p>
+              <p id="insidebalance">{totalBalance.toFixed(2)} USD</p>
           </div>
 
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
 
         <div id="generalinfo"> 
           <h1> General Informations </h1>
-          <p> Total fees </p>
-          <p> Final Balance </p>
-          <p> Performances </p>
-          <p> Buy&Hold </p>
-          <p> Performance vs Buy&Hold </p>
-          <p> Best trade </p>
-          <p> Worst trade </p>
+          <br/>
+          <p> Total fees : {totalFees.toFixed(2)} $ </p>
+          <p> Final Balance : {finalBalance.toFixed(2)} $ </p>
+          <p> Performances : {totalPerformances.toFixed(2)} % </p>
+          <p> Buy&Hold : {} $ </p>
+          <p> Performance vs Buy&Hold :{} $ </p>
+          <p> Best trade : {parseFloat(bestTrade.performance).toFixed(2)} % ({bestTrade.date})</p>
+          <p> Worst trade : {parseFloat(worstTrade.performance).toFixed(2)} % ({worstTrade.date}) </p>
         </div>
 
         {/* ----------------------------------------------------------------------------------------------------------------------------- */}
@@ -86,35 +254,35 @@ class Performance extends Component{
 
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
 
-          <div id="currencies"> 
-            <h1> Pair Result</h1>
-            <table id="tableau">
-                  <thead>
-                    <tr>
-                      <th>Trades</th>
-                      <th>Pair</th>
-                      <th>Sum-result</th>
-                      <th>Mean-Trade</th>
-                      <th>Worst-Trade</th>
-                      <th>Best-Trade</th>
-                      <th>Win-Rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.donnees.map((d, i) => (
-                      <tr key={i}>
-                        <td>{d.symbol.substring(0, 3)}</td>
-                        <td>{d.coins.toFixed(5)}</td>
-                        <td>{d.coins.toFixed(5)}</td>
-                        <td>{d.coins.toFixed(5)}</td>
-                        <td>{d.coins.toFixed(5)}</td>
-                        <td>{d.coins.toFixed(5)}</td>
-                        <td>{d.coins.toFixed(5)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table> 
-          </div>
+       <div id="currencies"> 
+        <h1> Pair Result</h1>
+        <table id="tableau">
+          <thead>
+            <tr>
+              <th>Trades</th>
+              <th>Pair</th>
+              <th>Sum-result</th>
+              <th>Mean-Trade</th>
+              <th>Worst-Trade</th>
+              <th>Best-Trade</th>
+              <th>Win-Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pairStats.map((pairStat, index) => (
+              <tr key={index}>
+                <td>{pairStat.trade}</td>
+                <td>{pairStat.pair.slice(0, 3)}</td>
+                <td>{parseFloat(pairStat.sumResult).toFixed(2)} %</td>
+                <td>{parseFloat(pairStat.meanTrade).toFixed(2)} %</td>
+                <td>{parseFloat(pairStat.worstTrade).toFixed(2)} %</td>
+                <td>{parseFloat(pairStat.bestTrade).toFixed(2)} %</td>
+                <td>{(pairStat.winRate * 100).toFixed(2)} %</td>
+              </tr>
+            ))}
+          </tbody>
+        </table> 
+      </div>
           
 
           <div id="place"> 
@@ -131,59 +299,41 @@ class Performance extends Component{
 
           <div id="droite"> 
               <div id="tradeinfo"> 
-                <h1> Trades Informations</h1>
-                <p> Number of trades </p>
-                <p> Number of positives trades  </p>
-                <p> Number of negatives trades  </p>
-                <p> Trades win rate ratio  </p>
-                <p> Average trades performances  </p>
-                <p> Average positive performances  </p>
-                <p> Average negative performances  </p>
+                <h1> Trades Informations </h1>
+                <h5> (Positions openLong & openShort) </h5>
+                <br/>
+                <p>Number of trades: {numOfTrades}</p>
+                <p>Number of positive trades: {numOfPositives}</p>
+                <p>Number of negative trades: {numOfNegatives}</p>
+                <p>Trades win rate ratio: {tradesWinRateRatio.toFixed(2)}</p>
+                <p>Average trades performances: {avgTradePerformance.toFixed(2)}</p>
+                <p>Average positive performances: {avgPositivePerformance.toFixed(2)}</p>
+                <p>Average negative performances: {avgNegativePerformance.toFixed(2)}</p>
               </div>
 
               <div id="longtradeinfo"> 
-                <h1> Long Trades Information</h1>
-                <p> Number of long trades </p>
-                <p> Average long trades performances  </p>
-                <p> Best long trade </p>
-                <p> Worst long trade  </p>
-                <p> Number of positives long trades  </p>
-                <p> Number of negatives long trades  </p>
-                <p> Long trade win rate ratio  </p>
+                <h1> Long Trades Information </h1>
+                <h5> (Positions openLong) </h5>
+                <p> Number of long trades: {numOfLongTrades} </p>
+                <p> Average long trades performances: {AvgLongTradePerformance}  </p>
+                <p> Best long trade: {BestLongTrade}</p>
+                <p> Worst long trade : {WorstLongTrade} </p>
+                <p> Number of positives long trades: {NumOfPositiveLongTrades}  </p>
+                <p> Number of negatives long trades : {NumOfNegativeLongTrades} </p>
+                <p> Long trade win rate ratio : {LongTradesWinRateRatio} </p>
               </div>
 
               <div id="shorttradeinfo"> 
                 <h1> Short Trades Information</h1>
-                <p> Number of short trades </p>
-                <p> Average short trades performances  </p>
-                <p> Best short trade </p>
-                <p> Worst short trade  </p>
-                <p> Number of positives short trades  </p>
-                <p> Number of negatives long trades  </p>
-                <p> Long trade win rate ratio  </p>
+                <h5> (Positions openShort) </h5>
+                <p> Number of short trades: {numOfShortTrades} </p>
+                <p> Average short trades performances: {AvgShortTradePerformance}  </p>
+                <p> Best short trade: {BestShortTrade} </p>
+                <p> Worst short trade: {WorstShortTrade}  </p>
+                <p> Number of positives short trades: {NumOfPositiveShortTrades}  </p>
+                <p> Number of negatives long trades: {NumOfNegativeShortTrades}  </p>
+                <p> Long trade win rate ratio: {ShortTradesWinRateRatio}  </p>
               </div>
-
-
-
-            {/* <h1> Transactions </h1>
-            <table id="tableau" ref={this.tableRef}>
-              <thead>
-                <tr>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.donnees.map((d, i) => (
-                  <tr key={i}>
-                    <td>{d.symbol.substring(0, 3)}</td>
-                    <td>{d.coins.toFixed(5)}</td>
-                    <td>{d.date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table> */}
           </div>
 
 
@@ -192,6 +342,5 @@ class Performance extends Component{
         </div>
     )
   }
-}
 
 export default Performance

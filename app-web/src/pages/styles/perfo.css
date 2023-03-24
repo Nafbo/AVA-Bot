@@ -20,7 +20,23 @@
   height: 100%;
 }
 
-#balance,
+
+#balance{
+  margin-bottom: 30px;
+  padding: 20px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #25a4ffc5;
+  color:white;
+ 
+}
+#balance p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  margin-top: 0;
+}
+
 #currencies,
 #running,
 #place,
@@ -32,12 +48,6 @@
   background-color: #f7f7f7;
 } 
 
-#balance p {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1a1a1a;
-  margin-top: 0;
-}
 
 #title {
   font-size: 2rem;

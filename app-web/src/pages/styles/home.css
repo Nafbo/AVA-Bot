@@ -221,6 +221,7 @@
   align-self: center;
   display: flex;
   justify-content: center;
+ 
 }
 .launch--stopped {
   background-color: #b9e2ff;
@@ -240,6 +241,7 @@
 .launch--launched, .launch--stopped {
   margin: 0 auto;
   margin-top: 10px;
+  margin-bottom: 5rem;
 }
 
 .launch--launched:hover {

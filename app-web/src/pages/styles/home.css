@@ -1,9 +1,18 @@
 .home {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
     justify-content: center;
     margin-top: 50px;
+  }
+
+  #gauche {
+    margin-right: 60px;
+  }
+  
+  .droite {
+    flex-grow: 1;
   }
   
 
@@ -235,30 +244,13 @@
 }
 
   
-  @media (min-width: 768px) {
-    .home {
-      flex-direction: row;
-      justify-content: space-around;
-    }
-    
-    #gauche {
-      margin-right: 60px;
-    }
-    
-    .droite {
-      flex-grow: 1;
-    }
-  }
+
+
   
-  @media (max-width: 767px) {
-    #gauche {
-      order: 2;
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-    
-    #launch {
-      order: 3;
-    }
-  }
+
+
+
+
+ 
+  
   

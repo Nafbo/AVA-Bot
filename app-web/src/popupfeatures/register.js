@@ -15,71 +15,12 @@ export const Register = (props) => {
     const [APIpassword, setApiPassword] = useState('');
     const [APIsecret, setApiSecret] = useState('');
     const [password, setPassword] = useState('');
-/*     const [encryptedAPIKey, setEncryptedAPIKey] = useState(''); */
-/*     const [encryptedAPISecret, setEncryptedAPISecret] = useState('');
-    const [encryptedAPIpassword, setEncryptedAPIPassword] = useState(''); */
     const [rememberMe, setRememberMe] = useState(false);
 
   
     const secretKey = 'asdbchituenHGUBUYfdoznchioryoizf';
     
-/*       const binaryKey = atob(secretKey);
-      const key = CryptoJS.enc.Hex.parse(binaryKey);
 
-      const encryptedAPISecret = 'U2FsdGVkX1+QchChsABSGhk/na0QC0J++lLTIaMCf2Q=';
-      const decryptedAPISecret = CryptoJS.AES.decrypt(encryptedAPISecret, key).toString(CryptoJS.enc.Utf8);
-
-      console.log(decryptedAPISecret); */
-
-     
-          
-/*     useEffect(() => {
-      async function loadPyodideAndRun() {
-          // Charge Pyodide depuis une URL distante
-          await loadPyodide({
-              indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/'
-          });
-
-          // Exécutez votre script Python
-          const script = `
-              importScripts('https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js');
-              const { Fernet } = pyodide.globals.get('cryptography.fernet');
-              
-              const encrypt_message = (message) => {
-                  const mykey = pyodide.openUrl('mykey.key');
-                  const key = pyodide.toJs(mykey);
-                  const f = Fernet(key);
-                  const encrypted_message = f.encrypt(message.encode());
-                  pyodide.runPython('with open("encrypted_data.txt", "wb") as outfile: outfile.write(' + encrypted_message + ')');
-              };
-              
-              encrypt_message("Hello World!");
-          `;
-          await runPython(script);
-      }
-
-      loadPyodideAndRun();
-  }, []); */
-          // Générer une clé de chiffrement aléatoire
-/*           const { Fernet } = pyodide.globals.get('cryptography.fernet');
-          const key = Fernet.generate_key();
-
-          // Initialiser un objet Fernet avec la clé
-          const f = Fernet("ZeU0CLZ6BZUfZV3aPr_GNKZ59Vo5-vfwOmM0Jk_Txfk=");
-
-          // Chiffrer les données
-          const encryptedAPIKey = f.encrypt(APIkey.encode());
-          const encryptedAPISecret = f.encrypt(APIsecret.encode());
-          const encryptedAPIPassword = f.encrypt(APIpassword.encode());
-
-          // Écrire les données chiffrées dans un fichier
-          pyodide.runPython(`
-              with open('encrypted_data.txt', 'wb') as outfile:
-                  outfile.write(b'${encryptedAPIKey}');
-                  outfile.write(b'${encryptedAPISecret}');
-                  outfile.write(b'${encryptedAPIPassword}');
-          `);
- */
     const saltRounds = 10
 
     const handleSubmit = async (event) => {

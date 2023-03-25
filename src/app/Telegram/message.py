@@ -132,5 +132,5 @@ class Telegram ():
 if __name__ == '__main__':
     chat_id = "6210537537"
     telegram = Telegram(chat_id)
-    # telegram.messageOpen('openShort', crypto = 'BTC/USDT', date = '2023-01-11', usdInvest = 19, price = 190, leverage = 2, stopLoss = 1829, takeProfit = 345)
-    telegram.messageClose('closeShortPosition', crypto = 'BTC/USDT', gain='bad', date = '2023-01-11',close = 'take profit touché', performance = '+33%', gainUsd = '+24', price = 234567)    
+    telegram.messageOpen('openShort', crypto = 'BTC/USDT', date = '2023-01-11', usdInvest = 19, price = 190, leverage = 2, stopLoss = 1829, takeProfit = 345)
+    # telegram.messageClose('closeShortPosition', crypto = 'BTC/USDT', gain='bad', date = '2023-01-11',close = 'take profit touché', performance = '+33%', gainUsd = '+24', price = 234567)    

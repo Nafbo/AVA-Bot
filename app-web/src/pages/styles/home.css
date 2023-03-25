@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 50px;
+    width:100%
   }
 
   #gauche {
@@ -14,7 +15,13 @@
   .droite {
     flex-grow: 1;
   }
-  
+
+  .gauche2{
+    width:100%
+  }
+  .droite2{
+    width: 100%;
+  }
 
  /* ------------------------------- */
 

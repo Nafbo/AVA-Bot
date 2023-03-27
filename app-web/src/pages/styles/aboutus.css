@@ -1,19 +1,9 @@
 
 .tout{
-  margin-top: 50px;
+  margin-top: 30px;
   padding:2%
 }
-/* haut container */
-/* .haut-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 50px;
-    
-    width:100%;
-  }
-  
+
   /* équipe et avatar */
 
    .team-ava-container {
@@ -33,7 +23,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 50px;
     
     width:100%;
   }
@@ -67,18 +56,40 @@
   .ava {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: white;
+    background-color: #25a4ffc5;
     border-radius: 10px;
+    color: white;
     padding: 10px;
     width:50%;
     margin-left:10px;
   }
+
+  .ava img {
+    margin-bottom: 10px;
+    margin-top:10px;
+    width:95px;
+    height:80px
+  }
+  
+  .ava label {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .ava p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0 20px;
+  }
   
   /* bas container */
+  
   .bas-container {
     display: flex;
     justify-content: space-between;
@@ -86,12 +97,70 @@
     margin-top: 50px;
   }
   
-  /* containers contenant les textes */
-  .bitget-container, .telegram-container {
+ 
+  
+
+  .bitget-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: white;
     border-radius: 10px;
     padding: 20px;
-    flex-basis: calc(50% - 20px);
     margin-right: 20px;
+    width:50%;
+    
+  }
+  
+
+  .bitget-container p {
+    text-align: center;
+    padding-top:50px;
+  }
+  
+  .telegram-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-right: 20px;
+    width : 50%;
+    padding-bottom: 50px;
+  }
+
+  .telegram-container label{
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .logo_img{
+      width : 200px;
+      height:auto;
+      margin-top:15px;
+  }
+
+  .logo_img2{
+    width : 100px;
+    height:auto;
+}
+
+  .exemple {
+    width: auto;
+    height: 300px;
+  }
+
+  .exemple2 {
+    width: auto;
+    height: 400px;
+  }
+  
+  .telegram-container p {
+    text-align: center;
   }
   

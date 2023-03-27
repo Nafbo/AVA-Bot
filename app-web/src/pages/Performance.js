@@ -162,7 +162,7 @@ function Performance() {
       return acc;
     }
   }, 0);
-  const avgTradePerformance = performancesSum / numOfTrades;
+  const avgTradePerformance = performancesSum; // numOfTrades;
   const avgPositivePerformance = sumPositivePerformances / numOfPositives;
   const avgNegativePerformance = sumNegativePerformances / numOfNegatives;
   const tradesWinRateRatio = numOfPositives / numOfTrades;

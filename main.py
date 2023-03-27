@@ -8,6 +8,7 @@ from src.app.influenceurs_analyse import analyse_sentiment_bitcoin
 from src.app.fed_analyse import analyze_fed_news_for_btc
 from src.app.whales_alert import analyze_whale_alert_tweets
 from src.app.bitcoin_trend import average_trend
+from src.app.ChatGPT import ChatGPT
 
 def main():
     fng = check_fng_index()
@@ -84,13 +85,15 @@ def main():
 
 if __name__ == "__main__":
     sentiment_analyse = main()
+    chatGPT = ChatGPT()
     timestamp = str(int(time.time() * 1000))
     date = datetime.datetime.fromtimestamp(int(timestamp) / 1000.0)
     date_formatee = date.strftime('%Y-%m-%d %H:%M:%S')
     print(sentiment_analyse)
     myrow = {
         'user_name':date_formatee ,
-        'sentiment_marche':sentiment_analyse
+        'sentiment_marche':sentiment_analyse,
+        'chatgpt': chatGPT
         }
     url ="https://u3ruvos9xf.execute-api.eu-west-1.amazonaws.com/items"
     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})

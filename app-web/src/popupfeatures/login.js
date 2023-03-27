@@ -10,7 +10,8 @@ export const Login = (props) => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     
-    
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const [rememberMe, setRememberMe] = useState(false);
     /* const key = uuidv4(); */
     /* document.cookie = "sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; */
@@ -41,8 +42,9 @@ export const Login = (props) => {
               if (passwordMatch) {
                   console.log('Utilisateur connecté');
                   document.cookie = `userId=${data[0].id}; maxAge: 30 * 24 * 60 * 60; path: '/'; /* httpOnly; */ secure`;
+                  setIsLoggedIn(true);
                   setShowPopup(false);
-
+                  
                    // Création du cookie si "Remember Me" est coché
                    if (rememberMe) {
                     const key = uuidv4();
@@ -92,7 +94,9 @@ export const Login = (props) => {
             // Si le cookie est valide, l'utilisateur est authentifié automatiquement
             /* const user = await response.json();
             setId(user.id); */
+            
             setShowPopup(false);
+            setIsLoggedIn(true);
         } else {
             // Si le cookie n'est pas valide, le supprimer
             document.cookie = `sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -100,17 +104,14 @@ export const Login = (props) => {
         }
     };
   
-  useEffect(() => {
+    useEffect(() => {
+        
+        checkSession();
+        if (isLoggedIn) {
+            window.location.reload();
+        }
+        }, [isLoggedIn]);
     
-    checkSession();
-
-/*     const popupStateCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('popupState='));
-    if (popupStateCookie) {
-      const popupState = popupStateCookie.split('=')[1];
-      setShowPopup(popupState !== 'hidden');
-    } */
-
-  }, []);
 
 
       const togglePasswordVisibility = () => {

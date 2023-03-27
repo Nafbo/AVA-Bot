@@ -17,6 +17,11 @@ const Wallet = () => {
     document.title = "AVABot Wallet"; 
   }, []);
 
+  const id = getCookie('userId');
+  const API_ENDPOINT = `https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/${id}`;
+
+
+
   const [data, setData] = useState([]);
 
   const chartOptions = useMemo(() => ({

@@ -10,6 +10,7 @@ function Popup() {
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
+  
 
   return (
     <div className="Popup">

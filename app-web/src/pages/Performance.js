@@ -139,8 +139,8 @@ function Performance() {
 
   const openPositions = data.filter((item) => item.position === "openLong" || item.position === "openShort");
   const numOfTrades = openPositions.length;
-  const numOfPositives = openPositions.filter((item) => item.resultat === "good").length;
-  const numOfNegatives = openPositions.filter((item) => item.resultat === "bad").length;
+  const numOfPositives =data.filter((item) => item.resultat === "good").length;
+  const numOfNegatives = data.filter((item) => item.resultat === "bad").length;
   const sumAllPerformances = openPositions.reduce((acc, item) => {
     if (!isNaN(item.performance)) {
       return acc + parseFloat(item.performance);

@@ -37,7 +37,7 @@ def chatGPT():
     texte_complet = emoji_pattern.sub(' ', texte_complet)
     texte_complet = texte_complet.strip()
     texte_complet = texte_complet.replace("\n", "")
-    openai.api_key = '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'
+    openai.api_key = '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'
     
     prompt = ("Fais-moi un résumé de ces tweets, en enlevant tout ce qui ne te parés pas intéressant et n'est pas complet:"+texte_complet)
     completion = openai.Completion.create(

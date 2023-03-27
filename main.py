@@ -8,84 +8,84 @@ from src.app.influenceurs_analyse import analyse_sentiment_bitcoin
 from src.app.fed_analyse import analyze_fed_news_for_btc
 from src.app.whales_alert import analyze_whale_alert_tweets
 from src.app.bitcoin_trend import average_trend
-from src.app.ChatGPT import ChatGPT
+from src.app.ChatGPT.ChatGPT import chatGPT
 
 def main():
     fng = check_fng_index()
     sentiment = analyse_sentiment_bitcoin()
     fed = analyze_fed_news_for_btc()
     whales = analyze_whale_alert_tweets()
-    google_trend = average_trend()
+    # google_trend = average_trend()
     
         
     print("\nAnalyse du sentiment du marché concernant le Bitcoin :\n\nNoté de 1 à 5, 5 représentant le meilleur sentiment du marché.\n")
 
-    if fng == "vert" and sentiment == 'confiant' and google_trend=='vogue' and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal":
+    if fng == "vert" and sentiment == 'confiant'  and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal": #and google_trend=='vogue'
         return "5/5"
-    elif fng == "vert" and sentiment == 'confiant' and google_trend=='vogue' and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal":
+    elif fng == "vert" and sentiment == 'confiant' and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal": #and google_trend=='vogue'
         return "5/5"
-    elif fng == "vert" and sentiment == 'confiant' and (google_trend=='vogue' or google_trend=='pas_vogue') and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal":
+    elif fng == "vert" and sentiment == 'confiant'  and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal": #google_trend=='vogue' or google_trend=='pas_vogue')
         return "4/5"
-    elif (fng == "vert" or fng == "neutre") and sentiment == 'confiant' and (google_trend=='vogue' or google_trend=='pas_vogue') and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal":
+    elif (fng == "vert" or fng == "neutre") and sentiment == 'confiant' and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal": #google_trend=='vogue' or google_trend=='pas_vogue')
         return "3/5"
-    elif fng == "neutre" and sentiment == 'confiant' and google_trend=='pas_vogue' and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal":
+    elif fng == "neutre" and sentiment == 'confiant'  and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal": #and google_trend=='pas_vogue'
         return "3/5"
-    elif fng == "neutre" and sentiment == 'confiant' and google_trend=='pas_vogue' and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal":
+    elif fng == "neutre" and sentiment == 'confiant'  and (fed=="bonnes_nouvelles" or fed=="pas_de_nouvelles") and whales=="normal": # and google_trend=='pas_vogue'
         return "3/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="mauvaises_nouvelles" and whales=="très_dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed=="mauvaises_nouvelles" and whales=="très_dangereux": # and google_trend=='pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="mauvaises_nouvelles" and whales=="dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed=="mauvaises_nouvelles" and whales=="dangereux": # and google_trend=='pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="pas_de_nouvelles" and whales=="très_dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed=="pas_de_nouvelles" and whales=="très_dangereux":# and google_trend=='pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="pas_de_nouvelles" and whales=="dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed=="pas_de_nouvelles" and whales=="dangereux":# and google_trend=='pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend=='pas_vogue' and (fed=="mauvaises_nouvelles" or fed=="pas_de_nouvelles") and (whales=="très_dangereux" or whales=="dangereux"):
+    elif fng == "neutre" and sentiment == 'prudent'  and (fed=="mauvaises_nouvelles" or fed=="pas_de_nouvelles") and (whales=="très_dangereux" or whales=="dangereux"):# and google_trend=='pas_vogue'
         return "2/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="mauvaises_nouvelles" and whales=="très_dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed=="mauvaises_nouvelles" and whales=="très_dangereux":# and google_trend=='pas_vogue'
         return "1/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="mauvaises_nouvelles" and whales=="dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed=="mauvaises_nouvelles" and whales=="dangereux":# and google_trend=='pas_vogue'
         return "1/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="pas_de_nouvelles" and whales=="très_dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed=="pas_de_nouvelles" and whales=="très_dangereux":# and google_trend=='pas_vogue'
         return "1/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend=='pas_vogue' and fed=="pas_de_nouvelles" and whales=="dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed=="pas_de_nouvelles" and whales=="dangereux":# and google_trend=='pas_vogue'
         return "1/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend=='pas_vogue' and (fed=="mauvaises_nouvelles" or fed=="pas_de_nouvelles") and (whales=="très_dangereux" or whales=="dangereux"):
+    elif fng == "rouge" and sentiment == 'prudent'  and (fed=="mauvaises_nouvelles" or fed=="pas_de_nouvelles") and (whales=="très_dangereux" or whales=="dangereux"): #and google_trend=='pas_vogue'
         return "1/5"
-    if fng == "vert" and sentiment == 'confiant' and google_trend == 'vogue' and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal":
+    if fng == "vert" and sentiment == 'confiant'  and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal": #and google_trend == 'vogue'
         return "5/5"
-    elif fng == "vert" and sentiment == 'confiant' and (google_trend == 'vogue' or google_trend == 'pas_vogue') and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal":
+    elif fng == "vert" and sentiment == 'confiant'  and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal": #and (google_trend == 'vogue' or google_trend == 'pas_vogue')
         return "4/5"
-    elif (fng == "vert" or fng == "neutre") and sentiment == 'confiant' and (google_trend == 'vogue' or google_trend == 'pas_vogue') and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal":
+    elif (fng == "vert" or fng == "neutre") and sentiment == 'confiant'  and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal": #and (google_trend == 'vogue' or google_trend == 'pas_vogue')
         return "3/5"
-    elif fng == "neutre" and sentiment == 'confiant' and google_trend == 'pas_vogue' and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal":
+    elif fng == "neutre" and sentiment == 'confiant'  and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales == "normal": # and google_trend == 'pas_vogue'
         return "3/5"
-    elif fng=="neutre" and sentiment=='confiant' and google_trend=='pas_vogue' and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales =="très_dangereux":
+    elif fng=="neutre" and sentiment=='confiant'  and (fed == "bonnes_nouvelles" or fed == "pas_de_nouvelles") and whales =="très_dangereux": #and google_trend=='pas_vogue'
         return "1/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "mauvaises_nouvelles" and whales == "très_dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed == "mauvaises_nouvelles" and whales == "très_dangereux": #and google_trend == 'pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "mauvaises_nouvelles" and whales == "dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed == "mauvaises_nouvelles" and whales == "dangereux":#and google_trend == 'pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "pas_de_nouvelles" and whales == "très_dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed == "pas_de_nouvelles" and whales == "très_dangereux":#and google_trend == 'pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "pas_de_nouvelles" and whales == "dangereux":
+    elif fng == "neutre" and sentiment == 'prudent'  and fed == "pas_de_nouvelles" and whales == "dangereux":#and google_trend == 'pas_vogue'
         return "2/5"
-    elif fng == "neutre" and sentiment == 'prudent' and google_trend == 'pas_vogue' and (fed == "mauvaises_nouvelles" or fed == "pas_de_nouvelles") and (whales == "très_dangereux" or whales == "dangereux"):
+    elif fng == "neutre" and sentiment == 'prudent'  and (fed == "mauvaises_nouvelles" or fed == "pas_de_nouvelles") and (whales == "très_dangereux" or whales == "dangereux"):#and google_trend == 'pas_vogue'
         if whales == "très_dangereux":
             return "1/5"
         else:
             return "2/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "mauvaises_nouvelles" and whales == "très_dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed == "mauvaises_nouvelles" and whales == "très_dangereux":#and google_trend == 'pas_vogue'
         return "1/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "mauvaises_nouvelles" and whales == "dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed == "mauvaises_nouvelles" and whales == "dangereux":#and google_trend == 'pas_vogue'
         return "1/5"
-    elif fng == "rouge" and sentiment == 'prudent' and google_trend == 'pas_vogue' and fed == "pas_de_nouvelles" and whales == "très_dangereux":
+    elif fng == "rouge" and sentiment == 'prudent'  and fed == "pas_de_nouvelles" and whales == "très_dangereux": #and google_trend == 'pas_vogue'
         return "1/5"
         
 
 if __name__ == "__main__":
     sentiment_analyse = main()
-    chatGPT = ChatGPT()
+    chatgpt = chatGPT()
     timestamp = str(int(time.time() * 1000))
     date = datetime.datetime.fromtimestamp(int(timestamp) / 1000.0)
     date_formatee = date.strftime('%Y-%m-%d %H:%M:%S')
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     myrow = {
         'user_name':date_formatee ,
         'sentiment_marche':sentiment_analyse,
-        'chatgpt': chatGPT
+        'chatgpt': chatgpt
         }
     url ="https://u3ruvos9xf.execute-api.eu-west-1.amazonaws.com/items"
     rq.put(url, json=myrow, headers={'Content-Type': 'application/json'})

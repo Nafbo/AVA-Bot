@@ -60,16 +60,24 @@
     margin-left: 7rem;
   }
 
+  #divhideapikey{
+    margin-left:20%;
+  }
+
+  #divhideapipassword{ 
+    margin-left:39%;
+  }
 
   #idaccount h5,
-  #apiaccount h5,
+  #apiaccount label,
   #telegramaccount h5 {
     font-size: 18px;
     margin-bottom: 10px;
     margin-left: 7rem;
   }
 
-  #idaccount button{
+  #idaccount button,
+  #apiaccount button{
     background-color: #f7f7f7;
     color:  #25a4ff;
     padding-left: 10px;

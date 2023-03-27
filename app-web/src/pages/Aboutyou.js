@@ -16,7 +16,9 @@ export default function Aboutyou() {
     const id = getCookie('userId');
     const [showPopup, setShowPopup] = useState(false); 
     const [chatid, setchatId] = useState('');
-    const [data, setData] = useState([]);
+    const [apiKeyValue, setapiKeyValue] = useState('');
+    const [apiPassvalue, setapiPassvalue] = useState('');
+    const [apiSecretValue, setapiSecretValue] = useState('');
 
     const handleLogout = () => {
         document.cookie = "sessionKey=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -62,17 +64,119 @@ export default function Aboutyou() {
         });
 
 
-        const secretKey = 'asdbchituenHGUBUYfdoznchioryoizf';
       
-        
-          
-        
+      const hideandshowsecret = () => {
+        var x = document.getElementById("divhideapisecret");
+        const manualButton = document.querySelector(".manuel");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+          manualButton.classList.add("active");
+        } else {
+          x.style.display = "none";
+          manualButton.classList.remove("active");
+        }
+      } 
+      
+      const hideandshowkey = () => {
+        var x = document.getElementById("divhideapikey");
+        const manualButton = document.querySelector(".manuel");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+          manualButton.classList.add("active");
+        } else {
+          x.style.display = "none";
+          manualButton.classList.remove("active");
+        }
+      }  
 
-      /* 
-        const decryptedAPIKey = CryptoJS.AES.decrypt(apiData.APIkey, secretKey).toString(CryptoJS.enc.Utf8);
-        const decryptedAPISecret = CryptoJS.AES.decrypt(apiData.APIsecret, secretKey).toString(CryptoJS.enc.Utf8);
-        const decryptedAPIPassword = CryptoJS.AES.decrypt(apiData.APIpassword, secretKey).toString(CryptoJS.enc.Utf8);
-       */
+      const hideandshowpass = () => {
+        var x = document.getElementById("divhideapipassword");
+        const manualButton = document.querySelector(".manuel");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+          manualButton.classList.add("active");
+        } else {
+          x.style.display = "none";
+          manualButton.classList.remove("active");
+        }
+      }  
+
+  // ----------------------------------------
+
+  const updateApiSecret=(apiSecretValue)=> {
+    const secretKey = 'asdbchituenHGUBUYfdoznchioryoizf';
+    const requestData = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ APIsecret: CryptoJS.AES.encrypt(apiSecretValue, secretKey).toString() })
+    };
+  
+    const id = getCookie('userId');
+    fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestData)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error updating API Secret');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('API Secret updated successfully:');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+   
+  
+  
+    const updateApiKey = (apiKeyValue) => {
+      const secretKey = 'asdbchituenHGUBUYfdoznchioryoizf';
+      const requestData = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ APIkey: CryptoJS.AES.encrypt(apiKeyValue, secretKey).toString() })
+      };
+      const id = getCookie('userId');
+      fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestData)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error updating API Key');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('API Key updated successfully:');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+    
+    
+    const updateApiPassword = (apiPassvalue) =>{
+      const secretKey = 'asdbchituenHGUBUYfdoznchioryoizf';
+      const requestData = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ APIpassword: CryptoJS.AES.encrypt(apiPassvalue, secretKey).toString() })
+      };
+      const id = getCookie('userId');
+      fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestData)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error updating API Password');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('API Password updated successfully:');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+
 
     return (  
         <> 
@@ -98,9 +202,21 @@ export default function Aboutyou() {
           
             <div id="apiaccount">
                 <h3>Your API</h3>
-                <h5 className="apiinfo">API Secret: {}</h5>
-                <h5 className="apiinfo">API Key: {}</h5>
-                <h5 className="apiinfo">API Password: {}</h5>
+                <label>API Secret: <button className={ 'manual' ? 'active' : ''} onClick={hideandshowsecret}> click here </button></label>
+                <label>API Key: <button className={'manual' ? 'active' : ''} onClick={hideandshowkey}> click here </button></label>
+                <label>API Password: <button className={'manual' ? 'active' : ''} onClick={hideandshowpass}> click here </button></label>
+
+                <div id="divhideapisecret" style = {{display:"none"}}>
+                  <input defaultValue={apiSecretValue}  id="apisecret" placeholder="you API Secret" required/> <button className="buttonsecret" onClick={() => updateApiSecret(document.querySelector("#apisecret").value)}> ok </button>
+                </div>
+
+                <div id="divhideapikey" style = {{display:"none"}}>
+                  <input defaultValue={apiPassvalue}  id="apikey" placeholder="you API Key" required/> <button className="buttonkey" onClick={() => updateApiKey(document.querySelector("#apikey").value)}> ok </button>
+                </div>
+
+                <div id="divhideapipassword" style = {{display:"none"}}>
+                  <input defaultValue={apiKeyValue} id="apipassword" placeholder="you API password" required/> <button className="buttonpassword" onClick={() => updateApiPassword(document.querySelector("#apipassword").value)}> ok </button>
+                </div>
             </div>
             <div id="telegramaccount">
                 <h3>Connect to Telegram?</h3>

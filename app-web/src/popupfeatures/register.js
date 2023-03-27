@@ -151,7 +151,7 @@ export const Register = (props) => {
                     
                 </div>
                 <div className="droiteregister"> 
-                    <label htmlFor="apiKey">API Key</label>
+                    <label htmlFor="apiKey">API Key <span className="info-icon" title="Your API Key is a secret key that allows you to authenticate with the API"></span></label>
                     <input value={APIkey} onChange={(e) => setApiKey(e.target.value)} type="password" placeholder="your API Key" id="apiKey" name="apiKey" required />
                     <label htmlFor="apiPassword">API Password</label>
                     <input value={APIpassword} onChange={(e) => setApiPassword(e.target.value)} type="password" placeholder="your API Password" id="apiPassword" name="apiPassword" required />

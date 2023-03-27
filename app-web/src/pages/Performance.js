@@ -175,20 +175,20 @@ function Performance() {
   // dfPositionLong = dfPositionLong.map((row) => Object.values(row));
   // dfPositionShort = dfPositionShort.map((row) => Object.values(row));
 
-  // const sumPositivePerformances = openPositions.reduce((acc, item) => {
-  //   if (item.resultat === "good" && !isNaN(item.performance)) {
-  //     return acc + parseFloat(item.performance);
-  //   } else {
-  //     return acc;
-  //   }
-  // }, 0);
-  // const sumNegativePerformances = openPositions.reduce((acc, item) => {
-  //   if (item.resultat === "bad" && !isNaN(item.performance)) {
-  //     return acc + parseFloat(item.performance);
-  //   } else {
-  //     return acc;
-  //   }
-  // }, 0);
+  const sumPositivePerformances = openPositions.reduce((acc, item) => {
+    if (item.resultat === "good" && !isNaN(item.performance)) {
+      return acc + parseFloat(item.performance);
+    } else {
+      return acc;
+    }
+  }, 0);
+  const sumNegativePerformances = openPositions.reduce((acc, item) => {
+    if (item.resultat === "bad" && !isNaN(item.performance)) {
+      return acc + parseFloat(item.performance);
+    } else {
+      return acc;
+    }
+  }, 0);
   const avgTradePerformance = performancesSum / numOfTrades;
   const avgPositivePerformance = sumPositivePerformances / numOfPositives;
   const avgNegativePerformance = sumNegativePerformances / numOfNegatives;

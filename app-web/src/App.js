@@ -11,25 +11,30 @@ import { Route, Routes } from "react-router-dom"
 
 
 
-
 function App() {
+  // Fonction qui recharge la page
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
+  // Recharge la page toutes les 5 minutes
+  setInterval(reloadPage, 5 * 60 * 1000);
+
   return (
     <>
-    <div className="popup"> 
-      <Popup/>
-    </div>
+      <div className="popup"> 
+        <Popup/>
+      </div>
       <Navbar />
         
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/News" element={<News />} />
-          <Route path="/Performance" element={<Performance />} />
-          <Route path="/Wallet" element={<Wallet />} />
-          <Route path="/Aboutus" element={<Aboutus />} />
-          <Route path="/Aboutyou" element={<Aboutyou />} />
-        </Routes>
-      
-      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/News" element={<News />} />
+        <Route path="/Performance" element={<Performance />} />
+        <Route path="/Wallet" element={<Wallet />} />
+        <Route path="/Aboutus" element={<Aboutus />} />
+        <Route path="/Aboutyou" element={<Aboutyou />} />
+      </Routes>
     </>
   )
 }

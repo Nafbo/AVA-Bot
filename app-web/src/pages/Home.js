@@ -15,12 +15,13 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
+    const isLaunched = localStorage.getItem('isLaunched') === 'true';
     this.state = {
       donnees: [],
       maxpos: '',
       pairlist: [],
-      isLaunched: false,
-      running: false,
+      isLaunched: isLaunched,
+      loading: true,
     };
     this.tableRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -37,7 +38,10 @@ class Home extends Component {
         })
         .then((result) => {
           console.log(result)
-          this.setState({ donnees: result })
+          this.setState({ donnees: result, 
+            isLaunched:  result.running, 
+            running: result.running,
+            loading: false, })
         }); 
     }
 
@@ -189,7 +193,9 @@ class Home extends Component {
   
       axios.patch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, { running, startingDate: currentDate})
         .then(response => {
+          localStorage.setItem('isLaunched', running);
           this.setState({
+
             isLaunched: !isLaunched,
             running: running,
           });
@@ -202,10 +208,14 @@ class Home extends Component {
 
     
     render(){
+      const { loading } = this.state;
       const pairs = this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3));
 
        
       const launchClass = this.state.isLaunched ? 'launch--stopped' : 'launch--launched';
+      if (loading) {
+        return <div>Loading...</div>; //afficher un message de chargement en attendant
+      }
       return(
     
         <div className='home'> 
@@ -229,9 +239,9 @@ class Home extends Component {
 
                 <div id='actual_state'> 
                   <h3> Actual Sate of the bot </h3>
-                  <div> <h5> Run : </h5> <p> {this.state.donnees[0]?.running ? "yes" : "no"}</p></div>
-                  <div> <h5> Maximum Open Position :</h5> <p> {this.state.donnees[0]?.maxActivePositions} </p></div>
-                  <div> <h5> Actual Pairlist :</h5> <p> {this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)).join(', ')}</p> </div>
+                  <div> <h5> Run  </h5> <p> {this.state.donnees[0]?.running ? "yes" : "no"}</p></div>
+                  <div> <h5> Maximum Open Position </h5> <p> {this.state.donnees[0]?.maxActivePositions} </p></div>
+                  <div> <h5> Actual Pairlist </h5> <p> {this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)).join(', ')}</p> </div>
                   
               </div>
               </div>
@@ -357,7 +367,7 @@ class Home extends Component {
 
           
 
-        
+            
           
             <button className={`launch ${launchClass}`}  onClick={this.handleClick}>
                 {this.state.isLaunched ? 'Stop me ! ' : 'Launch me !'}

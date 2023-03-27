@@ -89,7 +89,7 @@
   }
   
   /* bas container */
-  
+
   .bas-container {
     display: flex;
     justify-content: space-between;
@@ -163,4 +163,162 @@
   .telegram-container p {
     text-align: center;
   }
+
+  @media only screen and (min-width: 390px) and (max-width: 844px) {
+    .tout{
+      margin-top: 30px;
+      padding:2%
+    }
+    
+    /* équipe et avatar */
+    
+    .team-ava-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      border-radius: 10px;
+      padding: 10px;
+      flex-direction: column;
+    }
+    
+    .haut-container {
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+    
+    .team-member {
+      display: inline-block;
+      vertical-align: top;
+      text-align: center;
+      margin: 10px;
+      width: 100%; /* ajustez la largeur en fonction de vos besoins */
+    }
+    
+    .team-member img {
+      display: block;
+      margin: 0 auto;
+      width: 150px; /* ajustez la largeur en fonction de vos besoins */
+    }
+    
+    .team-member-name {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    
+    .team-member p {
+      margin: 0;
+      text-align: center;
+    }
+    
+    .ava {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #25a4ffc5;
+      border-radius: 10px;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    .ava img {
+      margin-bottom: 10px;
+      margin-top: 10px;
+      width: 95px;
+      height: 80px;
+    }
+    
+    .ava label {
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .ava p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0 20px;
+    }
+    
+    /* bas container */
+    
+    .bas-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 50px;
+      flex-direction: column;
+    }
+    
+    .bitget-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      width: 100%;
+    }
+    
+    .bitget-container p {
+      text-align: center;
+      padding-top: 50px;
+    }
+    
+    .telegram-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      width: 100%;
+      padding-bottom: 50px;
+    }
+    
+    .telegram-container label {
+      padding-left: 5px;
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .logo_img {
+      width: 200px;
+      height: auto;
+      margin-top: 15px;
+    }
+    
+    .logo_img2 {
+      width: 100px;
+      height: auto;
+    }
+    
+    .exemple {
+      width: 100%;
+      height: auto;
+    }
+    
+    .exemple2 {
+      width: 100%;
+      height: auto;
+    }
+    
+  }    
   

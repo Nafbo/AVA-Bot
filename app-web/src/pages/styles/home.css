@@ -208,6 +208,35 @@
 }
 
 
+.ligne1,
+.ligne2,
+.ligne3,
+.ligne4,
+.lignedubas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  
+}
+
+.principale{
+  margin-bottom: 30px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding:10px;
+}
+
+.ligne1,
+.ligne2,
+.ligne3,
+.ligne4,
+.lignedubas {
+  margin-top: 20px; /* pour ajouter un espace entre les deux lignes */
+}
+
+
 .launch--launched {
   background-color: #f9c6c9;
   color: white;

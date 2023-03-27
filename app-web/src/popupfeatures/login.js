@@ -107,10 +107,10 @@ export const Login = (props) => {
     useEffect(() => {
         
         checkSession();
-        if (isLoggedIn) {
+      /*   if (isLoggedIn) {
             window.location.reload();
-        }
-        }, [isLoggedIn]);
+        } */
+        }, [/* isLoggedIn */]);
     
 
 

@@ -4,6 +4,7 @@ import Chart from 'chart.js/auto';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
+
 function News() {
  
   useEffect(() => {
@@ -63,14 +64,15 @@ function News() {
         chartRef.current.chart.destroy();
       }
       // Créer le graphique
+      const sortedData=data.fearAndGreedHistory.sort((a,b)=> a.date - b.date);
       const ctx = chartRef.current.getContext('2d');
       const chart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: data.fearAndGreedHistory.map(item => item.date.toLocaleDateString()),
+          labels: sortedData.map(item => item.date.toLocaleDateString()),
           datasets: [{
             label: 'Fear and Greed Index',
-            data: data.fearAndGreedHistory.map(item => item.value),
+            data: sortedData.map(item => item.value),
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderWidth: 1

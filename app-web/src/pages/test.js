@@ -1,3 +1,4 @@
+
 /* import { Carousel } from 'react-bootstrap'; */
 import image1 from '../assets/robot1.png';
 /* import image2 from '../assets/robot2.png';
@@ -23,7 +24,7 @@ class Home extends Component {
       running: false,
     };
     this.tableRef = React.createRef();
-    this.handleSubmit = this.handleSubmit.bind(this)
+    /* this.handleSubmit = this.handleSubmit.bind(this) */
 
     
   }
@@ -154,19 +155,17 @@ class Home extends Component {
       console.log("clique")
       const { maxpos, pairlist } = this.state;
     
-      const pairlist2 = pairlist
+      /* const pairlist2 = pairlist
       .filter((value) => value)
-      .map((value) => value);
-
-      console.log(pairlist2);
-        
+      .map((value) => value[0]);
+         */
 
       fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 	
           maxActivePositions: maxpos,
-           pairList: pairlist2 })
+           pairList: pairlist })
       })
       .then(response => response.json())
       .then(data => {
@@ -245,10 +244,9 @@ class Home extends Component {
                     <input value={this.state.maxpos} onChange={(e) => this.setState({maxpos: e.target.value})}  id="maxpos" placeholder="how many do you want?" required/>
                     <p> actual open position : {this.state.donnees[0]?.maxActivePositions}</p>
                     <br/>
-                    <label htmlFor="pairlist">Choose your pairlist</label>
-                    
-                      <div className='principale'> 
-                      <div className='ligne1'> 
+                    <label htmlFor="pairlist">Pairlist</label>
+
+                      <div> 
                         <input type="checkbox" id="BTC" name="pairlist" value="BTC/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="BTC">BTC/USDT:USDT</label>
                         
@@ -263,9 +261,6 @@ class Home extends Component {
                         
                         <input type="checkbox" id="BCH" name="pairlist" value="BCH/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="BCH">BCH/USDT:USDT</label>
-
-                        </div>
-                        <div className='ligne2'>
                         
                         <input type="checkbox" id="LTC" name="pairlist" value="LTC/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="LTC">LTC/USDT:USDT</label>
@@ -281,9 +276,6 @@ class Home extends Component {
                        
                         <input type="checkbox" id="TRX" name="pairlist" value="TRX/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="TRX">TRX/USDT:USDT</label>
-
-                        </div>
-                        <div className='ligne3'>
                         
                         <input type="checkbox" id="DOT" name="pairlist" value="DOT/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="DOT">DOT/USDT:USDT</label>
@@ -300,9 +292,6 @@ class Home extends Component {
                         <input type="checkbox" id="BNB" name="pairlist" value="BNB/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="BNB">BNB/USDT:USDT</label>
 
-                        </div>
-                        <div className='ligne4'>
-
                         <input type="checkbox" id="UNIU" name="pairlist" value="UNIU/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="UNIU">UNIU/USDT:USDT</label>
 
@@ -318,10 +307,6 @@ class Home extends Component {
                         <input type="checkbox" id="MANA" name="pairlist" value="MANA/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="MANA">MANA/USDT:USDT</label>
 
-                        </div>
-                        <div className='lignedubas'>
-                        
-
                         <input type="checkbox" id="GALA" name="pairlist" value="GALA/USDT:USDT" onChange={this.handleCheckboxChange} />
                         <label htmlFor="GALA">GALA/USDT:USDT</label>
 
@@ -329,10 +314,8 @@ class Home extends Component {
                         <label htmlFor="SAND">SAND/USDT:USDT</label>
 
                         </div>
-
-                        </div>
                         
-                    <p> actual pairlist : {/* {this.state.donnees[0]?.pairList} */}</p>  
+                    <p> actual pairlist : {this.state.donnees[0]?.pairList}</p>  
                   </form> 
                   <button type="submit" onClick={this.handleSubmit}>Save these preferences</button>
                 </div>

@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Chart from 'chart.js/auto';
+import getCookie from "./features/getcookies"
 
-
-const API_ENDPOINT = "https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/1";
 
 
 const SYMBOLS = ["BTC/USDT:USDT", "ETH/USDT:USDT", "DOGE/USDT:USDT", "LTC/USDT:USDT", "XRP/USDT:USDT"];
 
 
 
+const id = getCookie('userId');
+const API_ENDPOINT = `https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/${id}`;
 
 
 const Wallet = () => {
@@ -16,9 +17,6 @@ const Wallet = () => {
   useEffect(() => {
     document.title = "AVABot Wallet"; 
   }, []);
-
-  const id = getCookie('userId');
-  const API_ENDPOINT = `https://ttwjs0n6o1.execute-api.eu-west-1.amazonaws.com/items/${id}`;
 
 
 
@@ -184,11 +182,11 @@ const Wallet = () => {
   return (
     <div>
       <div> 
-        <h1>Voici votre portefeuille </h1>
+        <h1>Your Wallet </h1>
         <br />
         <br />
         <center>
-        <h4>Votre wallet total</h4></center>
+        <h4>Total Wallet</h4></center>
 
       </div>
       <div>
@@ -204,11 +202,11 @@ const Wallet = () => {
         <br />
         <center>
 
-        <h4>Achat et vente d'une cryptomonnaie</h4></center>
+        <h4>Buy&Sell</h4></center>
     
         </div>
         <div>
-          <label htmlFor="symbol-select">Choisissez un symbole :</label>
+          <label htmlFor="symbol-select">Choose symbol :</label>
           <select id="symbol-select" value={symbol} onChange={(e) => setSymbol(e.target.value)}>
             {SYMBOLS.map((s) => (
               <option key={s} value={s}>

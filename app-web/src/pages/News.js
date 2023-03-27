@@ -99,7 +99,7 @@ function News() {
   }, [data]);
 
   return (
-    <div>
+    <div className="News" style={{padding : '2%'}}>
       <h1>News about cryptocurrencies</h1>
       {data && (
         <>  

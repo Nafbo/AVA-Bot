@@ -19,7 +19,6 @@ function App() {
       <Popup/>
     </div>
       <Navbar />
-      <div className="container">
         
         <Routes>
           <Route path="/" element={<Home />} />
@@ -29,7 +28,7 @@ function App() {
           <Route path="/Aboutus" element={<Aboutus />} />
           <Route path="/Aboutyou" element={<Aboutyou />} />
         </Routes>
-      </div>
+      
       
     </>
   )

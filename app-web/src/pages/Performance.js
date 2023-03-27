@@ -249,7 +249,7 @@ if (filteredDatalong.length > 0) {
           <div className="gauche"> 
           <div id="balance"> 
             <h1> Balance </h1>
-              <p id="insidebalance">{totalBalance.toFixed(2)} USD</p>
+              <p id="insidebalance">{finalBalance.toFixed(2)} USD</p>
           </div>
 
        {/* ----------------------------------------------------------------------------------------------------------------------------- */}
@@ -258,7 +258,6 @@ if (filteredDatalong.length > 0) {
           <h1> General Informations </h1>
           <br/>
           <p> Total fees : {totalFees.toFixed(2)} $ </p>
-          <p> Final Balance : {finalBalance.toFixed(2)} $ </p>
           <p> Performances : {totalPerformances.toFixed(2)} % </p>
           <p> Buy&Hold : {} $ </p>
           <p> Performance vs Buy&Hold :{} $ </p>

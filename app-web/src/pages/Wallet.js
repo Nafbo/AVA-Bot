@@ -180,7 +180,7 @@ const Wallet = () => {
   
 
   return (
-    <div>
+    <div style={{padding : "2%"}}>
       <div> 
         <h1>Your Wallet </h1>
         <br />

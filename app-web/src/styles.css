@@ -17,9 +17,7 @@ body {
   color: #fff;
 }
 
-/* .container {
-  margin: 2rem;
-} */
+
 
 .nav {
   background-color: #1E1E1E;
@@ -121,21 +119,6 @@ body {
   transform: translateY(0.5rem);
 }
 
-/* Media queries */
-
-@media screen and (max-width: 767px) {
-    
-  
-    .logo-container {
-      flex: 1 1 100%;
-      margin-bottom: 1rem;
-    }
-    
-    .menu-btn {
-      display: block;
-    }
-    
-  }
 
   
 

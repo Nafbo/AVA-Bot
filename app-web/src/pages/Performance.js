@@ -141,13 +141,13 @@ function Performance() {
   const numOfTrades = openPositions.length;
   const numOfPositives =data.filter((item) => item.resultat === "good").length;
   const numOfNegatives = data.filter((item) => item.resultat === "bad").length;
-  const sumAllPerformances = openPositions.reduce((acc, item) => {
-    if (!isNaN(item.performance)) {
-      return acc + parseFloat(item.performance);
-    } else {
-      return acc;
-    }
-  }, 0);
+  // const sumAllPerformances = openPositions.reduce((acc, item) => {
+  //   if (!isNaN(item.performance)) {
+  //     return acc + parseFloat(item.performance);
+  //   } else {
+  //     return acc;
+  //   }
+  // }, 0);
   const sumPositivePerformances = openPositions.reduce((acc, item) => {
     if (item.resultat === "good" && !isNaN(item.performance)) {
       return acc + parseFloat(item.performance);
@@ -162,7 +162,7 @@ function Performance() {
       return acc;
     }
   }, 0);
-  const avgTradePerformance = sumAllPerformances / numOfTrades;
+  const avgTradePerformance = performancesSum / numOfTrades;
   const avgPositivePerformance = sumPositivePerformances / numOfPositives;
   const avgNegativePerformance = sumNegativePerformances / numOfNegatives;
   const tradesWinRateRatio = numOfPositives / numOfTrades;

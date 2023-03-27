@@ -8,6 +8,11 @@ import axios from "axios";
 
 
 export default function Aboutyou() {
+
+    useEffect(() => {
+      document.title = "AVABot Account"; 
+    }, []);
+  
     const id = getCookie('userId');
     const [showPopup, setShowPopup] = useState(false); 
     const [chatid, setchatId] = useState('');

@@ -6,6 +6,9 @@ import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
 function News() {
  
+  useEffect(() => {
+    document.title = "AVABot News"; // Remplacez "Titre de MaPage" par le titre de votre choix pour cette page
+  }, []);
 
   const [data, setData] = useState('');
   const chartRef = useRef('');

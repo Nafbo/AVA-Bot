@@ -8,7 +8,9 @@ import getCookie from "./features/getcookies"
 
 function Performance() {
 
-
+  useEffect(() => {
+    document.title = "AVABot Performances"; 
+  }, []);
  
  
   const [data, setData] = useState([]);

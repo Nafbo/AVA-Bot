@@ -149,31 +149,31 @@ function Performance() {
   //   }
   // }, 0);
 
-  const dfPosition = data.filter((row) => row.position === 'stopLossHit' || row.position === 'takeProfitHit' || row.position === 'closeShort' || row.position === 'closeLong');
+  // const dfPosition = data.filter((row) => row.position === 'stopLossHit' || row.position === 'takeProfitHit' || row.position === 'closeShort' || row.position === 'closeLong');
 
-  let dfPositionLong = [];
-  let dfPositionShort = [];
+  // let dfPositionLong = [];
+  // let dfPositionShort = [];
   
-  for (let i = 0; i < dfPosition.length; i++) {
-    const date = dfPosition[i].whenBuy;
-    if (dfTrades[date].length !== 15) {
-      for (let j = 0; j < dfTrades[date].length; j++) {
-        if (dfTrades[date][j].position === 'openLong' && dfTrades[date][j].symbol === dfPosition[i].symbol) {
-          dfPositionLong.push(dfPosition[i]);
-        } else if (dfTrades[date][j].position === 'openShort' && dfTrades[date][j].symbol === dfPosition[i].symbol) {
-          dfPositionShort.push(dfPosition[i]);
-        }
-      }
-    } else {
-      if (dfTrades[date].position === 'openLong' && dfTrades[date].symbol === dfPosition[i].symbol) {
-        dfPositionLong.push(dfPosition[i]);
-      } else if (dfTrades[date].position === 'openShort' && dfTrades[date].symbol === dfPosition[i].symbol) {
-        dfPositionShort.push(dfPosition[i]);
-      }
-    }
-  }
-  dfPositionLong = dfPositionLong.map((row) => Object.values(row));
-  dfPositionShort = dfPositionShort.map((row) => Object.values(row));
+  // for (let i = 0; i < dfPosition.length; i++) {
+  //   const date = dfPosition[i].whenBuy;
+  //   if (dfTrades[date].length !== 15) {
+  //     for (let j = 0; j < dfTrades[date].length; j++) {
+  //       if (dfTrades[date][j].position === 'openLong' && dfTrades[date][j].symbol === dfPosition[i].symbol) {
+  //         dfPositionLong.push(dfPosition[i]);
+  //       } else if (dfTrades[date][j].position === 'openShort' && dfTrades[date][j].symbol === dfPosition[i].symbol) {
+  //         dfPositionShort.push(dfPosition[i]);
+  //       }
+  //     }
+  //   } else {
+  //     if (dfTrades[date].position === 'openLong' && dfTrades[date].symbol === dfPosition[i].symbol) {
+  //       dfPositionLong.push(dfPosition[i]);
+  //     } else if (dfTrades[date].position === 'openShort' && dfTrades[date].symbol === dfPosition[i].symbol) {
+  //       dfPositionShort.push(dfPosition[i]);
+  //     }
+  //   }
+  // }
+  // dfPositionLong = dfPositionLong.map((row) => Object.values(row));
+  // dfPositionShort = dfPositionShort.map((row) => Object.values(row));
 
   // const sumPositivePerformances = openPositions.reduce((acc, item) => {
   //   if (item.resultat === "good" && !isNaN(item.performance)) {

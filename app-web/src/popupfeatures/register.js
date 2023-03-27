@@ -4,6 +4,7 @@ import hideIcon from '../assets/eye_open.png';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import CryptoJS from 'crypto-js'
+import "./register.css"
 
 
 export const Register = (props) => {
@@ -151,11 +152,11 @@ export const Register = (props) => {
                     
                 </div>
                 <div className="droiteregister"> 
-                    <label htmlFor="apiKey">API Key <span className="info-icon" title="Your API Key is a secret key that allows you to authenticate with the API"></span></label>
+                    <label htmlFor="apiKey">API Key <span className="info-icon" title="Find your API Key on your BitGet account"></span></label>
                     <input value={APIkey} onChange={(e) => setApiKey(e.target.value)} type="password" placeholder="your API Key" id="apiKey" name="apiKey" required />
-                    <label htmlFor="apiPassword">API Password</label>
+                    <label htmlFor="apiPassword">API Password <span className="info-icon" title="Find your API Password on your BitGet account"></span></label>
                     <input value={APIpassword} onChange={(e) => setApiPassword(e.target.value)} type="password" placeholder="your API Password" id="apiPassword" name="apiPassword" required />
-                    <label htmlFor="apiSecret">API Secret</label>
+                    <label htmlFor="apiSecret">API Secret <span className="info-icon" title="Find your API Secret on your BitGet account"></span></label>
                     <input value={APIsecret} onChange={(e) => setApiSecret(e.target.value)} type="password" placeholder="your API Secret" id="apiSecret" name="apiSecret" required/>
                 </div>
 

@@ -220,7 +220,7 @@ export default function Aboutyou() {
             </div>
             <div id="telegramaccount">
                 <h3>Connect to Telegram?</h3>
-                <label className="chatid"> Chat Id</label>
+                <label className="chatid"> Chat Id <span className="info-icon" title="See on About Us page how to get your chat_id for Telegram"></span></label>
                 <input value={chatid} onChange={(e) => setchatId(e.target.value)}  id="chatidtelegram" placeholder="you chat id" required/>
             </div>
         

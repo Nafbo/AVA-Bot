@@ -21,6 +21,9 @@ body {
 
 .nav {
   background-color: #1E1E1E;
+  position: fixed;
+  width:100%;
+  top:0%;
   font-family: Arial;
   font-style: normal;
   font-weight: 400;

@@ -189,7 +189,7 @@ function Performance() {
   //     return acc;
   //   }
   // }, 0);
-  const avgTradePerformance = 73/22; //performancesSum / numOfTrades;
+  const avgTradePerformance = performancesSum / numOfTrades;
   const avgPositivePerformance = sumPositivePerformances / numOfPositives;
   const avgNegativePerformance = sumNegativePerformances / numOfNegatives;
   const tradesWinRateRatio = numOfPositives / numOfTrades;
@@ -197,7 +197,7 @@ function Performance() {
   setNumOfTrades(numOfTrades);
   setNumOfPositives(numOfPositives);
   setNumOfNegatives(numOfNegatives);
-  setNumTradePerformance(avgTradePerformance);
+  setAvgTradePerformance(avgTradePerformance);
   setAvgPositivePerformance(avgPositivePerformance);
   setAvgNegativePerformance(avgNegativePerformance);
   setTradesWinRateRatio(tradesWinRateRatio);

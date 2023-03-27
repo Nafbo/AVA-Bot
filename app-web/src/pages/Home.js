@@ -183,12 +183,15 @@ class Home extends Component {
       const id = getCookie('userId');
       const { isLaunched}= this.state;
       const running = !isLaunched;
+      const currentDate = new Date().toISOString();
+
+      console.log(currentDate);
   
-      axios.patch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, { running })
+      axios.patch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, { running, startingDate: currentDate})
         .then(response => {
           this.setState({
             isLaunched: !isLaunched,
-            running: running
+            running: running,
           });
         })
         .catch(error => {

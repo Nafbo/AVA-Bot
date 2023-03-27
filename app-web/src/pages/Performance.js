@@ -11,6 +11,20 @@ function Performance() {
   useEffect(() => {
     document.title = "AVABot Performances"; 
   }, []);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Récupération des dernières informations sur le Bitcoin
+      const fetchCryptoData = async () => {
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/coins/bitcoin',
+        );
+        const data = await response.json();
+        return {
+          price: data.market_data.current_price.usd,
+        };
+      };}})
  
  
   const [data, setData] = useState([]);

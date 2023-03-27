@@ -50,7 +50,8 @@ export const Register = (props) => {
                       telegram: false,
                       chat_id: "NaN",
                       mode : 'automatic',
-                      withMode: 'NaN' 
+                      withMode: 'NaN',
+                      startingDate:"NaN"
                       }
           
       

@@ -12,6 +12,7 @@ import axios from 'axios';;
 
 class Home extends Component {
 
+ 
   /* const [APIkey, setApiKey] = useState(''); */
 
 
@@ -30,6 +31,7 @@ class Home extends Component {
   }
   
     componentDidMount(){
+      document.title = "AVABot";
       const id = getCookie('userId');
       fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`,  )
         .then((response) => {

@@ -250,7 +250,7 @@ class Home extends Component {
                   <h3> Actual Sate of the bot </h3>
                   <div> <h5> Run  </h5> <p className='p'> {this.state.donnees[0]?.running ? "yes" : "no"}</p></div>
                   <div> <h5> Maximum Open Position </h5> <p className='p'> {this.state.donnees[0]?.maxActivePositions} </p></div>
-                  <div> <h5> Actual Pairlist </h5> <p className='ppailist'> {this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)).join(', ')}</p> </div>
+                  <div> <h5> Actual Pairlist </h5> <br/> <p className='ppailist'> {this.state.donnees[0]?.pairList/* .map(pair => pair.substring(0, 3)).join(', ')*/}</p> </div>
                   
               </div>
               </div>

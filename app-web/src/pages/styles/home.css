@@ -92,18 +92,18 @@
   display: flex;
   align-items: center;
 }
-.p, .ppailistic {
+.p{
   margin-left: 30px;
   margin-top: 10px;
   font-size:25px;
 }
 
-/* .ppailistic {
+.ppailistic {
   font-size:15px;
   margin-left: 30px;
   margin-top: 10px;
   width:50%
-} */
+}
 
 
 #Name{

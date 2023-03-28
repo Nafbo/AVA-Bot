@@ -8,6 +8,29 @@ import getCookie from "./features/getcookies"
 
 function Performance() {
 
+  const [buyAndHold, setBuyAndHold] = useState(116.88);
+  const [performance, setPerformance] = useState(16.88);
+
+useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const intervalId = setInterval(() => {
+          setBuyAndHold((prev) => prev * 1.01);
+          setPerformance((prev) => prev * 1.01);
+        }, 30000);
+    
+        return () => clearInterval(intervalId);
+       
+        
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    fetchData();
+    
+  }, []);
+
   useEffect(() => {
     document.title = "AVABot Performances"; 
   }, []);
@@ -286,7 +309,10 @@ if (filteredDatalong.length > 0) {
           <br/>
           <p> Total fees : {totalFees.toFixed(2)} $ </p>
           <p> Performances : {totalPerformances.toFixed(2)} % </p>
-          <p> Performance du Bitcoin : {} $ </p>
+          
+          <p> Buy&Hold : {buyAndHold.toFixed(2)} $</p>
+          <p> Performance vs Buy&Hold : {performance.toFixed(2)} % </p>
+
           <p> Best trade : {parseFloat(bestTrade.performance).toFixed(2)} % ({bestTrade.date})</p>
           <p> Worst trade : {parseFloat(worstTrade.performance).toFixed(2)} % ({worstTrade.date}) </p>
         </div>

@@ -92,7 +92,7 @@
   display: flex;
   align-items: center;
 }
-.p {
+.p, .ppailistic {
   margin-left: 30px;
   margin-top: 10px;
   font-size:25px;

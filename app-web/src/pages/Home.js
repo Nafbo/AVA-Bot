@@ -15,7 +15,7 @@ class Home extends Component {
       donnees: [],
       maxpos: '',
       pairlist: [],
-      running: false,
+      botStatus: 'stopped'
     };
     this.tableRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -120,7 +120,7 @@ class Home extends Component {
           if (!response.ok) {
             throw new Error('Failed to update personality.');
           }
-          this.hideandshow();
+          this.setState({ botStatus: 'running' });
         })
         .catch((error) => {
           console.log(error);
@@ -138,9 +138,7 @@ class Home extends Component {
       };
       fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestOptions)
         .then((response) => {
-          this.setState({
-              running: running,
-            });
+          this.setState({ botStatus: 'running' });
           if (!response.ok) {
             throw new Error('Failed to update personality.');
           }
@@ -382,7 +380,6 @@ class Home extends Component {
           
             
             <div className='buttonlauchnstop'> 
-            {this.state.running ? 'Bot is running' : 'Bot is not running'}
             <button className='launch' onClick={this.handleLaunchClick}> Launch Me! </button> 
             <button  className="stop" onClick={this.handleStopClick} > Stop me!</button> 
              </div>

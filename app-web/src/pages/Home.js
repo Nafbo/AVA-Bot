@@ -209,7 +209,7 @@ class Home extends Component {
     
     render(){
       const { loading } = this.state;
-      const pairs = this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3));
+      /* const pairs = this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)); */
 
        
       const launchClass = this.state.isLaunched ? 'launch--stopped' : 'launch--launched';

@@ -129,6 +129,7 @@ class Home extends Component {
 
 
     handleStopClick = () => {
+      const {running} = this.state;
       const id = getCookie('userId');
       const requestOptions = {
         method: 'PATCH',
@@ -137,10 +138,13 @@ class Home extends Component {
       };
       fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestOptions)
         .then((response) => {
+          this.setState({
+              running: running,
+            });
           if (!response.ok) {
             throw new Error('Failed to update personality.');
           }
-          this.hideandshow();
+          
         })
         .catch((error) => {
           console.log(error);
@@ -246,9 +250,9 @@ class Home extends Component {
 
                 <div id='actual_state'> 
                   <h3> Actual Sate of the bot </h3>
-                  <div> <h5> Run  </h5> <p> {this.state.donnees[0]?.running ? "yes" : "no"}</p></div>
-                  <div> <h5> Maximum Open Position </h5> <p> {this.state.donnees[0]?.maxActivePositions} </p></div>
-                  <div> <h5> Actual Pairlist </h5> <p> {this.state.donnees[0]?.pairList/* .map(pair => pair.substring(0, 3)).join(', ') */}</p> </div>
+                  <div> <h5> Run  </h5> <p className='p'> {this.state.donnees[0]?.running ? "yes" : "no"}</p></div>
+                  <div> <h5> Maximum Open Position </h5> <p className='p'> {this.state.donnees[0]?.maxActivePositions} </p></div>
+                  <div> <h5> Actual Pairlist </h5> <p className='ppailist'> {this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)).join(', ')}</p> </div>
                   
               </div>
               </div>

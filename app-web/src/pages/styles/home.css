@@ -92,13 +92,18 @@
   display: flex;
   align-items: center;
 }
-#actual_state div p {
+.p {
   margin-left: 30px;
   margin-top: 10px;
   font-size:25px;
-
 }
 
+/* .ppailistic {
+  font-size:15px;
+  margin-left: 30px;
+  margin-top: 10px;
+  width:50%
+} */
 
 
 #Name{

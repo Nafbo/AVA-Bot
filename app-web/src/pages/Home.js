@@ -1,13 +1,9 @@
-/* import { Carousel } from 'react-bootstrap'; */
+
 import image1 from '../assets/robot1.png';
-/* import image2 from '../assets/robot2.png';
-import image3 from '../assets/robot3.png';
-import image4 from '../assets/robot4.png'; */
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/home.css";
-import getCookie from "./features/getcookies";/* om "react"; */
+import getCookie from "./features/getcookies";
 import React, {Component} from "react" ;
-import axios from 'axios';;
 
 class Home extends Component {
 
@@ -15,13 +11,11 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    const isLaunched = localStorage.getItem('isLaunched') === 'true';
     this.state = {
       donnees: [],
       maxpos: '',
       pairlist: [],
-      isLaunched: isLaunched,
-      loading: true,
+      running: false,
     };
     this.tableRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -37,11 +31,10 @@ class Home extends Component {
         return response.json()
         })
         .then((result) => {
-          console.log(result)
-          this.setState({ donnees: result, 
-            isLaunched:  result.running, 
-            running: result.running,
-            loading: false, })
+          /* console.log(result) */
+          this.setState({ donnees: result,
+              running: result.running, // Ajouter ici pour mettre à jour le state running initial
+            }) 
         }); 
     }
 
@@ -115,6 +108,45 @@ class Home extends Component {
         }) 
     }
 
+    handleLaunchClick = () => {
+      const id = getCookie('userId');
+      const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ running: true })
+      };
+      fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestOptions)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to update personality.');
+          }
+          this.hideandshow();
+        })
+        .catch((error) => {
+          console.log(error);
+        }) 
+    }
+
+
+    handleStopClick = () => {
+      const id = getCookie('userId');
+      const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ running: false })
+      };
+      fetch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, requestOptions)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to update personality.');
+          }
+          this.hideandshow();
+        })
+        .catch((error) => {
+          console.log(error);
+        }) 
+    }
+
     updateData = () => {
       const id = getCookie('userId');
       const requestOptions = {
@@ -175,7 +207,6 @@ class Home extends Component {
       .then(response => response.json())
       .then(data => {
         console.log('Data updated:', data);
-        // Update the component state with the updated data if necessary
       })
       .catch(error => {
         console.error('Error updating data:', error);
@@ -183,38 +214,14 @@ class Home extends Component {
     }
   
 
-    handleClick = () => {
-      const id = getCookie('userId');
-      const { isLaunched}= this.state;
-      const running = !isLaunched;
-      const currentDate = new Date().toISOString();
 
-      console.log(currentDate);
-  
-      axios.patch(`https://wklab094d7.execute-api.eu-west-1.amazonaws.com/items/${id}`, { running, startingDate: currentDate})
-        .then(response => {
-          localStorage.setItem('isLaunched', running);
-          this.setState({
-
-            isLaunched: !isLaunched,
-            running: running,
-          });
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
     
 
     
     render(){
-      const { loading } = this.state;
-      /* const pairs = this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)); */
-
-       
-      const launchClass = this.state.isLaunched ? 'launch--stopped' : 'launch--launched';
-      if (loading) {
-        return <div>Loading...</div>; //afficher un message de chargement en attendant
+      let launchClass = '';
+      if (this.state.running) {
+        launchClass = 'running';
       }
       return(
     
@@ -241,7 +248,7 @@ class Home extends Component {
                   <h3> Actual Sate of the bot </h3>
                   <div> <h5> Run  </h5> <p> {this.state.donnees[0]?.running ? "yes" : "no"}</p></div>
                   <div> <h5> Maximum Open Position </h5> <p> {this.state.donnees[0]?.maxActivePositions} </p></div>
-                  <div> <h5> Actual Pairlist </h5> <p> {this.state.donnees[0]?.pairList.map(pair => pair.substring(0, 3)).join(', ')}</p> </div>
+                  <div> <h5> Actual Pairlist </h5> <p> {this.state.donnees[0]?.pairList/* .map(pair => pair.substring(0, 3)).join(', ') */}</p> </div>
                   
               </div>
               </div>
@@ -369,9 +376,13 @@ class Home extends Component {
 
             
           
-            <button className={`launch ${launchClass}`}  onClick={this.handleClick}>
-                {this.state.isLaunched ? 'Stop me ! ' : 'Launch me !'}
-            </button>
+            
+            <div className='buttonlauchnstop'> 
+            {this.state.running ? 'Bot is running' : 'Bot is not running'}
+            <button className='launch' onClick={this.handleLaunchClick}> Launch Me! </button> 
+            <button  className="stop" onClick={this.handleStopClick} > Stop me!</button> 
+             </div>
+                
 
           </div> 
 

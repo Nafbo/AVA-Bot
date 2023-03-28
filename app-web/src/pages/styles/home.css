@@ -295,7 +295,21 @@
 }
 
 
-.launch--launched {
+.buttonlauchnstop {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 5rem;
+}
+
+.buttonlauchnstop button {
+  margin: 0 10px;
+}
+
+
+.stop{
   background-color: #f9c6c9;
   color: white;
   border: none;
@@ -310,7 +324,7 @@
   justify-content: center;
  
 }
-.launch--stopped {
+.launch {
   background-color: #b9e2ff;
   color: white;
   border: none;
@@ -325,17 +339,20 @@
   justify-content: center;
 }
 
-.launch--launched, .launch--stopped {
-  margin: 0 auto;
-  margin-top: 10px;
-  margin-bottom: 5rem;
-}
 
-.launch--launched:hover {
+
+.stop:hover {
   background-color: #ff767f;
 }
 
-.launch--stopped:hover {
+.stop:focus {
+  background-color: #ff767f;
+}
+
+.launch:hover {
+  background-color: #25a4ffc5;
+}
+.launch:focus {
   background-color: #25a4ffc5;
 }
 
